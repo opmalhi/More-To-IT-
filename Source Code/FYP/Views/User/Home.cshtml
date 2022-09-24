@@ -1,0 +1,523 @@
+﻿@model List<FYP.Models.AddPackageModel>
+@ViewBag.TourGuider = new AddPackageModel();
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .nav-tabs {
+        border-bottom: 1px solid #ddd;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .nav {
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+    }
+
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > .services:hover {
+        color: #555;
+        cursor: default;
+        border: 1px solid #ddd;
+        border-bottom-color: transparent;
+    }
+
+    .nav-tabs > li > a {
+        margin-right: 2px;
+        line-height: 1.42857143;
+        border: 1px solid transparent;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .nav > li > a {
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+        color: orange;
+    }
+
+
+    .nav-tabs > li {
+        float: left;
+        margin-bottom: -1px;
+    }
+
+    .nav > li {
+        position: relative;
+        display: block;
+    }
+
+    .nav-tabs > li > a {
+        margin-right: 2px;
+        line-height: 1.42857143;
+        border: 1px solid transparent;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .nav > li > a {
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+    }
+
+    #Vehicle_Type {
+        background-color: #f7f7f7;
+        padding: 1rem;
+        font-size: 1.7rem;
+        color: #333;
+        width: 290px;
+        height: 50px;
+        cursor: pointer;
+    }
+</style>
+
+
+@Html.Raw(TempData["Message"])
+
+
+<<section class="home" id="home">
+
+    <div class="content">
+        <h3>adventure is worthwhile</h3>
+        <p>discover new places with us, adventure awaits</p>
+    </div>
+
+    <div class="controls">
+        <span class="vid-btn active" data-src="/Content/image/vid-1.mp4"></span>
+        <span class="vid-btn" data-src="/Content/image/vid-2.mp4"></span>
+        <span class="vid-btn" data-src="/Content/image/vid-3.mp4"></span>
+    </div>
+
+    <div class="video-container">
+        <video src="~/Content/image/vid-1.mp4" id="video-slider" loop autoplay muted></video>
+    </div>
+
+</section>
+
+<!-- home section ends -->
+<!-- book section starts  -->
+
+<section class="book" id="book">
+
+    <h1 class="heading">
+        <span>c</span>
+        <span>u</span>
+        <span>s</span>
+        <span>t</span>
+        <span>o</span>
+        <span>m</span>
+        <span>i</span>
+        <span>z</span>
+        <span>e</span>
+        <span class="space"></span>
+        <span>p</span>
+        <span>a</span>
+        <span>c</span>
+        <span>k</span>
+        <span>a</span>
+        <span>g</span>
+        <span>e</span>
+    </h1>
+
+    <div class="row">
+
+        <div class="image">
+            <img src="~/Content/image/book-img.svg" alt="">
+        </div>
+
+        @using (Html.BeginForm("CustomizePackage", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="inputBox">
+                <h3>start from</h3>
+                @*<input type="text" placeholder="place name">*@
+
+                @Html.DropDownList("City", ViewBag.City as SelectList, "Select City", new { @class = "inputBox", id = "City", name = "City", style = "width: 100%; padding: 1rem; font-size: 1.7rem; color: #333; background: #f7f7f7; text-transform: none; ", required = "required" })
+            </div>
+            <div class="inputBox">
+                <h3>how many</h3>
+                <input type="number" placeholder="number of people" id="People" name="People" min="1" max="15">
+            </div>
+            <div class="inputBox">
+                <h3>trip start date</h3>
+                <input type="date" id="StartDate" name="StartDate" min="9/8/2022">
+            </div>
+            <div class="inputBox">
+                <h3>trip end date</h3>
+                <input type="date" id="EndDate" name="EndDate" onclick="checkStartDate()">
+            </div>
+            <input name="U_Id" id="U_Id" type="hidden" value="@Session["U_Id"]" />
+            <input type="submit" class="btn" value="customize your trip" />
+            @*@Html.ActionLink("customize your trip", "CustomizePackage", "User", new { userID = Session["U_Id"] }, new { @id = "customTripBtnId", @class = "btn" })*@
+        }
+    </div>
+
+</section>
+
+<!-- book section ends -->
+<!-- packages section starts  -->
+
+<section class="packages" id="packages">
+
+    <h1 class="heading">
+        <span>p</span>
+        <span>a</span>
+        <span>c</span>
+        <span>k</span>
+        <span>a</span>
+        <span>g</span>
+        <span>e</span>
+        <span>s</span>
+    </h1>
+
+    <div class="box-container">
+        @foreach (var item in Model)
+        {
+            var date = item.Date >= DateTime.Now;
+            if (date && item.IsCustomize == false)
+            {
+                <div class="box">
+                    <img src="@Url.Content(item.Picture)" alt="@Url.Content(item.Name)">
+                    <div class="content">
+                        <h3> <i class="fas fa-map-marker-alt"></i> @item.Name </h3>
+                        @*<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, nam!</p>*@
+                        @{
+                            var price = String.Format("{0:n0}", @item.Price);
+                        }
+                        <div class="price"> PKR @price @*<span>$120.00</span>*@ </div>
+                        <a href="/User/ViewDetails/@item.Package_ID" class="btn" id="@Url.Content(Convert.ToString(item.Package_ID))">Details</a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+</section>
+
+<section class="services" id="services">
+
+    <h1 class="heading">
+        <span>s</span>
+        <span>e</span>
+        <span>r</span>
+        <span>v</span>
+        <span>i</span>
+        <span>c</span>
+        <span>e</span>
+        <span>s</span>
+    </h1>
+
+    <div class="box-container">
+
+        <div class="box">
+            <i class="fas fa-globe-asia"></i>
+            <h3>customize vacation</h3>
+            <p>Customize your vacation schedule with or without guides and priority vehicles.</p>
+        </div>
+        <div class="box">
+            <i class="fas fa-bullhorn"></i>
+            <h3>Services</h3>
+            <p>Anyone can apply for a guide or rent a car.</p>
+        </div>
+        <div class="box">
+            <i class="fas fa-car"></i>
+            <h3>car rental</h3>
+            <p>Wherever you travel our car rental is included.</p>
+        </div>
+    </div>
+
+</section>
+
+<section class="gallery" id="gallery">
+
+    <h1 class="heading">
+        <span>g</span>
+        <span>a</span>
+        <span>l</span>
+        <span>l</span>
+        <span>e</span>
+        <span>r</span>
+        <span>y</span>
+    </h1>
+
+    <div class="box-container">
+
+        <div class="box">
+            <img src="~/Content/image/g-1.jpg" alt="">
+            <div class="content">
+                <h3>Amazing Places</h3>
+                <p>Wanna Explore!!.</p>
+                <a href="/User/Gallery" class="btn">see more</a>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- review section starts  -->
+
+<section class="review" id="review">
+
+    <h1 class="heading">
+        <span>r</span>
+        <span>e</span>
+        <span>v</span>
+        <span>i</span>
+        <span>e</span>
+        <span>w</span>
+    </h1>
+
+    <div class="swiper-container review-slider">
+
+        <div class="swiper-wrapper" id="reviews">
+
+            @*<div class="swiper-slide">
+                <div class="box">
+                    <img src="images/pic1.png" alt="">
+                    <h3>john deo</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa adipisci quisquam sunt nesciunt fugiat odit minus illum asperiores dolorum enim sint quod ipsam distinctio molestias consectetur ducimus beatae, reprehenderit exercitationem!</p>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+            </div>*@
+           
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- review section ends -->
+
+<section class="contact" id="career">
+
+    <h1 class="heading">
+        <span>c</span>
+        <span>a</span>
+        <span>r</span>
+        <span>e</span>
+        <span>e</span>
+        <span>r</span>
+    </h1>
+
+    <div class="row">
+
+        <div class="image">
+            <img src="~/Content/image/contact-img.svg" alt="">
+        </div>
+        <div class="form">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#guider" role="tab" data-toggle="tab" class="services">Tour Guider</a></li>
+                <li><a href="#vehicle" role="tab" data-toggle="tab" class="services">Vehicle Rental</a></li>
+                @*<li><a href="#captain" role="tab" data-toggle="tab">Captian</a></li>*@
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="guider">
+                    @using (Html.BeginForm("GuiderApplication", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="inputBox">
+                            <input type="text" placeholder="name" id="Name" name="Name" required autocomplete="off">
+                            <input type="text" placeholder="cnic" id="CNIC" name="CNIC" required autocomplete="off">
+                        </div>
+                        <div class="inputBox">
+                            <input type="text" placeholder="contact no" id="Contact_No" name="Contact_No" required autocomplete="off">
+                            <input type="email" placeholder="email" id="Email" name="Email" required autocomplete="off">
+                        </div>
+                        <div class="inputBox">
+                            <input type="text" placeholder="licence no" id="Licence_No" name="Licence_No" required autocomplete="off">
+                            <input type="number" placeholder="age" id="Age" name="Age" required autocomplete="off">
+                        </div>
+                        <div class="inputBox">
+                            <input style="width:99%" type="text" placeholder="address" id="Address" name="Address" required autocomplete="off">
+                        </div>
+                        <div class="inputBox">
+                            @Html.DropDownList("City", ViewBag.City as SelectList, "Select City", new { @class = "inputBox", style = "width: 49%; margin: 1rem 0; padding: 1rem; font-size: 1.7rem; color: #333; background: #f7f7f7; text-transform: none; ", required = "required" })
+                            <input type="text" placeholder="state" id="State" name="State" required autocomplete="off">
+                        </div>
+                        <div class="inputBox">
+                            <div>
+                                <label for="formFile" style="font-size:12px;">Resume</label>
+                            </div>
+                            <div class="col-6">
+                                <label for="formFile" style="font-size:12px;">Image</label>
+                            </div>
+                        </div>
+                        <div class="inputBox">
+                            <input type="file" name="file" id="file" accept=".pdf,.docx,.doc" required>
+                            <input type="file" name="ProfileImage" id="ProfileImage" accept=".jpg,.jpeg,.png" required>
+                        </div>
+                        <input type="submit" class="btn" value="Apply">
+                    }
+                </div>
+                <div class="tab-pane" id="vehicle">
+                    @using (Html.BeginForm("VehicleApplication", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="inputBox">
+                            <input type="text" placeholder="owner name" id="User_Name" name="User_Name" required autocomplete="off">
+                            <input type="text" placeholder="contact no" id="Phone_No" name="Phone_No" required autocomplete="off">
+                        </div>
+                        <div class="inputBox">
+                            <input type="email" placeholder="email" id="Email" name="Email" required autocomplete="off">
+                        </div>
+                        <div class="inputBox">
+                            <select id="Vehicle_Type" name="Vehicle_Type">
+                                <option selected="selected" disabled style="cursor: not-allowed">Select Vehicle Type</option>
+                                <option value="Hatchback">Hatchback</option>
+                                <option value="Sedan">Sedan</option>
+                                <option value="SUV">SUV</option>
+                                <option value="Pickup Truck">Pickup Truck</option>
+                                <option value="Van">Van</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <input type="text" placeholder="vehicle no" id="Vehicle_No" name="Vehicle_No" required autocomplete="off">
+                        </div>
+                        <div class="inputBox">
+                            <input type="text" placeholder="vehicle company(honda,toyota,kia..)" id="Vehicle_Company" name="Vehicle_Company" required autocomplete="off">
+                            <input type="text" placeholder="vehicle model(civic,fortuner...)" id="Vehicle_Model" name="Vehicle_Model" required autocomplete="off">
+                        </div>
+                        <div class="inputBox">
+                            <input type="text" placeholder="vehicle model year" id="Vehicle_Model_Year" name="Vehicle_Model_Year" required autocomplete="off">
+                            <input type="text" placeholder="mileage(km)" id="Vehicle_Mileage" name="Vehicle_Mileage" required autocomplete="off">
+                        </div>
+                        <div class="inputBox">
+                            @Html.DropDownList("City", ViewBag.City as SelectList, "Select City", new { @class = "inputBox", style = "width: 49%; margin: 1rem 0; padding: 1rem; font-size: 1.7rem; color: #333; background: #f7f7f7; text-transform: none; " })
+                            @*<input type="text" placeholder="city" id="City" name="City" required autocomplete="off">*@
+                        </div>
+                        <div class="inputBox">
+                            <div>
+                                <label for="formFile" style="font-size:12px;">Vehicle Photos</label>
+
+                            </div>
+                            <div class="col-6">
+                                <label for="formFile" style="font-size:12px;">Vehicle Inspection Pdf</label>
+
+                            </div>
+                        </div>
+                        <div class="inputBox">
+                            <input type="file" name="ImageFile" id="ImageFile" accept=".jpg,.jpeg,.png" required multiple>
+                            <input type="file" name="PdfFile" id="PdfFile" accept=".pdf,.doc,.docx" required>
+                        </div>
+                        <input type="submit" class="btn" value="Apply">
+                    }
+                </div>
+                @*<div class="tab-pane" id="captain">
+
+                    </div>*@
+            </div>
+        </div>
+
+        @if (ViewBag.Message != null)
+        {
+            <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+            </script>
+        }
+
+        @*<form action="">
+                <div class="inputBox">
+                    <input type="text" placeholder="name">
+                    <input type="email" placeholder="email">
+                </div>
+                <div class="inputBox">
+                    <input type="number" placeholder="number">
+                    <input type="text" placeholder="subject">
+                </div>
+                <textarea placeholder="message" name="" id="" cols="30" rows="10"></textarea>
+                <input type="submit" class="btn" value="send message">
+            </form>*@
+
+    </div>
+
+</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script>
+    $('#City option:contains("Select City")').attr("disabled", "disabled");
+
+    var now = new Date();
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = now.getFullYear() + "-" + (month) + "-" + (day);
+
+    //$('#StartDate').val(today);
+    $('#StartDate').attr('min', today);
+    //$('#EndDate').val(today);
+
+    function checkStartDate() {
+        var enddate = new Date($('#StartDate').val());
+        //var enddate = $('#StartDate').val();
+        //enddate = new Date(today);
+        var day1 = ("0" + enddate.getDate()).slice(-2);
+        var month1 = ("0" + (enddate.getMonth() + 1)).slice(-2);
+        var today1 = enddate.getFullYear() + "-" + (month1) + "-" + (day1);
+
+        $('#EndDate').attr('min', today1);
+    }
+
+    //fetch('/User/PakageReviews')
+    //    .then(response => response.json())
+    //    .then(json => console.log(json))
+
+    $.get("/User/PakageReviews", function (data) {
+        console.log(data)
+        var reviewDiv = document.getElementById("reviews")
+        var reviewhtml = ""
+
+        for (var review = 0; review < data.Reviews.length; review++) {
+
+            if (data.Reviews[review].Gender == "Male") {
+                var imgResult = "https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png"
+            } else {
+                var imgResult = "https://cdn.icon-icons.com/icons2/2643/PNG/512/female_woman_person_people_avatar_icon_159366.png"
+            }
+
+            reviewhtml += `<div class="swiper-slide">
+                <div class="box">
+                    <img src="${imgResult}" alt="">
+                    <h3>${data.Reviews[review].Name}</h3>
+                    <p>${data.Reviews[review].Review}</p>
+                    <div class="stars">
+                        ${getStars(data.Reviews[review].Rating)}
+                    </div>
+                </div>
+            </div>`
+        }
+
+        reviewDiv.innerHTML = reviewhtml
+    });
+
+    function getStars(rating) {
+
+        let output = [];
+
+        //if (rating != null) {
+        rating = Math.round(rating * 2) / 2;
+
+        for (var i = rating; i >= 1; i--)
+            output.push('<i class="fa fa-star" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+        if (i == .5) output.push('<i class="fa fa-star-half-o" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+        for (let i = (5 - rating); i >= 1; i--)
+            output.push('<i class="fa fa-star" aria-hidden="true" style="color: #d9c1c1;"></i>&nbsp;');
+
+        //} else {
+        //    output.push('&nbsp;');
+        //}
+        return output.join('');
+
+    }
+</script>

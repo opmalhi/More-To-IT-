@@ -1,0 +1,37 @@
+﻿@model FYP.Models.PackageReview
+
+<link href="~/Content/userassests/css/Review.css" rel="stylesheet" />
+
+@*@using (Html.BeginForm("GuiderApplication", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{*@
+    <div class="col-10">
+
+        <div class="comment-box ml-2">
+
+            <h4>Add a comment</h4>
+
+            <div class="rating">
+                @Html.RadioButtonFor(x => x.Rating, "5", new { id = "5", value = "5", name = "rating" })<label for="5">☆</label>
+                @Html.RadioButtonFor(x => x.Rating, "4", new { id = "4", value = "4", name = "rating" })<label for="4">☆</label>
+                @Html.RadioButtonFor(x => x.Rating, "3", new { id = "3", value = "3", name = "rating" })<label for="3">☆</label>
+                @Html.RadioButtonFor(x => x.Rating, "2", new { id = "2", value = "2", name = "rating" })<label for="2">☆</label>
+                @Html.RadioButtonFor(x => x.Rating, "1", new { id = "1", value = "1", name = "rating" })<label for="1">☆</label>
+                @*<input type="radio" name="rating" value="5" id="5"><label for="5"></label>*@
+                @*<input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
+                    <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
+                    <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
+                    <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>*@
+            </div>
+
+            <div class="comment-area">
+                @Html.TextAreaFor(x => x.Review, new { @class = "form-control", placeholder = "what is your view?", rows = "4" })
+                @*<textarea class="form-control" placeholder="what is your view?" rows="4"></textarea>*@
+                @Html.TextBoxFor(x=>x.Package_ID)
+            </div>
+
+        </div>
+    </div>
+    @Html.ActionLink("Review", "PackageReview", "User", new { U_Id = Session["U_Id"] }, new { @class = "btn" })
+
+    @*<input type="submit" class="btn" value="Apply">
+}*@

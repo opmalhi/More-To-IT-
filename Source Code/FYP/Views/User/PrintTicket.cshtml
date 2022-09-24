@@ -1,0 +1,134 @@
+﻿@model FYP.Models.Booking
+
+<title>Print Ticket</title>
+
+<link href="~/Content/userassests/css/TicketStyle.css" rel="stylesheet" />
+
+<style type="text/css" media="print">
+    @@page {
+        size: auto; /* auto is the initial value */
+        margin: 0mm; /* this affects the margin in the printer settings */
+    }
+</style>
+
+
+@{
+    var totalTickets = 0;
+    if (Model.Package.IsCustomize == false)
+    {
+        totalTickets = Convert.ToInt32(Model.Transaction.Amount) / Model.Package.Price;
+
+    }
+    else { 
+        totalTickets = Model.Package.No_of_Bookings.Value;
+    }
+
+    for (int ticket = 1; ticket <= totalTickets; ticket++)
+    {
+    <div class="ticket">
+        <div class="ticket--start">
+            <img src="~/Content/loginassets/img/dummy/Ticket.png" style="width:80px;" />
+            @*<img src="https://i.ibb.co/W3cK42J/image-1.png" />*@
+        </div>
+        <div class="ticket--center">
+            <div class="ticket--center--row">
+                <div class="ticket--center--col">
+                    <span>Your ticket for</span>
+                    <strong>@Model.Package.Name</strong>
+                </div>
+                <div class="ticket--center--col">
+                    <span>Booked By</span>
+                    <strong>@Model.Name</strong>
+                </div>
+            </div>
+            <div class="ticket--center--row">
+                <div class="ticket--center--col">
+                    <span class="ticket--info--title">Date and Trip Days</span>
+                    <span class="ticket--info--subtitle date">@*Thursday, May 14 2020*@</span>
+                    <span class="ticket--info--content tripDays"></span>
+                </div>
+                <div class="ticket--center--col">
+                    <span class="ticket--info--title">Location</span>
+                    <span class="ticket--info--subtitle">PickUp Location</span>
+                    <span class="ticket--info--content">@Model.Package.Pick_Up_Location</span>
+                </div>
+            </div>
+            <div class="ticket--center--row">
+                <div class="ticket--center--col">
+                    <span class="ticket--info--title">Ticket type</span>
+                    @{
+                        var ticketType = Model.Package.IsCustomize;
+                        var ticketCustom = String.Empty;
+                        if (ticketType == false)
+                        {
+                            ticketCustom = "Pre-Planned";
+                            <span class="ticket--info--content">@ticketCustom</span>
+                        }
+                        else
+                        {
+                            ticketCustom = "Customized";
+                            <span class="ticket--info--content">@ticketCustom</span>
+                        }
+                     }
+                </div>
+                
+                    @*@if (totalTickets > 1) { 
+                        <div class="ticket--center--col">
+                                <span class="ticket--info--title">Total Tickets</span>
+                                <span class="ticket--info--content">@ticket of @totalTickets</span>
+                        </div>
+                    }*@
+
+                <div class="ticket--center--col">
+                        <span class="ticket--info--title">Total Ticket</span>
+                        <span class="ticket--info--content">Ticket: @ticket of @totalTickets</span>
+                    </div>
+            </div>
+        </div>
+        <div class="ticket--end">
+            <div>
+                <img src="@Model.QRCode" style="width:100px; height:100px;">
+            </div>
+            <div>
+                <span style="color:whitesmoke;">
+                    @*<img src="~/Content/loginassets/img/dummy/suitcase.png" style="width:24px;height:24px; color:white;" />*@
+                    @*  More To It!*@
+                </span>
+            </div>
+        </div>
+    </div>
+    }
+
+}
+
+<script src="~/Scripts/jquery-3.6.0.js"></script>
+<script>
+    $(document).ready(() => {
+
+        var today = new Date();
+        const month = today.toLocaleString('default', { month: 'long' });
+        var tddate = month + '-' + today.getDate() + '-' + today.getFullYear();
+
+        var stay = @Html.Raw(Json.Encode(Model.Package.TripDays));
+        var stayArray = stay.split(',').map(function (item) {
+            return parseInt(item, 10);
+        });
+
+        var totalDays = 0;
+        for (let i = 0; i < stayArray.length; i++) {
+            totalDays += stayArray[i];
+        }
+
+        debugger
+        var dates = document.getElementsByClassName("date")
+        for (var i = 0; i < dates.length; i++) {
+            dates[i].innerHTML = tddate
+        }
+
+        var tripdays = document.getElementsByClassName('tripDays')
+        for (var j = 0; j < tripdays.length; j++) {
+            tripdays[j].innerHTML = "Total Trip Days: " + totalDays
+        }
+        window.print();
+    })
+</script>

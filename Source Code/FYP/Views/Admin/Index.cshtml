@@ -1,0 +1,412 @@
+﻿@model FYP.Models.DashboardModel
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    body {
+        margin: 10px 15px;
+    }
+</style>
+<link href="~/Content/adminassets/assets/css/color/color-1.css" rel="stylesheet" />
+@*<link href="~/Content/adminassets/css/color-1.css" rel="stylesheet" />*@
+<link href="~/Content/adminassets/assets/css/dashboard.css" rel="stylesheet" />
+<div class="db-breadcrumb">
+    <h4 class="breadcrumb-title">Dashboard</h4>
+    <ul class="db-breadcrumb-list">
+        <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+        <li>Dashboard</li>
+    </ul>
+</div>
+
+<!-- Card -->
+<div class="row">
+    <div class="col-md-6 col-lg-3 col-xl-3 col-sm-6 col-12">
+        <div class="widget-card widget-bg1">
+            <div class="wc-item">
+                <h4 class="wc-title">
+                    No. of Users
+                </h4>
+                <span class="wc-des">
+                    Users Review
+                </span>
+                <span class="wc-stats counter">
+                    @Model.total_users
+                </span>
+                <div class="progress wc-progress">
+                    <div id="ttl-user" class="progress-bar" role="progressbar" style="width:0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3 col-xl-3 col-sm-6 col-12">
+        <div class="widget-card widget-bg2">
+            <div class="wc-item">
+                <h4 class="wc-title">
+                    No. of Admins
+                </h4>
+                <span class="wc-des">
+                    Admins Review
+                </span>
+                <span class="wc-stats counter">
+                    @Model.total_admins
+                </span>
+                <div class="progress wc-progress">
+                    <div id="ttl-admin" class="progress-bar" role="progressbar" style="width: 90%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3 col-xl-3 col-sm-6 col-12">
+        <div class="widget-card widget-bg3">
+            <div class="wc-item">
+                <h4 class="wc-title">
+                    No. of Cities
+                </h4>
+                <span class="wc-des">
+                    Cities Review
+                </span>
+                <span class="wc-stats counter">
+                    @Model.total_cities
+                </span>
+                <div class="progress wc-progress">
+                    <div id="ttl-city" class="progress-bar" role="progressbar" style="width: 88%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3 col-xl-3 col-sm-6 col-12">
+        <div class="widget-card widget-bg4">
+            <div class="wc-item">
+                <h4 class="wc-title ">
+                    No. of Places
+                </h4>
+                <span class="wc-des">
+                    Famous Places Review
+                </span>
+                <span class="wc-stats counter">
+                    @Model.total_places
+                </span>
+                <div class="progress wc-progress">
+                    <div id="ttl-place" class="progress-bar" role="progressbar" style="width: 65%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-3 col-xl-3 col-sm-6 col-12">
+        <div class="widget-card widget-bg5">
+            <div class="wc-item">
+                <h4 class="wc-title ">
+                    No. of Hotels
+                </h4>
+                <span class="wc-des">
+                    Hotels Review
+                </span>
+                <span class="wc-stats counter">
+                    @Model.total_hotels
+                </span>
+                <div class="progress wc-progress">
+                    <div id="ttl-hotel" class="progress-bar" role="progressbar" style="width: 65%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-6 col-lg-3 col-xl-3 col-sm-6 col-12">
+        <div class="widget-card widget-bg6">
+            <div class="wc-item">
+                <h4 class="wc-title">
+                    No. of Packages
+                </h4>
+                <span class="wc-des">
+                    Packages Review
+                </span>
+                <span class="wc-stats counter">
+                    @Model.total_packages
+                </span>
+                <div class="progress wc-progress">
+                    <div id="ttl-package" class="progress-bar" role="progressbar" style="width: 90%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3 col-xl-3 col-sm-6 col-12">
+        <div class="widget-card widget-bg7">
+            <div class="wc-item">
+                <h4 class="wc-title">
+                    No. of Bookings
+                </h4>
+                <span class="wc-des">
+                    Bookings Review
+                </span>
+                <span class="wc-stats counter">
+                    @Model.total_bookings
+                </span>
+                <div class="progress wc-progress">
+                    <div id="ttl-booking" class="progress-bar" role="progressbar" style="width: 90%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-3 col-xl-3 col-sm-6 col-12">
+        <div class="widget-card widget-bg8">
+            <div class="wc-item">
+                <h4 class="wc-title">
+                    No. of Employee
+                </h4>
+                <span class="wc-des">
+                    Tour Guider Review
+                </span>
+                <span class="wc-stats counter">
+                    @Model.total_tourGuiderEmployee
+                </span>
+                <div class="progress wc-progress">
+                    <div id="ttl-employee" class="progress-bar" role="progressbar" style="width: 90%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-lg-3 col-xl-3 col-sm-6 col-12">
+        <div class="widget-card widget-bg9">
+            <div class="wc-item">
+                <h4 class="wc-title">
+                    No. of Vehicle
+                </h4>
+                <span class="wc-des">
+                    Rental Vehicle Review
+                </span>
+                <span class="wc-stats counter">
+                    @Model.total_vehicle
+                </span>
+                <div class="progress wc-progress">
+                    <div id="ttl-vehicle" class="progress-bar" role="progressbar" style="width: 90%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<br>
+<br>
+
+<div class="db-breadcrumb">
+    <h4 class="breadcrumb-title">Charts</h4>
+</div>
+
+<!-- DONUT CHART 01 -->
+@*<div class="card card-danger" style="display:inline-block; width:48%;">
+        <div class="card-header">
+            <h4 class="card-title" style="text-align: center">Users & Admins </h4>
+            <meta name="viewport" content="width=device-width" />
+        </div>
+        <div class="card-body">
+            <div style="text-align: center">
+                <canvas id="Doughnutcanvas"></canvas>
+            </div>
+        </div>
+    </div>*@
+
+<!-- DONUT CHART 02 -->
+
+<div class="row">
+    <div class="col">
+        <div class="card card-danger">
+            <div class="card-header">
+                <h4 class="card-title" style="text-align: center">Donut Comparison</h4>
+                <meta name="viewport" content="width=device-width" />
+            </div>
+            <div class="card-body">
+                <div style="text-align: center">
+                    <canvas id="Doughnutcanvas2"></canvas>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card card-danger">
+            <div class="card-header">
+                <h4 class="card-title" style="text-align: center">Bar Chart Comparison</h4>
+                <meta name="viewport" content="width=device-width" />
+            </div>
+            <div class="card-body">
+                <div style="text-align: center">
+                    <canvas id="barcanvas"></canvas>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+@*<br>
+    <br>
+    <br>*@
+
+<!-- BAR CHART -->
+
+<br>
+<br>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/0.6.1/progressbar.min.js" integrity="sha512-7IoDEsIJGxz/gNyJY/0LRtS45wDSvPFXGPuC7Fo4YueWMNOmWKMAllEqo2Im3pgOjeEwsOoieyliRgdkZnY0ow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+@*<script src="~/Content/assetstable/jquery.counterup.min.js"></script>*@
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.js" integrity="sha512-+/4Q+xH9jXbMNJzNt2eMrYv/Zs2rzr4Bu2thfvzlshZBvH1g+VGP55W8b6xfku0c0KknE7qlbBPhDPrHFbgK4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>*@
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/jquery.waypoints.js" integrity="sha512-ZKNVEa7gi0Dz4Rq9jXcySgcPiK+5f01CqW+ZoKLLKr9VMXuCsw3RjWiv8ZpIOa0hxO79np7Ec8DDWALM0bDOaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/function-plot/1.22.8/function-plot.js" integrity="sha512-5q5FX8Fdy/bUEurwyMuC8g6Jv083LrK4yry74q0Xl1NTXsRio0h1BRiRkRwsTP1CJ92zduGh4ug4RBUPzmT3wA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    var $y = jQuery.noConflict();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/jquery.waypoints.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery.counterup@2.1.0/jquery.counterup.min.js"></script>
+
+<script>
+    jQuery(document).ready(function ($) {
+        $('.counter').counterUp({
+            delay: 200, // the delay time in ms
+            time: 1500 // the speed time in ms
+        });
+    });
+</script>
+<script>
+    //First DonutChart
+    @*var donut =
+        {
+            labels: ["ALL-USERS", "ALL-TEACHERS"],
+            datasets: [{
+                backgroundColor: [
+                    "#42188a",
+                    "#ec3261",
+                ],
+                borderWidth: 2,
+                data: [@Model.total_users,@Model.total_teachers]
+            }]
+        };*@
+    //Second DonutChart
+    var donut2 =
+    {
+        labels: ["CITIES", "PLACES","HOTELS"],
+        datasets: [{
+            backgroundColor: [
+                "#275efd",
+                "#2596be",
+                "#063970",
+            ],
+            borderWidth: 2,
+            data: [@Model.total_cities,@Model.total_places,@Model.total_hotels]
+        }]
+    };
+
+    //Bar Chart
+    var bar =
+    {
+        labels: ["CITIES", "PLACES", "PACKAGES","HOTELS"],
+            datasets: [{
+
+                backgroundColor: [
+                    "#db4b24",
+                    "#668bff",
+                    "#8340f6",
+                    "#8699fb",
+                ],
+                borderWidth: 2,
+                data: [@Model.total_cities,@Model.total_places,@Model.total_packages,@Model.total_hotels]
+            }]
+    };
+
+
+    window.onload = function () {
+        //First DonutChart
+        //var ctx1 = document.getElementById("Doughnutcanvas").getContext("2d");
+        //window.myBar = new Chart(ctx1,
+        //    {
+        //        type: 'doughnut',
+        //        data: donut,
+        //        options:
+        //            {
+        //                title:
+        //                {
+        //                    display: true,
+        //                },
+        //                responsive: true,
+        //                maintainAspectRatio: true
+        //            }
+        //    });
+        //Second DonutChart
+        var user = @Model.total_users;
+        var admin = @Model.total_admins;
+        var city = @Model.total_cities;
+        var place = @Model.total_places;
+        var hotel = @Model.total_hotels;
+        var employee = @Model.total_tourGuiderEmployee;
+        var vehicle = @Model.total_vehicle;
+        var placewidth = (@Model.total_places) / 2;
+        var hotelwidth = (@Model.total_hotels) / 2;
+        var employeewidth = (@Model.total_tourGuiderEmployee) / 2;
+        var vehiclewidth = (@Model.total_vehicle) / 2;
+        var package = @Model.total_packages;
+        var booking = @Model.total_bookings;
+
+        $("#ttl-user").css("width", user + "%").attr("aria-valuenow", user);
+        $("#ttl-admin").css("width", admin + "%").attr("aria-valuenow", admin);
+        $("#ttl-city").css("width", city + "%").attr("aria-valuenow", city);
+        $("#ttl-place").css("width", placewidth + "%").attr("aria-valuenow", place);
+        $("#ttl-hotel").css("width", hotelwidth + "%").attr("aria-valuenow", hotel);
+        $("#ttl-package").css("width", package + "%").attr("aria-valuenow", package);
+        $("#ttl-booking").css("width", booking + "%").attr("aria-valuenow", booking);
+        $("#ttl-employee").css("width", employeewidth + "%").attr("aria-valuenow", employee);
+        $("#ttl-vehicle").css("width", vehiclewidth + "%").attr("aria-valuenow", vehicle);
+
+        var ctx2 = document.getElementById("Doughnutcanvas2").getContext("2d");
+        window.myBar = new Chart(ctx2,
+            {
+                type: 'doughnut',
+                data: donut2,
+                options:
+                    {
+                        title:
+                        {
+                            display: true,
+                        },
+                        responsive: true,
+                        maintainAspectRatio: true
+                    }
+            });
+        //Bar Chart
+        var barchart = document.getElementById("barcanvas").getContext("2d");
+        window.myBar = new Chart(barchart,
+            {
+                type: 'bar',
+                data: bar,
+                options: {
+                    title:
+                    {
+                        display: true,
+                    },
+                    responsive: true,
+                    maintainAspectRatio: true
+                }
+            });
+    }
+</script>
+

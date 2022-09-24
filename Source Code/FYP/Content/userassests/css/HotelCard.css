@@ -1,0 +1,126 @@
+﻿
+.main-content {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.text-striked {
+    text-decoration: line-through;
+}
+
+.shadow {
+    box-shadow: rgb(50 50 93 / 25%) 0px 6px 12px -2px, rgb(0 0 0 / 30%) 0px 3px 7px -3px !important;
+}
+
+.hotel-card .hotel-card_images {
+    flex: 2;
+}
+
+    .hotel-card .hotel-card_images .carousel-item img {
+        height: 250px;
+        object-fit: cover;
+    }
+
+@media (min-width: 992px) {
+    .hotel-card .hotel-card_images .carousel-item img {
+        height: 100%;
+    }
+}
+
+.hotel-card .hotel-card_info {
+    flex: 3;
+}
+
+.hotel-card .amnities img {
+    max-height: 20px;
+}
+
+.hotel-card .hotel-checklist {
+    list-style-type: none;
+}
+
+.carousel .carousel-control-prev {
+    background: linear-gradient(to right, #333333bb, #33333300);
+}
+
+.carousel .carousel-control-next {
+    background: linear-gradient(to left, #333333bb, #33333300);
+}
+
+
+/*
+.spanContainer {
+    position: relative;
+    width: 80px !important;
+    height: 30px;
+    border-radius: 40px;
+    border: 2px solid rgba(255,255,255,.2);
+    transition: 0.5s;
+    background-color: #333333;
+}
+
+    .spanContainer:hover {
+        width: 100px !important;
+        border: 2px solid rgba(255,255,255,1);
+    }
+
+    .spanContainer .next {
+        position: absolute;
+        top: 50%;
+        right: 15px !important;
+        display: block;
+        width: 8px;
+        height: 8px;
+        border-top: 2px solid #fff;
+        border-left: 2px solid #fff;
+        z-index: 1;
+        transform: translateY(-50%) rotate(135deg);
+        cursor: pointer;
+        opacity: 0;
+        transition: 0.5s;
+    }
+
+    .spanContainer:hover .next {
+        opacity: 1;
+        right: 15px;
+    }
+
+    .spanContainer .prev {
+        position: absolute;
+        top: 50%;
+        left: 15px !important;
+        display: block;
+        width: 8px;
+        height: 8px;
+        border-top: 2px solid #fff;
+        border-left: 2px solid #fff;
+        z-index: 1;
+        transform: translateY(-50%) rotate(315deg);
+        cursor: pointer;
+        opacity: 0;
+        transition: 0.5s;
+    }
+
+    .spanContainer:hover .prev {
+        opacity: 1;
+        left: 15px;
+    }
+
+#box span {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 28px;
+    display: none;
+    color: #ffa500;
+    font-size: 18px;
+    font-weight: 500;
+    user-select: none;
+}
+
+    #box span:nth-child(1) {
+        display: initial;
+    }
+*/

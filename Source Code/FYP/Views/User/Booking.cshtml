@@ -1,0 +1,505 @@
+﻿@model FYP.Models.Booking
+@{
+    ViewBag.Title = "Booking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/userassests/css/BookingStyle.css" rel="stylesheet" />
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+<div class="formdiv">
+    <h1>Booking Process </h1>
+    <div id="multi-step-form-container">
+        <!-- Form Steps / Progress Bar -->
+        <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0">
+            <!-- Step 1 -->
+            <li class="form-stepper-active text-center form-stepper-list" step="1">
+                <a class="mx-2">
+                    <span class="form-stepper-circle">
+                        <span>1</span>
+                    </span>
+                    <div class="label">Personal Details</div>
+                </a>
+            </li>
+            <!-- Step 2 -->
+            <li class="form-stepper-unfinished text-center form-stepper-list" step="2">
+                <a class="mx-2">
+                    <span class="form-stepper-circle text-muted">
+                        <span>2</span>
+                    </span>
+                    <div class="label text-muted">Selected Package</div>
+                </a>
+            </li>
+            <!-- Step 3 -->
+            <li class="form-stepper-unfinished text-center form-stepper-list" step="3">
+                <a class="mx-2">
+                    <span class="form-stepper-circle text-muted">
+                        <span>3</span>
+                    </span>
+                    <div class="label text-muted">Hotel Details</div>
+                </a>
+            </li>
+            <!-- Step 4 -->
+            <li class="form-stepper-unfinished text-center form-stepper-list" step="4">
+                <a class="mx-2">
+                    <span class="form-stepper-circle text-muted">
+                        <span>4</span>
+                    </span>
+                    <div class="label text-muted">Billing</div>
+                </a>
+            </li>
+            <!-- Step 5 -->
+            <li class="form-stepper-unfinished text-center form-stepper-list" step="5">
+                <a class="mx-2">
+                    <span class="form-stepper-circle text-muted">
+                        <span>5</span>
+                    </span>
+                    <div class="label text-muted ">Summary</div>
+                </a>
+            </li>
+        </ul>
+        <!-- Step Wise Form Content -->
+        <div id="userAccountSetupForm" name="userAccountSetupForm">
+            <!-- Step 1 Content -->
+            <section id="step-1" class="form-step">
+                <h2 class="font-normal">Personal Details</h2>
+                <!-- Step 1 input fields -->
+                <div class="mt-3">
+                    <div class="form-group row">
+                        <div class="col">
+                            <label class="col-sm col-form-label font-weight-bold">Full Name</label>
+                            <div class="col-sm">
+                                <input class="form-control" id="Name" placeholder="Name" type="text" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label class="col-sm col-form-label font-weight-bold">Contact Number #</label>
+                            <div class="col-sm-7">
+                                <input class="form-control" id="ContactNumber" placeholder="Contact Number" type="number" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label class="col-sm col-form-label font-weight-bold">CNIC #</label>
+                            <div class="col-sm">
+                                <input class="form-control" id="CNIC" placeholder="CNIC" type="text" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label class="col-sm col-form-label font-weight-bold">Date of Birth</label>
+                            <div class="col-sm-7">
+                                <input class="form-control" id="DOB" type="date" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label class="col-sm-2 col-form-label font-weight-bold">Email</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" id="Email" type="email" placeholder="Enter Email" style="text-transform:lowercase" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label class="col-sm-2 col-form-label font-weight-bold">Address</label>
+                            <div class="col-sm-7">
+                                <input class="form-control" id="Address" type="text" placeholder="Enter Complete Address" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label class="col-sm col-form-label font-weight-bold">State</label>
+                            <div class="col-sm">
+                                <input class="form-control" id="State" placeholder="State" type="text" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label class="col-sm-2 col-form-label font-weight-bold">City</label>
+                            <div class="col-sm-7">
+                                <input class="form-control" id="city" placeholder="City" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <div class="col">
+                        <button class="button btn-navigate-form-step" type="button" step_number="2">Next</button>
+                    </div>
+                </div>
+            </section>
+            <!-- Step 2 Content, default hidden on page load. -->
+            <section id="step-2" class="form-step d-none">
+                <h2 class="font-normal">Selected Package</h2>
+                <!-- Step 2 input fields -->
+                <div class="mt-3">
+                    @*<label class="col-sm col-form-label">PackageID: </label>
+                        <label class="col-sm col-form-label" id="packId"></label><br />*@
+                    <label class="col-sm col-form-label font-weight-bold">Name:</label><br />
+                    <label class="col-sm col-form-label" id="packName"></label>
+                    <label class="col-sm col-form-label font-weight-bold">Price:</label><br />
+                    <label class="col-sm col-form-label" id="packAmount"></label>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label class="col-sm col-form-label font-weight-bold">No of Tickets<span class="text-danger">*</span></label>
+                            <div class="col-sm">
+                                <input class="form-control" id="NoofTickets" placeholder="Enter No of Tickets" type="number" onkeyup="checkSeats(this)" required/>
+                                <span class="col-sm col-form-label text-danger" id="alertTicketText"></span>
+                            </div>
+                            <span class="col-sm col-form-label" id="availableSeats"></span><br />
+                            <span class="col-sm col-form-label text-danger" id="alertText"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <button class="buttonPrev btn-navigate-form-step" type="button" step_number="1">Prev</button>
+                    <button class="button btn-navigate-form-step" type="button" step_number="3" id="packNextBtn">Next</button>
+                </div>
+            </section>
+            <!-- Step 3 Content, default hidden on page load. -->
+            <section id="step-3" class="form-step d-none">
+                <h2 class="font-normal">Hotel Details</h2>
+                <!-- Step 3 input fields -->
+                <div class="mt-3" id="hotelDiv">
+                    @*<label class="col-sm col-form-label">HotelID: </label>
+                        <label class="col-sm col-form-label" id="hotelId"></label><br />*@
+
+                </div>
+                <div class="mt-3">
+                    <button class="buttonPrev btn-navigate-form-step" type="button" step_number="2">Prev</button>
+                    <button class="button btn-navigate-form-step" type="button" step_number="4">Next</button>
+                </div>
+            </section>
+            <!-- Step 4 Content, default hidden on page load. -->
+            <section id="step-4" class="form-step d-none">
+                <h2 class="font-normal">Billing</h2>
+                <!-- Step 3 input fields -->
+                <div class="mt-3">
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="username">
+                                    <h6 class="font-weight-bold">Cardholder's Name'</h6>
+                                </label>
+                                <input class="form-control" id="CardHolderName" placeholder="Card Holder Name" type="text" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <label for="cardNumber">
+                                <h6 class="font-weight-bold">Card Number</h6>
+                            </label>
+                            <div class="input-group">
+                                <input class="form-control" id="CardNumber" placeholder="Card Number" type="number" required />                          <div class="input-group-append">
+                                    <span class="input-group-text text-muted">
+                                        <i class="fab fa-cc-visa mx-1"></i>
+                                        <i class="fab fa-cc-mastercard mx-1"></i>
+                                        <i class="fab fa-cc-amex mx-1"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>
+                                    <span class="hidden-xs">
+                                        <h6 class="font-weight-bold">Expiration Date</h6>
+                                    </span>
+                                </label>
+                                <div class="input-group">
+                                    <input class="form-control" id="month" placeholder="MM" type="number" required/>
+                                    <input class="form-control" id="year" placeholder="YYYY" type="number" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group mb-4">
+                                <label data-toggle="tooltip" title="Three digit CV code on the back of your card">
+                                    <h6 class="font-weight-bold">CVV <i class="fa fa-question-circle d-inline"></i></h6>
+                                </label>
+                                <input class="form-control" id="cvc" placeholder="CVV" type="number" required />
+                                @*<input type="text" required class="form-control">*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <button class="buttonPrev btn-navigate-form-step" type="button" step_number="3">Prev</button>
+                    <button class="button btn-navigate-form-step" type="button" step_number="5" onclick="summary()">Next</button>
+                </div>
+            </section>
+            <!-- Step 5 Content, default hidden on page load. -->
+            <section id="step-5" class="form-step d-none">
+                <h2 class="font-normal font-weight-bold">Summary</h2>
+                <!-- Step 5 input fields -->
+                <div class="mt-3">
+                    <h4 class="font-normal font-weight-bold">Personal Details</h4>
+                    <div class="row py-2">
+                        <div class="col-6">
+                            <label class="font-weight-bold">Name:</label>
+                            <span id="userName"></span><hr />
+                            <label class="font-weight-bold">Contact No#: </label>
+                            <span id="userContact"></span><hr />
+                            <label class="font-weight-bold">Address:</label>
+                            <span id="userAddress"></span><hr />
+                            <label class="font-weight-bold">State:</label>
+                            <span id="userState"></span>
+                        </div>
+                        <div class="col-6">
+                            <label class="font-weight-bold">Date of Birth:</label>
+                            <span id="userDOB"></span><hr />
+                            <label class="font-weight-bold">CNIC:</label>
+                            <span id="userCNIC"></span><hr />
+                            <label class="font-weight-bold">City:</label>
+                            <span id="userCity"></span>
+                        </div>
+                    </div>
+                    <br />
+
+
+                    <h4 class="font-normal font-weight-bold">Package Details</h4>
+                    <div class="row py-2">
+
+                        <div class="col-6">
+                            <label class="font-weight-bold">Package:</label>
+                            <span id="packageName"></span><hr />
+                            <label class="font-weight-bold">Duration:</label>
+                            <span id="duration"></span><hr />
+                            <label class="font-weight-bold">Trip Starting Date: </label>
+                            <span id="date"></span>
+                        </div>
+                        <div class="col-6">
+                            <label class="font-weight-bold">Pick Up Location: </label>
+                            <span id="pickUpLocation"></span><hr />
+                            <label class="font-weight-bold">Price:</label>
+                            <span id="price"></span><hr />
+                            <label class="font-weight-bold">Total Tickets:</label>
+                            <span id="ticket"></span>
+                            @*<input id="hotelId"/>*@
+                        </div>
+                    </div>
+                    <br />
+
+                    <h4 class="font-normal font-weight-bold">Payment Details</h4>
+                    <div class="row py-2">
+                        <div class="col-6">
+                            <label class="font-weight-bold">Card Number:</label><br />
+                            <label class="font-weight-bold">Amount:</label><br />
+                            <label class="font-weight-bold">GST: </label><br />
+                            <label class="font-weight-bold">Discount: </label><br />
+                            <label class="font-weight-bold">Total: </label>
+                        </div>
+                        <div class="col-6">
+                            <span id="cardNumber"></span><br />
+                            <span id="amount"></span><br />
+                            <span id="tax"></span><br />
+                            <span id="discount">0%</span><br /><hr />
+                            <span id="total" class="font-weight-bold"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <div class="col">
+                        <button class="buttonPrev btn-navigate-form-step" type="button" step_number="4">Prev</button>
+                        <button class="button submit-btn" id="saveBtn" onclick="bookingSubmit()">Book Trip</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+<script src="~/Scripts/jquery-3.6.0.js"></script>
+<script src="~/Content/userassests/js/BookingScript.js"></script>
+
+<script>
+
+    var url = new URL(window.location);
+    var userID = url.searchParams.get("userID");
+    var packID = url.searchParams.get("packID");
+    var Hotels = document.getElementById("hotelDiv")
+    var hotelids = [];
+    var price;
+
+    var availabeSeats = 0;
+
+    $.get(`/User/BookingDetails?userID=${userID}&packID=${packID}`, function (data) {
+        console.log(data);
+
+        availabeSeats = data.Package.Total_Seats - data.Package.No_of_Bookings;
+
+        const d1 = new Date(data.User.DOB.match(/\d+/)[0] * 1);
+        const formattedDate1 = d1.getFullYear() + '-' + ("0" + (d1.getMonth() + 1)).slice(-2) + '-' + ("0" + d1.getDate()).slice(-2)
+
+        const d2 = new Date(data.Package.Date.match(/\d+/)[0] * 1);
+        const formattedDate2 = d2.getFullYear() + '-' + ("0" + (d1.getMonth() + 1)).slice(-2) + '-' + ("0" + d1.getDate()).slice(-2)
+
+        const trips = data.Package.TripDays;
+        const days = trips.split(',');
+
+        var hotels = ""
+        for (let hotel = 0; hotel < data.Hotels.length; hotel++){
+            hotels += `
+                    <div class="row">
+                        <div class="col-4">
+                            <label class="col-sm col-form-label font-weight-bold">Name</label><br/>
+                            <label class="col-sm col-form-label">${data.Hotels[hotel].Name}</label>
+                        </div>
+                        <div class="col-6">
+                            <label class="col-sm col-form-label font-weight-bold">No of Days Stay</label><br/>
+                            <label class="col-sm col-form-label">${days[hotel]} Days</label>
+                        </div>
+                    </div><br/>`
+            hotelids.push(data.Hotels[hotel].Id)
+        }
+
+        Hotels.innerHTML = hotels
+
+        $('#Name').val(data.User.Name);
+        $('#Email').val(data.User.Email);
+        $('#ContactNumber').val(data.User.Contact_Number);
+        $('#CNIC').val(data.User.CNIC);
+        $('#DOB').val(formattedDate1);
+        $('#Address').val(data.User.Address);
+        $('#State').val(data.User.State);
+        $('#city').val(data.User.City);
+        $('#packId').text(data.Package.Package_ID);
+        $('#packName').text(data.Package.Name);
+        $('#availableSeats').text("No# of Seats Available "+availabeSeats);
+        $('#packAmount').text(data.Package.Price);
+        //$('#hotelId').val(hotelids);
+        //$('#hotelName').text(data.Hotels[0].Name);
+        
+        price = data.Package.Price;
+        //Summary
+        $("#userName").text(data.User.Name);
+        $("#userCNIC").text(data.User.CNIC);
+        $("#userContact").text(data.User.Contact_Number);
+        $("#userAddress").text(data.User.Address);
+        $("#userState").text(data.User.State);
+        $("#userCity").text(data.User.City);
+        $("#userDOB").text(formattedDate1);
+        $("#packageName").text(data.Package.Name);
+        $("#pickUpLocation").text(data.Package.Pick_Up_Location);
+        $("#duration").text(data.Package.No_of_Days + " Days");
+        $("#price").text("Rs " + numberWithCommas(data.Package.Price));
+        $("#date").text(formattedDate2);
+        //$("#hotel").text(json.Summary.Hotels);
+    });
+
+    function summary() {
+        var tickets = $('#NoofTickets').val();
+        var amount = tickets * price;
+        var tax = amount * 0.02;
+        var total = amount + tax;
+        var cardNumber = $('#CardNumber').val();
+        cardNumber = cardNumber.toString().substr(-4); 
+        $("#ticket").text(tickets);
+        $("#cardNumber").text("****" + cardNumber);
+        $("#amount").text("Rs " + numberWithCommas(amount));
+        $("#tax").text("Rs " + numberWithCommas(tax));
+        $("#total").text("RS " + numberWithCommas(String(total)));
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function checkSeats(data) {
+        var boxVal = data.value
+        if (boxVal > availabeSeats) {
+            $('#packNextBtn').prop('disabled', true)
+            $('#alertText').text("Not Available")
+            document.getElementById('packNextBtn').style.cursor = "not-allowed"
+        } else if (boxVal == 0 || boxVal == null) {
+            $('#packNextBtn').prop('disabled', true)
+            $('#alertTicketText').text("Enter Number of Tickets")
+            document.getElementById('packNextBtn').style.cursor = "not-allowed"
+        }
+        else {
+            $('#packNextBtn').prop('disabled', false)
+            $('#alertText').text("")
+            document.getElementById('packNextBtn').style.cursor = "pointer"
+        }
+    }
+
+    function bookingSubmit() {
+        var idsHotel = hotelids.toString();
+        var name = $('#Name').val();
+        var email = $('#Email').val();
+        var phone = $('#ContactNumber').val();
+        var cnic = $('#CNIC').val();
+        var dob = $('#DOB').val();
+        var Address = $('#Address').val();
+        var State = $('#State').val();
+        var City = $('#city').val();
+        var hotelId = idsHotel.toString();
+        var holderName = $('#CardHolderName').val();
+        var cardNo = $('#CardNumber').val();
+        var month = $('#month').val();
+        var year = $('#year').val();
+        var cvc = $('#cvc').val();
+        var nooftickets= $('#NoofTickets').val();
+        //var amount = $('#amount').text();
+
+        var bookingModel = {
+            id: userID,
+            name: name,
+            email: email,
+            contact_number: phone,
+            cnic: cnic,
+            dob: dob,
+            address: Address,
+            state: State,
+            city: City,
+            packageid: packID,
+            hotelid: hotelId,
+            cardholdername: holderName,
+            cardnumber: cardNo,
+            month: month,
+            year: year,
+            cvc: cvc,
+            amount: price,
+            no_of_tickets: nooftickets,
+        }
+        $("#saveBtn").disabled = true;
+        document.getElementById("saveBtn").innerHTML = `Booking....`
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(bookingModel)
+        };
+        fetch('/User/Booking', requestOptions)
+            .then(response => response.json())
+            .then(json => {
+                document.getElementById("saveBtn").innerHTML = `Book Trip`
+                if (json) {
+                    Swal.fire({
+                        title: 'Trip Book Successfully!',
+                        icon: 'success',
+                        showDenyButton: false,
+                        showCancelButton: false,
+                        confirmButtonText: 'Ok',
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            $("#saveBtn").disabled = false;
+                            location.replace("@Url.Action("BookingHistory","User")?U_Id=" + userID)
+                        }
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
+                }
+            })
+    }
+</script>

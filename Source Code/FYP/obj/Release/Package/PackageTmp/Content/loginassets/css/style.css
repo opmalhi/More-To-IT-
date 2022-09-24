@@ -1,0 +1,50 @@
+.paper-card{
+	border-radius: 20px !important;
+	animation: 2s ease-out 0s 1 onloadpop;
+	opacity: 0.85;
+}
+
+.height-full{
+	background-image: linear-gradient(rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50)), url('bckg.jpg');
+	background-size: 100% 100%;
+}
+
+.roundlogo{
+	background-color: white;
+	height: 165px;
+	width: 165px;
+	border: 3px solid black;
+	border-radius: 100px;
+	margin: auto;
+}
+
+.check-pass{
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+.btn {
+    background-color: #ffa500;
+}
+
+@keyframes onloadpop{
+	100%{
+		transform: translateY(0);
+	}
+
+	0%{
+		transform: translateY(100%);
+	}
+}
+form i {
+    margin-left: -30px;
+    cursor: pointer;
+}
+input {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    outline: none;
+    width: 100%;
+    border: solid 1px #ccc;
+}

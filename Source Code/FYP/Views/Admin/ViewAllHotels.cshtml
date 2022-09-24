@@ -1,0 +1,213 @@
+﻿@model List<FYP.Models.HotelMapModel>
+@{
+    ViewBag.Title = "ViewAllHotel";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<style>
+    tbody tr:hover {
+        cursor: pointer;
+    }
+
+    .modal-body {
+        padding: 0;
+    }
+
+    .img {
+        resize: both;
+        width: 100%;
+        /*height: 435px;*/
+    }
+
+    .modal-content {
+        height: auto !important;
+    }
+
+    .carousel .carousel-inner .carousel-item {
+        height: auto !important;
+    }
+
+    /*.carousel-item {
+        display: block;
+        width: auto;
+        max-height: 100%
+    }*/
+</style>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img id="hotelImage" onclick="openImageInTab(this)" >
+                                </div>
+                                <div class="carousel-item">
+                                    <img id="hotelImage1" onclick="openImageInTab(this)" >
+
+                                </div>
+                                <div class="carousel-item">
+                                    <img id="hotelImage2" onclick="openImageInTab(this)" >
+                                </div>
+                                <div class="carousel-item">
+                                    <img id="hotelImage3" onclick="openImageInTab(this)" >
+                                </div>
+                            </div>
+                        </div>
+                        @*<img id="placeImage" style="width:100%; height:435px;" onclick="openImageInTab(this)" />*@
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div style="padding:25px;">
+                            <label>Hotel Name:</label>
+                            <span id="hotelName"></span><hr />
+                            <label>Price:</label>
+                            <span id="hotelPrice"></span><hr />
+                            <label>Total Rooms:</label>
+                            <span id="hotelRooms"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div style="padding:25px;">
+                            <label>Hotel Details:</label><br />
+                            <span id="hotelDetails"></span>
+                        </div>
+                    </div>
+                    @*<div class="col" style="padding-top:10px;">
+                        <div style="padding:25px;">
+                            <label>Hotel Name:</label>
+                            <span id="hotelName"></span><hr />
+                            <label>Price:</label>
+                            <span id="hotelPrice"></span><hr />
+                            <label>Total Rooms:</label>
+                            <span id="hotelRooms"></span><hr />
+                            <label>Hotel Details:</label><br />
+                            <span id="hotelDetails"></span>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="db-breadcrumb">
+        <h4 class="breadcrumb-title">Hotels</h4>
+        <ul class="db-breadcrumb-list">
+            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            <li>View all Hotel</li>
+        </ul>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-12 m-b30">
+            <div class="widget-box">
+                <div class="wc-title">
+                    <h4>Hotels</h4>
+                </div>
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" style="width:100%;" cellspacing="0">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th class="d-none">Hotel ID</th>
+                                        <th>Hotel</th>
+                                        <th>City</th>
+                                        <th>Total Rooms</th>
+                                        <th>Available Rooms</th>
+                                        @*<th>Modify</th>*@
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr class="text-center" onclick="hotelDetails(this)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <td class="d-none">@item.Id</td>
+                                            <td>@item.Name</td>
+                                            <td>@item.City</td>
+                                            <td>@item.Rooms</td>
+                                            <td>@item.Available_Rooms</td>
+                                            @*<td>@Html.ActionLink("Update", "UpdateHotel", "Admin", new { Hotel_Id = @item.Id }, new { @class = "btn " })</td>*@
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ttr-overlay"></div>
+
+<script src="~/Content/assetstable/vendor/jquery/jquery.min.js"></script>
+<script src="~/Content/assetstable/vendor/datatables/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.noConflict();
+        var table = $('#dataTable').DataTable();
+    });</script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Content/assetstable/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="~/Content/assetstable/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+
+<script>
+    fetch('https://hotelline.herokuapp.com/api/v1/hotel/gethotel')
+        .then(response => response.json())
+        .then(json => console.log(json))
+
+    function openImageInTab(data) {
+        var img = $(data).attr('src');
+        window.open(img, "_blank");
+    }
+
+
+    function hotelDetails(data) {
+        var value = $(data).closest('tr').children('td:first').text();
+        console.log(value);
+
+        $.get("/Admin/HotelDetails/" + value, function (data) {
+            let imgStr = data.hotelDetail.Picture;
+            var stringArray = imgStr.split(/(\s+)/);
+            let img = stringArray[2];
+            let img1 = stringArray[4];
+            let img2 = stringArray[6];
+            let img3 = stringArray[8];
+            let result = img.replace("~/", "");
+            result = result.replace(",", "");
+            let result1 = img1.replace("~/", "");
+            result1 = result1.replace(",", "");
+            let result2 = img2.replace("~/", "");
+            result2 = result2.replace(",", "");
+            let result3 = img3.replace("~/", "");
+            result3 = result3.replace(",", "");
+            $("#hotelImage").attr("src", "http://localhost:53010/" + result);
+            $("#hotelImage1").attr("src", "http://localhost:53010/" + result1);
+            $("#hotelImage2").attr("src", "http://localhost:53010/" + result2);
+            $("#hotelImage3").attr("src", "http://localhost:53010/" + result3);
+            $("#hotelName").text(data.hotelDetail.Name);
+            $("#hotelPrice").text(data.hotelDetail.Price);
+            $("#hotelRooms").text(data.hotelDetail.Rooms);
+            $("#hotelDetails").text(data.hotelDetail.Details);
+        });
+
+    }
+</script>
+
+
+
+
+

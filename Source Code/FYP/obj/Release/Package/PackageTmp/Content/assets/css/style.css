@@ -1,0 +1,115 @@
+.navbar {
+    transition: all 0.4s;
+}
+
+    .navbar .nav-link {
+        color: #fff;
+    }
+
+        .navbar .nav-link:hover,
+        .navbar .nav-link:focus {
+            color: #fff;
+            text-decoration: none;
+        }
+
+    .navbar .navbar-brand {
+        color: #fff;
+        margin-right: 300px;
+    }
+
+
+    .navbar.active {
+        background: #fff;
+        box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .navbar.active .nav-link {
+            color: #555;
+        }
+
+            .navbar.active .nav-link:hover,
+            .navbar.active .nav-link:focus {
+                color: #555;
+                text-decoration: none;
+            }
+
+        .navbar.active .navbar-brand {
+            color: #555;
+        }
+
+
+@media (max-width: 991.98px) {
+    .navbar {
+        background: #fff;
+    }
+
+        .navbar .navbar-brand, .navbar .nav-link {
+            color: #555;
+        }
+}
+
+.text-small {
+    font-size: 0.9rem !important;
+}
+
+
+.intro {
+    min-height: 110vh;
+    background-color: #4ca1af;
+    background-image: url('../../Image/backgd.webp');
+    background-size:100% 100%;
+}
+
+.nav-item {
+    margin-left: 50px;
+}
+
+.hero-text h1 {
+    color: #fff;
+    font-size: 60px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 0px;
+
+    margin-top: 0px;
+    font-family: 'Quicksand';
+    line-height: normal;
+}
+
+.hero-text p {
+    color: #fff;
+    font-size: 15px;
+    margin-bottom: 40px;
+}
+
+.w3-display-bottommiddle {
+    position: absolute;
+    left: 50%;
+    /* bottom: 0; */
+    transform: translate(-50%,0%);
+    /*-ms-transform: translate(-50%,0%);*/
+}
+
+#about {
+   background-color: #F1F8FF;
+}
+
+.btn {
+    margin-top:20px;
+}
+
+.service {
+    background: #fafafa none repeat scroll 0 0;
+    margin-bottom: 40px;
+    transition: all 0.4s ease 0s;
+    padding: 65px 25px 45px;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: .5s;
+    border: 1px solid rgba(0,0,0,0.06)
+}
+
+.#navBtn {
+    color: white;
+    border-color: #212529;
+}

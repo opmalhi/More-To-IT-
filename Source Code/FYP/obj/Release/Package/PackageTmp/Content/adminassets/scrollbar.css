@@ -1,0 +1,52 @@
+
+/*Scroll-Bar*/
+.ttr-sidebar-navi {
+    max-height: calc(100vh - 9rem);
+    /*overflow-y: auto;*/
+}
+
+#myprofileid:hover {
+    background-color: lightgrey !important;
+}
+
+.ttr-header-submenu ul li a:hover{
+    background-color: lightgrey !important;
+}
+.nameandpic{
+    display: inline-flex !important;
+}
+.ttr-user-avatar{
+    height:45px !important;
+    width: 45px !important;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 13px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #efefef;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  border-radius: 20px;
+  border: 3px solid #efefef;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: grey;
+  border-radius: 20px;
+  border: 3px solid #efefef;
+}
+
+.ttr-sidebar-navi a
+{
+ font-weight: 500;
+}
+
+.ttr-material-button:hover
+{
+	background-color: lightgrey  !important ;
+	color: #212121 !important;
+}

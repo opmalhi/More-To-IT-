@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>More To It!</title>
+    <link rel="icon" href="/Content/loginassets/img/dummy/suitcase.png" type="image/x-icon"/>
+    <link href="~/Content/swiper-bundle.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    @*<link href="~/Content/bootstrap/bootstrap.min.css" rel="stylesheet" />*@
+    @*<link href="~/Content/font-awesome.min.css" rel="stylesheet" />*@
+    @*<link href="~/Content/assets/css/style.css" rel="stylesheet" />*@
+    <link href="~/Content/all.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+
+    <style>
+
+        .nameandpic {
+            display: inline-flex !important;
+        }
+
+        .ttr-user-avatar {
+            display: block;
+            width: 45px;
+            height: 45px;
+            border-radius: 100%;
+            overflow: hidden;
+        }
+
+        a {
+            text-decoration: none !important;
+        }
+
+            a:hover {
+                color: #555 !important; 
+            }
+
+        .dropdown-toggle::after {
+            color:white;
+            font-size:1.6rem;
+        }
+        
+        /*.dropdown-toggle:hover{
+            color:#ffa500 !important;
+        }*/
+
+        .navbar-nav .dropdown-menu {
+            font-size: 1.5rem;
+        }
+
+        span .username:hover {
+            color: #ffa500 !important;
+        }
+
+        .dropdown-menu {
+            width:150px;
+            margin-left:50px !important;
+        }
+
+        #loginBtn {
+            font-weight: 900;
+            border-radius: 5px;
+            float: right;
+            margin: 0 !important;
+            padding: 5px 20px;
+            font-size: 16px;
+            background-color: #ffa500;
+            /*border: none;*/
+            color: white;
+        }
+
+            #loginBtn:hover {
+               /* background: rgba(255, 165, 0,.2);
+                color: white;
+                border-color: #ffa500;*/
+               opacity:0.7;
+               color:white !important;
+            }
+
+    </style>
+</head>
+<body>
+
+    <header>
+
+        <div id="menu-bar" class="fas fa-bars"></div>
+
+        <a href="http://localhost:53010/" class="logo"><span>M</span>ore <span>T</span>o <span>I</span>t<span>!</span> </a>
+
+        <nav class="navbar">
+            <a href="http://localhost:53010/">home</a>
+            <a href="http://localhost:53010/#book">book</a>
+            <a href="http://localhost:53010/#packages">packages</a>
+            <a href="http://localhost:53010/#services">services</a>
+            <a href="http://localhost:53010/#gallery">gallery</a>
+            @*<a href="http://localhost:53010/#review">review</a>*@
+            <a href="http://localhost:53010/#career">Career</a>
+        </nav>
+        @if (Request.IsAuthenticated)
+        {
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                
+                        <span class="nameandpic">
+                            <span class="ttr-user-avatar">
+                                @*<img alt="" src="@Url.Content(Session["UserImage"].ToString())" width="45" height="45">*@
+                                <i class="fas fa-user-circle mx-2 my-auto text-white" style="font-size:40px;"></i>
+                            </span>
+                            
+                            <span class="username" style="margin-top:12px !important; margin-left:10px !important; color:white; font-size:1.6rem;"><strong class="my-auto">@Session["Full_Name"]</strong></span>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                @Html.ActionLink(" My Profile", "UpdateUser", "User", new { U_Id = Session["U_Id"] }, new { @id = "myprofileid", @class = "fas fa-user dropdown-item" })
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                @Html.ActionLink(" Bookings", "BookingHistory", "User", new { U_Id = Session["U_Id"] }, new { @id = "bookingid", @class = "fas fa-history dropdown-item" })
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-danger" href="@Url.Action("UserLogout","Home")">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        }
+        else
+        {
+            <div class="icons">
+                @*<i class="fas fa-search" id="search-btn"></i>*@
+                <a href="/Login/UserLogin" id="loginBtn">Login</a>
+            </div>
+        }
+    </header>
+
+    <!--<div class="login-form-container">
+
+        <i class="fas fa-times" id="form-close"></i>
+
+        <form action="">
+            <h3>login</h3>
+            <input type="email" class="box" placeholder="enter your email">
+            <input type="password" class="box" placeholder="enter your password">
+            <input type="submit" value="login now" class="btn">
+            <input type="checkbox" id="remember">
+            <label for="remember">remember me</label>-->
+    @*<p>forget password? <a href="#">click here</a></p>*@
+    <!--<p>don't have and account? <a href="#" id="signup">register now</a></p>
+        </form>
+
+    </div>-->
+
+    @RenderBody()
+
+    <section class="footer">
+
+        <footer class="bg-dark text-center" style="color:white; font-size:1.5rem; text-align:center;">
+            <div style="background-color: rgba(0, 0, 0, 0.2);">
+                © 2022 Copyright:
+                <a style="color:white;" href="http://localhost:53010/">More To IT!</a>
+            </div>
+        </footer>
+    </section>
+
+    @*<script src="~/Content/adminassets/assets/js/admin.js"></script>*@
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.js"></script>
+    <script src="~/Content/swiper-bundle.min.js"></script>
+    <script src="~/Content/script.js"></script>
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+﻿@model FYP.Models.HotelModel
+@{
+    ViewBag.Title = "AddHotel";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .p1-image {
+        position: absolute;
+        top: 191px;
+        right: 380px;
+        color: #666666;
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    }
+
+    .p2-image {
+        position: absolute;
+        top: 112px;
+        right: 119px;
+        color: #666666;
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    }
+
+    .p3-image {
+        position: absolute;
+        top: 112px;
+        right: 307px;
+        color: #666666;
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    }
+
+    #preview {
+        height: 235px;
+    }
+
+    img {
+        height: 235px;
+        width: 400px;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="db-breadcrumb">
+        <h4 class="breadcrumb-title">Add Hotel</h4>
+        <ul class="db-breadcrumb-list">
+            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            <li>Add Hotel</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 m-b30">
+        <div class="widget-box">
+            <div class="wc-title">
+                <h4>Add Hotel</h4>
+            </div>
+            <div class="widget-inner">
+
+                @using (Html.BeginForm("AddHotel", "Admin", FormMethod.Post, new { @class = "edit-profile m-b30", enctype = "multipart/form-data" }))
+                {
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <div class="width-box">
+                                <div class="wc-title">
+                                    <h3>Hotel Images:</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="packImage" style="overflow: hidden; width: 400px; height: 235px; border: 8px solid rgba(171, 168, 168, 0.66);">
+                                        <div id="preview"></div>
+                                    </div>
+                                    <div class="p1-image">
+                                        <i class="fa fa-camera upload-button"></i>
+                                        <input id="file" type="file" multiple class="file-upload" name="ImageFile">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="packImage" style="overflow: hidden; width: 400px; height: 235px; border: 8px solid rgba(171, 168, 168, 0.66);">
+                                        <div id="preview1"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="packImage" style="overflow: hidden; width: 400px; height: 235px; border: 8px solid rgba(171, 168, 168, 0.66);">
+                                        <div id="preview2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="packImage" style="overflow: hidden; width: 400px; height: 235px; border: 8px solid rgba(171, 168, 168, 0.66);">
+                                        <div id="preview3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <div class="width-box">
+                                <div class="wc-title">
+                                    <h3>Hotel Details:</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">City Name</label>
+                        <div class="col-sm-7">
+                            @Html.DropDownListFor(model => model.City_Id, ViewBag.City as SelectList, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <div class="width-box">
+                                <div class="wc-title">
+                                    <h3>Hotel Details:</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Hotel Name</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Name, new { @Class = "form-control", placeholder = "Hotel Name" })
+                            @Html.ValidationMessageFor(x => x.Name, null, new { style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Hotel Details</label>
+                        <div class="col-sm-7">
+                            @Html.TextAreaFor(x => x.Details, new { @Class = "form-control", placeholder = "Hotel Details" })
+                            @Html.ValidationMessageFor(x => x.Details, null, new { style = "color:red" })
+                        </div>
+                    </div>
+                
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Total Rooms</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Rooms, new { @Class = "form-control", placeholder = "Total Rooms", type="number" })
+                            @Html.ValidationMessageFor(x => x.Rooms, null, new { style = "color:red" })
+                        </div>
+                    </div>
+                
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Available Rooms</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Available_Rooms, new { @Class = "form-control", placeholder = "Available Rooms", type="number" })
+                            @Html.ValidationMessageFor(x => x.Available_Rooms, null, new { style = "color:red" })
+                        </div>
+                    </div>
+                
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Price</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Price, new { @Class = "form-control", placeholder = "Price", type="number" })
+                            @Html.ValidationMessageFor(x => x.Price, null, new { style = "color:red" })
+                        </div>
+                    </div>
+                
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Ratings</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Rating, new { @Class = "form-control", placeholder = "Rating", type="number" })
+                            @Html.ValidationMessageFor(x => x.Rating, null, new { style = "color:red" })
+                        </div>
+                    </div>
+
+                   
+
+                    @helper button(string type, string value, string clas = "btn")
+                    {
+                        /**/
+                        <input type="@type" value="@value" class="@clas" />
+                    }
+
+                    <div class="row">
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-sm-7">
+                            <button type="submit" class="btn">Add Hotel</button>
+                            <button type="reset" class="btn-secondry">Cancel</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ttr-overlay"></div>
+<script src="~/Content/adminassets/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+    function previewImages() {
+
+        var preview = document.querySelector('#preview');
+
+        if (this.files) {
+            [].forEach.call(this.files, readAndPreview);
+        }
+
+        function readAndPreview(file) {
+            debugger
+            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
+                return alert(file.name + " is not an image");
+            }
+
+            var reader = new FileReader();
+
+            reader.addEventListener("load", function () {
+                var image = new Image();
+
+                image.title = file.name;
+                image.src = this.result;
+                if ($("#preview img").length == 0) {
+                    image.height = '315px';
+                    preview.appendChild(image);
+                }
+                else if ($("#preview1 img").length == 0) {
+                    preview1.appendChild(image);
+                } else if ($("#preview2 img").length == 0) {
+                    preview2.appendChild(image);
+                } else if ($("#preview3 img").length == 0) {
+                    preview3.appendChild(image);
+                }
+            });
+
+            reader.readAsDataURL(file);
+
+        }
+
+    }
+
+    document.querySelector('#file').addEventListener("change", previewImages);
+
+    $(".upload-button").on('click', function () {
+        $(".file-upload").click();
+    });
+
+</script>
+
+
+

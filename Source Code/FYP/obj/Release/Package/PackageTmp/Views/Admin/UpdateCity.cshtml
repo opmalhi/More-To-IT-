@@ -1,0 +1,297 @@
+﻿@model FYP.Models.AddCityModel
+@{
+    ViewBag.Title = "Update City";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
+<style>
+
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+
+    .p1-image {
+        position: absolute;
+        top: 191px;
+        right: 395px;
+        color: #666666;
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    }
+
+    .p2-image {
+        position: absolute;
+        top: 112px;
+        right: 119px;
+        color: #666666;
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    }
+
+    .p3-image {
+        position: absolute;
+        top: 112px;
+        right: 307px;
+        color: #666666;
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    }
+
+    #pickUpbtn {
+        background-color: #EFBB20 !important;
+        color: white;
+    }
+
+    #preview {
+        height: 235px;
+    }
+
+    img {
+        height: 235px;
+        width: 400px;
+    }
+
+    sup {
+        color: red;
+        font-size: 15px;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="db-breadcrumb">
+        <h4 class="breadcrumb-title">Update City</h4>
+        <ul class="db-breadcrumb-list">
+            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            <li> City</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 m-b30">
+        <div class="widget-box">
+            <div class="wc-title">
+                <h4>Update City</h4>
+            </div>
+            <div class="widget-inner">
+
+                @using (Html.BeginForm("UpdateCity", "Admin", FormMethod.Post, new { @class = "edit-profile m-b30", enctype = "multipart/form-data" }))
+                {
+
+                    @Html.HiddenFor(x => x.City_ID)
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <div class="width-box">
+                                <div class="wc-title">
+                                    <h3>City Images:</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="packImage" style="overflow: hidden; width: 400px; height: 235px; border: 8px solid rgba(171, 168, 168, 0.66);">
+                                        <div id="preview">
+                                            <img class="profile-pic" src="@Url.Content(Model.City_Picture1)">
+                                            @Html.HiddenFor(x => x.City_Picture1)
+                                        </div>
+                                    </div>
+                                    @*<div class="p1-image">
+                                        <i class="fa fa-camera upload-button"></i>
+                                        <input id="file" type="file" multiple class="file-upload" name="ImageFile">
+                                    </div>*@
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="packImage" style="overflow: hidden; width: 400px; height: 235px; border: 8px solid rgba(171, 168, 168, 0.66);">
+                                        <div id="preview1">
+                                            <img class="profile-pic" src="@Url.Content(Model.City_Picture2)">
+                                            @Html.HiddenFor(x => x.City_Picture2)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="packImage" style="overflow: hidden; width: 400px; height: 235px; border: 8px solid rgba(171, 168, 168, 0.66);">
+                                        <div id="preview2">
+                                            <img class="profile-pic" src="@Url.Content(Model.City_Picture3)">
+                                            @Html.HiddenFor(x => x.City_Picture3)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="packImage" style="overflow: hidden; width: 400px; height: 235px; border: 8px solid rgba(171, 168, 168, 0.66);">
+                                        <div id="preview3">
+                                            <img class="profile-pic" src="@Url.Content(Model.City_Picture4)">
+                                            @Html.HiddenFor(x => x.City_Picture4)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <div class="width-box">
+                                <div class="wc-title">
+                                    <h3>City Details:</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">City Name<sup>*</sup></label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.City_Name, null, new { @Class = "form-control", placeholder = "City Name" })
+                            @Html.ValidationMessageFor(x => x.City_Name, null, new { style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">City Details<sup>*</sup></label>
+                        <div class="col-sm-7">
+                            @Html.TextAreaFor(x => x.City_Details, new { @Class = "form-control", placeholder = "City Details" })
+                            @Html.ValidationMessageFor(x => x.City_Details, null, new { style = "color:red" })
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <div class="width-box">
+                                <div class="wc-title">
+                                    <h3>City Co-Ordinates:</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Pin City Location<sup>*</sup></label>
+                        <div class="col-sm-7">
+                            <div id="map"></div>
+                            <br>
+                            <a class="btn btn-sm" id="pickUpbtn" onclick="getCoordinates()">Confirm Coordinates</a>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Latitude</label>
+                        <div class="col-sm-7">
+                            @Html.HiddenFor(x => x.Latitude)
+                            @Html.TextBoxFor(x => x.Latitude, null, new { id = "Latid", @Class = "form-control", placeholder = "Latitude", disabled = "disabled" })
+                            @Html.ValidationMessageFor(x => x.Latitude, null, new { style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Longitude</label>
+                        <div class="col-sm-7">
+                            @Html.HiddenFor(x => x.Longitude)
+                            @Html.TextBoxFor(x => x.Longitude, null, new { id = "Longid", @Class = "form-control", placeholder = "Longitude", disabled = "disabled" })
+                            @Html.ValidationMessageFor(x => x.Longitude, null, new { style = "color:red" })
+
+                        </div>
+                    </div>
+
+                    @helper button(string type, string value, string clas = "btn")
+                    {
+                        /**/
+                        <input type="@type" value="@value" class="@clas" />
+                    }
+
+                    <div class="row">
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-sm-7">
+                            <button type="submit" class="btn">Update City</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ttr-overlay"></div>
+
+<script src="~/Content/adminassets/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+    function previewImages() {
+
+        var preview = document.querySelector('#preview');
+
+        if (this.files) {
+            [].forEach.call(this.files, readAndPreview);
+        }
+
+        function readAndPreview(file) {
+            debugger
+            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
+                return alert(file.name + " is not an image");
+            }
+
+            var reader = new FileReader();
+
+            reader.addEventListener("load", function () {
+                var image = new Image();
+
+                image.title = file.name;
+                image.src = this.result;
+                if ($("#preview img").length == 0) {
+                    image.height = '315px';
+                    preview.appendChild(image);
+                }
+                else if ($("#preview1 img").length == 0) {
+                    preview1.appendChild(image);
+                } else if ($("#preview2 img").length == 0) {
+                    preview2.appendChild(image);
+                } else if ($("#preview3 img").length == 0) {
+                    preview3.appendChild(image);
+                }
+            });
+
+            reader.readAsDataURL(file);
+
+        }
+
+    }
+
+    document.querySelector('#file').addEventListener("change", previewImages);
+
+    $(".upload-button").on('click', function () {
+        $(".file-upload").click();
+    });
+
+    var onClickPositionView = document.getElementById('onClickPositionView');
+    var onIdlePositionView = document.getElementById('onIdlePositionView');
+
+    var lp = new locationPicker('map', {
+        setCurrentPosition: true,
+    }, {
+        zoom: 10,
+        center: new google.maps.LatLng(@Model.Latitude, @Model.Longitude)
+        });
+
+    function getCoordinates() {
+        var location = lp.getMarkerPosition();
+        document.getElementById("Latitude").value = location.lat
+        document.getElementById("Latid").value = location.lat
+        document.getElementById("Longitude").value = location.lng
+        document.getElementById("Longid").value = location.lng
+    };
+
+
+</script>
+
+
+

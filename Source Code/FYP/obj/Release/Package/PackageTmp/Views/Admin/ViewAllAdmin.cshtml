@@ -1,0 +1,83 @@
+﻿@model List<FYP.Models.CreateAdminModel>
+
+@{
+    ViewBag.Title = "ViewAllAdmin";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div class="container-fluid">
+    <div class="db-breadcrumb">
+        <h4 class="breadcrumb-title">Users</h4>
+        <ul class="db-breadcrumb-list">
+            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            <li>View all Users</li>
+        </ul>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-12 m-b30">
+            <div class="widget-box">
+                <div class="wc-title">
+                    <h4>List Views Users</h4>
+                </div>
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" style="width:100%;" cellspacing="0">
+                                <thead>
+                                    <tr class="text-center">
+                                        @*<th>User ID</th>*@
+                                        <th>Full Name</th>
+                                        <th>Father Name</th>
+                                        <th>NIC</th>
+                                        <th>Gender</th>
+                                        <th>Active</th>
+                                        <th>Modify</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr class="text-center">
+                                            @*<td>@item.User_ID</td>*@
+                                            <td>@item.Full_Name</td>
+                                            <td>@item.Father_Name</td>
+                                            <td>@item.NIC</td>
+                                            <td>@item.Gender</td>
+                                            <td class="text-center">
+                                                <label class="switch">
+                                                    <input type="checkbox" id="switchId">
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </td>
+                                            <td>@Html.ActionLink("Update", "UpdateAdmin", "Admin", new { User_ID = @item.User_ID }, new { @class = "btn " })</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ttr-overlay"></div>
+
+<script src="~/Content/assetstable/vendor/jquery/jquery.min.js"></script>
+<script src="~/Content/assetstable/vendor/datatables/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.noConflict();
+        var table = $('#dataTable').DataTable();
+    });</script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Content/assetstable/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="~/Content/assetstable/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+
+

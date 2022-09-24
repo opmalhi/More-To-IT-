@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f1f10179fb344f79a3a60074c37fb4db" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="MoreToIt_DatabaseModel.Admin" Width="1.5" PointX="7.75" PointY="10.75" />
+        <EntityTypeShape EntityType="MoreToIt_DatabaseModel.Booking" Width="1.5" PointX="5.25" PointY="6.25" />
+        <EntityTypeShape EntityType="MoreToIt_DatabaseModel.City" Width="1.5" PointX="7.75" PointY="4.875" />
+        <EntityTypeShape EntityType="MoreToIt_DatabaseModel.FamousPlace" Width="1.5" PointX="10" PointY="6.875" />
+        <EntityTypeShape EntityType="MoreToIt_DatabaseModel.GuiderReview" Width="1.5" PointX="3" PointY="13.375" />
+        <EntityTypeShape EntityType="MoreToIt_DatabaseModel.Hotel" Width="1.5" PointX="10" PointY="3.25" />
+        <EntityTypeShape EntityType="MoreToIt_DatabaseModel.PackageReview" Width="1.5" PointX="5.25" PointY="12.375" />
+        <EntityTypeShape EntityType="MoreToIt_DatabaseModel.Package" Width="1.5" PointX="3" PointY="5.875" />
+        <EntityTypeShape EntityType="MoreToIt_DatabaseModel.PickUpLocation" Width="1.5" PointX="9.75" PointY="10.75" />
+        <EntityTypeShape EntityType="MoreToIt_DatabaseModel.TourGuider" Width="1.5" PointX="0.75" PointY="6.375" />
+        <EntityTypeShape EntityType="MoreToIt_DatabaseModel.Transaction" Width="1.5" PointX="3" PointY="16.375" />
+        <EntityTypeShape EntityType="MoreToIt_DatabaseModel.User" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MoreToIt_DatabaseModel.Vehicle" Width="1.5" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="MoreToIt_DatabaseModel.VehicleReview" Width="1.5" PointX="3" PointY="20.375" />
+        <AssociationConnector Association="MoreToIt_DatabaseModel.FK__Bookings__Packag__32E0915F" />
+        <AssociationConnector Association="MoreToIt_DatabaseModel.FK__Bookings__U_Id__31EC6D26" />
+        <AssociationConnector Association="MoreToIt_DatabaseModel.FK_Bookings_Transactions" />
+        <AssociationConnector Association="MoreToIt_DatabaseModel.City_Id" />
+        <AssociationConnector Association="MoreToIt_DatabaseModel.FK__FamousPla__City___35BCFE0A" />
+        <AssociationConnector Association="MoreToIt_DatabaseModel.FK__GuiderRev__Guide__6C190EBB" />
+        <AssociationConnector Association="MoreToIt_DatabaseModel.FK__PackageRe__Packa__6A30C649" />
+        <AssociationConnector Association="MoreToIt_DatabaseModel.FK__Packages__Guider__6EF57B66" />
+        <AssociationConnector Association="MoreToIt_DatabaseModel.FK__Packages__Vehicl__6E01572D" />
+        <AssociationConnector Association="MoreToIt_DatabaseModel.FK__Transacti__Custo__02FC7413" />
+        <AssociationConnector Association="MoreToIt_DatabaseModel.FK__VehicleRe__Vehic__6D0D32F4" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

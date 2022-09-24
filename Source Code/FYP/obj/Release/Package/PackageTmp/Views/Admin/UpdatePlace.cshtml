@@ -1,0 +1,237 @@
+﻿@model FYP.Models.AddFamousPlaceModel
+@{
+    ViewBag.Title = "Update Place";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<style>
+    .p1-image {
+        position: absolute;
+        top: 191px;
+        right: 395px;
+        color: #666666;
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    }
+
+    .p2-image {
+        position: absolute;
+        top: 112px;
+        right: 119px;
+        color: #666666;
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    }
+
+    .p3-image {
+        position: absolute;
+        top: 112px;
+        right: 307px;
+        color: #666666;
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    }
+
+    #preview {
+        height: 235px;
+    }
+
+    img {
+        height: 235px;
+        width: 400px;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="db-breadcrumb">
+        <h4 class="breadcrumb-title">Update Place</h4>
+        <ul class="db-breadcrumb-list">
+            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            <li> Place</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 m-b30">
+        <div class="widget-box">
+            <div class="wc-title">
+                <h4>Update Place</h4>
+            </div>
+            <div class="widget-inner">
+
+                @using (Html.BeginForm("UpdatePlace", "Admin", FormMethod.Post, new { @class = "edit-profile m-b30", enctype = "multipart/form-data" }))
+                {
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <div class="width-box">
+                                <div class="wc-title">
+                                    <h3>Place Images:</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="packImage" style="overflow: hidden; width: 400px; height: 235px; border: 8px solid rgba(171, 168, 168, 0.66);">
+                                        <div id="preview">
+                                            <img class="profile-pic" src="@Url.Content(Model.Place_Pic4)"/>
+                                            @Html.HiddenFor(x=>x.Place_Pic1)
+                                        </div>
+                                    </div>
+                                    @*<div class="p1-image">
+                                        <i class="fa fa-camera upload-button"></i>
+                                        <input id="file" type="file" multiple class="file-upload" name="ImageFile">
+                                    </div>*@
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="packImage" style="overflow: hidden; width: 400px; height: 235px; border: 8px solid rgba(171, 168, 168, 0.66);">
+                                        <div id="preview1">
+                                            <img class="profile-pic" src="@Url.Content(Model.Place_Pic1)" />
+                                            @Html.HiddenFor(x => x.Place_Pic2)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="packImage" style="overflow: hidden; width: 400px; height: 235px; border: 8px solid rgba(171, 168, 168, 0.66);">
+                                        <div id="preview2">
+                                            <img class="profile-pic" src="@Url.Content(Model.Place_Pic2)" />
+                                            @Html.HiddenFor(x => x.Place_Pic3)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="packImage" style="overflow: hidden; width: 400px; height: 235px; border: 8px solid rgba(171, 168, 168, 0.66);">
+                                        <div id="preview3">
+                                            <img class="profile-pic" src="@Url.Content(Model.Place_Pic3)" />
+                                            @Html.HiddenFor(x => x.Place_Pic4)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <div class="width-box">
+                                <div class="wc-title">
+                                    <h3>City Details:</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">City Name</label>
+                        <div class="col-sm-7">
+                            @Html.DropDownListFor(model => model.City_ID, ViewBag.City as SelectList, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <div class="width-box">
+                                <div class="wc-title">
+                                    <h3>Place Details:</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Place Name</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Place_Name, new { @Class = "form-control", placeholder = "Place Name" })
+                            @Html.ValidationMessageFor(x => x.Place_Name, null, new { style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Place Details</label>
+                        <div class="col-sm-7">
+                            @Html.TextAreaFor(x => x.Place_Details, new { @Class = "form-control", placeholder = "Place Details" })
+                            @Html.ValidationMessageFor(x => x.Place_Details, null, new { style = "color:red" })
+                        </div>
+                    </div>
+
+                    @helper button(string type, string value, string clas = "btn")
+                    {
+                        /**/
+                        <input type="@type" value="@value" class="@clas" />
+                    }
+
+                    <div class="row">
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-sm-7">
+                            <button type="submit" class="btn">Update Place</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ttr-overlay"></div>
+<script src="~/Content/adminassets/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+    function previewImages() {
+
+        var preview = document.querySelector('#preview');
+
+        if (this.files) {
+            [].forEach.call(this.files, readAndPreview);
+        }
+
+        function readAndPreview(file) {
+            debugger
+            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
+                return alert(file.name + " is not an image");
+            }
+
+            var reader = new FileReader();
+
+            reader.addEventListener("load", function () {
+                var image = new Image();
+
+                image.title = file.name;
+                image.src = this.result;
+                if ($("#preview img").length == 0) {
+                    image.height = '315px';
+                    preview.appendChild(image);
+                }
+                else if ($("#preview1 img").length == 0) {
+                    preview1.appendChild(image);
+                } else if ($("#preview2 img").length == 0) {
+                    preview2.appendChild(image);
+                } else if ($("#preview3 img").length == 0) {
+                    preview3.appendChild(image);
+                }
+            });
+
+            reader.readAsDataURL(file);
+
+        }
+
+    }
+
+    document.querySelector('#file').addEventListener("change", previewImages);
+
+    $(".upload-button").on('click', function () {
+        $(".file-upload").click();
+    });
+
+</script>
+
+
+

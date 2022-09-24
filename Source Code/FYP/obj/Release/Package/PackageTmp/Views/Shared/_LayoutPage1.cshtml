@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>More To It!</title>
+
+    <link href="~/Content/swiper-bundle.min.css" rel="stylesheet" />
+    @*<link href="~/Content/bootstrap/bootstrap.min.css" rel="stylesheet" />*@
+    @*<link href="~/Content/font-awesome.min.css" rel="stylesheet" />*@
+    @*<link href="~/Content/assets/css/style.css" rel="stylesheet" />*@
+    <link href="~/Content/all.min.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+</head>
+<body>
+
+    <header>
+
+        <div id="menu-bar" class="fas fa-bars"></div>
+
+        <a href="#" class="logo"><span>M</span>ore <span>T</span>o <span>I</span>t<span>!</span> </a>
+
+        <nav class="navbar">
+            <a href="#home">home</a>
+            <a href="#book">book</a>
+            <a href="#packages">packages</a>
+            <a href="#services">services</a>
+            <a href="#gallery">gallery</a>
+            <a href="#review">review</a>
+            <a href="#contact">contact</a>
+        </nav>
+
+    </header>
+
+    @RenderBody();
+
+    <section class="footer">
+
+        <footer class="bg-dark text-center" style="color:white; font-size:1.5rem; text-align:center;">
+            <div style="background-color: rgba(0, 0, 0, 0.2);">
+                © 2022 Copyright:
+                <a style="color:white;" href="http://localhost:53010/">More To IT!</a>
+            </div>
+        </footer>
+    </section>
+
+    <script src="~/Content/swiper-bundle.min.js"></script>
+    @*<script src="~/Content/script.js"></script>*@
+</body>
+</html>

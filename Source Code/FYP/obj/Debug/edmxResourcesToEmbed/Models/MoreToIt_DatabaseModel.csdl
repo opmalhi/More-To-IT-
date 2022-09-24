@@ -1,0 +1,426 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MoreToIt_DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="MoreToIt_DatabaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Admins" EntityType="MoreToIt_DatabaseModel.Admin" />
+    <EntitySet Name="Bookings" EntityType="MoreToIt_DatabaseModel.Booking" />
+    <EntitySet Name="Citys" EntityType="MoreToIt_DatabaseModel.City" />
+    <EntitySet Name="FamousPlaces" EntityType="MoreToIt_DatabaseModel.FamousPlace" />
+    <EntitySet Name="GuiderReviews" EntityType="MoreToIt_DatabaseModel.GuiderReview" />
+    <EntitySet Name="Hotels" EntityType="MoreToIt_DatabaseModel.Hotel" />
+    <EntitySet Name="PackageReviews" EntityType="MoreToIt_DatabaseModel.PackageReview" />
+    <EntitySet Name="Packages" EntityType="MoreToIt_DatabaseModel.Package" />
+    <EntitySet Name="PickUpLocations" EntityType="MoreToIt_DatabaseModel.PickUpLocation" />
+    <EntitySet Name="TourGuiders" EntityType="MoreToIt_DatabaseModel.TourGuider" />
+    <EntitySet Name="Transactions" EntityType="MoreToIt_DatabaseModel.Transaction" />
+    <EntitySet Name="Users" EntityType="MoreToIt_DatabaseModel.User" />
+    <EntitySet Name="Vehicles" EntityType="MoreToIt_DatabaseModel.Vehicle" />
+    <EntitySet Name="VehicleReviews" EntityType="MoreToIt_DatabaseModel.VehicleReview" />
+    <AssociationSet Name="FK__Bookings__Packag__32E0915F" Association="MoreToIt_DatabaseModel.FK__Bookings__Packag__32E0915F">
+      <End Role="Package" EntitySet="Packages" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Bookings__U_Id__31EC6D26" Association="MoreToIt_DatabaseModel.FK__Bookings__U_Id__31EC6D26">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Bookings_Transactions" Association="MoreToIt_DatabaseModel.FK_Bookings_Transactions">
+      <End Role="Transaction" EntitySet="Transactions" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="City_Id" Association="MoreToIt_DatabaseModel.City_Id">
+      <End Role="City" EntitySet="Citys" />
+      <End Role="Hotel" EntitySet="Hotels" />
+    </AssociationSet>
+    <AssociationSet Name="FK__FamousPla__City___35BCFE0A" Association="MoreToIt_DatabaseModel.FK__FamousPla__City___35BCFE0A">
+      <End Role="City" EntitySet="Citys" />
+      <End Role="FamousPlace" EntitySet="FamousPlaces" />
+    </AssociationSet>
+    <AssociationSet Name="FK__GuiderRev__Guide__6C190EBB" Association="MoreToIt_DatabaseModel.FK__GuiderRev__Guide__6C190EBB">
+      <End Role="TourGuider" EntitySet="TourGuiders" />
+      <End Role="GuiderReview" EntitySet="GuiderReviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PackageRe__Packa__6A30C649" Association="MoreToIt_DatabaseModel.FK__PackageRe__Packa__6A30C649">
+      <End Role="Package" EntitySet="Packages" />
+      <End Role="PackageReview" EntitySet="PackageReviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Packages__Guider__6EF57B66" Association="MoreToIt_DatabaseModel.FK__Packages__Guider__6EF57B66">
+      <End Role="TourGuider" EntitySet="TourGuiders" />
+      <End Role="Package" EntitySet="Packages" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Packages__Vehicl__6E01572D" Association="MoreToIt_DatabaseModel.FK__Packages__Vehicl__6E01572D">
+      <End Role="Vehicle" EntitySet="Vehicles" />
+      <End Role="Package" EntitySet="Packages" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transacti__Custo__02FC7413" Association="MoreToIt_DatabaseModel.FK__Transacti__Custo__02FC7413">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Transaction" EntitySet="Transactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__VehicleRe__Vehic__6D0D32F4" Association="MoreToIt_DatabaseModel.FK__VehicleRe__Vehic__6D0D32F4">
+      <End Role="Vehicle" EntitySet="Vehicles" />
+      <End Role="VehicleReview" EntitySet="VehicleReviews" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="User_ID" />
+    </Key>
+    <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Picture" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Full_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Father_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="NIC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Contact_Number" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="UserRole" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="BookingId" />
+    </Key>
+    <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="U_Id" Type="Int32" Nullable="false" />
+    <Property Name="Package_ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CNIC" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Contact_Number" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Transaction_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Hotel_Id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="isReviewed" Type="Boolean" />
+    <Property Name="QRCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Package" Relationship="MoreToIt_DatabaseModel.FK__Bookings__Packag__32E0915F" FromRole="Booking" ToRole="Package" />
+    <NavigationProperty Name="User" Relationship="MoreToIt_DatabaseModel.FK__Bookings__U_Id__31EC6D26" FromRole="Booking" ToRole="User" />
+    <NavigationProperty Name="Transaction" Relationship="MoreToIt_DatabaseModel.FK_Bookings_Transactions" FromRole="Booking" ToRole="Transaction" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="City_ID" />
+    </Key>
+    <Property Name="City_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="City_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="City_Picture1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="City_Picture2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="City_Picture3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="City_Picture4" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="City_Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Latitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Longitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Hotels" Relationship="MoreToIt_DatabaseModel.City_Id" FromRole="City" ToRole="Hotel" />
+    <NavigationProperty Name="FamousPlaces" Relationship="MoreToIt_DatabaseModel.FK__FamousPla__City___35BCFE0A" FromRole="City" ToRole="FamousPlace" />
+  </EntityType>
+  <EntityType Name="FamousPlace">
+    <Key>
+      <PropertyRef Name="Place_ID" />
+    </Key>
+    <Property Name="Place_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="City_ID" Type="Int32" Nullable="false" />
+    <Property Name="Place_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Place_Pic1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Place_Pic2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Place_Pic3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Place_Pic4" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Place_Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="City" Relationship="MoreToIt_DatabaseModel.FK__FamousPla__City___35BCFE0A" FromRole="FamousPlace" ToRole="City" />
+  </EntityType>
+  <EntityType Name="GuiderReview">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Rating" Type="Int32" />
+    <Property Name="Review" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Guider_ID" Type="Int32" />
+    <NavigationProperty Name="TourGuider" Relationship="MoreToIt_DatabaseModel.FK__GuiderRev__Guide__6C190EBB" FromRole="GuiderReview" ToRole="TourGuider" />
+  </EntityType>
+  <EntityType Name="Hotel">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Picture" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Details" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Rating" Type="Int32" Nullable="false" />
+    <Property Name="City_Id" Type="Int32" Nullable="false" />
+    <Property Name="Rooms" Type="Int32" Nullable="false" />
+    <Property Name="Available_Rooms" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Int32" />
+    <NavigationProperty Name="City" Relationship="MoreToIt_DatabaseModel.City_Id" FromRole="Hotel" ToRole="City" />
+  </EntityType>
+  <EntityType Name="PackageReview">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Rating" Type="Int32" />
+    <Property Name="Review" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Package_ID" Type="Int32" />
+    <NavigationProperty Name="Package" Relationship="MoreToIt_DatabaseModel.FK__PackageRe__Packa__6A30C649" FromRole="PackageReview" ToRole="Package" />
+  </EntityType>
+  <EntityType Name="Package">
+    <Key>
+      <PropertyRef Name="Package_ID" />
+    </Key>
+    <Property Name="Package_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Picture" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Pick_Up_Location" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="No_of_Days" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="Cities" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Places" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TripDays" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Hotels" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Inclusions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Exclusions" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="No_of_Bookings" Type="Int32" />
+    <Property Name="Total_Seats" Type="Int32" />
+    <Property Name="IsCustomize" Type="Boolean" />
+    <Property Name="GuiderID" Type="Int32" />
+    <Property Name="VehicleID" Type="Int32" />
+    <NavigationProperty Name="Bookings" Relationship="MoreToIt_DatabaseModel.FK__Bookings__Packag__32E0915F" FromRole="Package" ToRole="Booking" />
+    <NavigationProperty Name="PackageReviews" Relationship="MoreToIt_DatabaseModel.FK__PackageRe__Packa__6A30C649" FromRole="Package" ToRole="PackageReview" />
+    <NavigationProperty Name="TourGuider" Relationship="MoreToIt_DatabaseModel.FK__Packages__Guider__6EF57B66" FromRole="Package" ToRole="TourGuider" />
+    <NavigationProperty Name="Vehicle" Relationship="MoreToIt_DatabaseModel.FK__Packages__Vehicl__6E01572D" FromRole="Package" ToRole="Vehicle" />
+  </EntityType>
+  <EntityType Name="PickUpLocation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="City" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="TourGuider">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CNIC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Contact_No" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Licence_No" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <Property Name="FilePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Img" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Age" Type="Int32" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Charge" Type="Int32" />
+    <NavigationProperty Name="GuiderReviews" Relationship="MoreToIt_DatabaseModel.FK__GuiderRev__Guide__6C190EBB" FromRole="TourGuider" ToRole="GuiderReview" />
+    <NavigationProperty Name="Packages" Relationship="MoreToIt_DatabaseModel.FK__Packages__Guider__6EF57B66" FromRole="TourGuider" ToRole="Package" />
+  </EntityType>
+  <EntityType Name="Transaction">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Amount" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <Property Name="Card_Number" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Currency" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Customer_Id" Type="Int32" />
+    <NavigationProperty Name="Bookings" Relationship="MoreToIt_DatabaseModel.FK_Bookings_Transactions" FromRole="Transaction" ToRole="Booking" />
+    <NavigationProperty Name="User" Relationship="MoreToIt_DatabaseModel.FK__Transacti__Custo__02FC7413" FromRole="Transaction" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="U_Id" />
+    </Key>
+    <Property Name="U_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Picture" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Contact_Number" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CNIC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="UserRole" Type="Int32" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Bookings" Relationship="MoreToIt_DatabaseModel.FK__Bookings__U_Id__31EC6D26" FromRole="User" ToRole="Booking" />
+    <NavigationProperty Name="Transactions" Relationship="MoreToIt_DatabaseModel.FK__Transacti__Custo__02FC7413" FromRole="User" ToRole="Transaction" />
+    <Property Name="Gender" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Vehicle">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Phone_No" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Vehicle_No" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Vehicle_Company" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Vehicle_Model" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Vehicle_Model_Year" Type="Int32" Nullable="false" />
+    <Property Name="Vehicle_Mileage" Type="Int32" Nullable="false" />
+    <Property Name="Vehicle_Pictures" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <Property Name="Rent" Type="Int32" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Vehicle_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Packages" Relationship="MoreToIt_DatabaseModel.FK__Packages__Vehicl__6E01572D" FromRole="Vehicle" ToRole="Package" />
+    <NavigationProperty Name="VehicleReviews" Relationship="MoreToIt_DatabaseModel.FK__VehicleRe__Vehic__6D0D32F4" FromRole="Vehicle" ToRole="VehicleReview" />
+  </EntityType>
+  <EntityType Name="VehicleReview">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Rating" Type="Int32" />
+    <Property Name="Review" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Vehicle_ID" Type="Int32" />
+    <NavigationProperty Name="Vehicle" Relationship="MoreToIt_DatabaseModel.FK__VehicleRe__Vehic__6D0D32F4" FromRole="VehicleReview" ToRole="Vehicle" />
+  </EntityType>
+  <Association Name="FK__Bookings__Packag__32E0915F">
+    <End Type="MoreToIt_DatabaseModel.Package" Role="Package" Multiplicity="1" />
+    <End Type="MoreToIt_DatabaseModel.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Package">
+        <PropertyRef Name="Package_ID" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="Package_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Bookings__U_Id__31EC6D26">
+    <End Type="MoreToIt_DatabaseModel.User" Role="User" Multiplicity="1" />
+    <End Type="MoreToIt_DatabaseModel.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="U_Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="U_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Bookings_Transactions">
+    <End Type="MoreToIt_DatabaseModel.Transaction" Role="Transaction" Multiplicity="0..1" />
+    <End Type="MoreToIt_DatabaseModel.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Transaction">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="Transaction_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="City_Id">
+    <End Type="MoreToIt_DatabaseModel.City" Role="City" Multiplicity="1" />
+    <End Type="MoreToIt_DatabaseModel.Hotel" Role="Hotel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="City_ID" />
+      </Principal>
+      <Dependent Role="Hotel">
+        <PropertyRef Name="City_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__FamousPla__City___35BCFE0A">
+    <End Type="MoreToIt_DatabaseModel.City" Role="City" Multiplicity="1" />
+    <End Type="MoreToIt_DatabaseModel.FamousPlace" Role="FamousPlace" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="City_ID" />
+      </Principal>
+      <Dependent Role="FamousPlace">
+        <PropertyRef Name="City_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__GuiderRev__Guide__6C190EBB">
+    <End Type="MoreToIt_DatabaseModel.TourGuider" Role="TourGuider" Multiplicity="0..1" />
+    <End Type="MoreToIt_DatabaseModel.GuiderReview" Role="GuiderReview" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TourGuider">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GuiderReview">
+        <PropertyRef Name="Guider_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PackageRe__Packa__6A30C649">
+    <End Type="MoreToIt_DatabaseModel.Package" Role="Package" Multiplicity="0..1" />
+    <End Type="MoreToIt_DatabaseModel.PackageReview" Role="PackageReview" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Package">
+        <PropertyRef Name="Package_ID" />
+      </Principal>
+      <Dependent Role="PackageReview">
+        <PropertyRef Name="Package_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Packages__Guider__6EF57B66">
+    <End Type="MoreToIt_DatabaseModel.TourGuider" Role="TourGuider" Multiplicity="0..1" />
+    <End Type="MoreToIt_DatabaseModel.Package" Role="Package" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TourGuider">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Package">
+        <PropertyRef Name="GuiderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Packages__Vehicl__6E01572D">
+    <End Type="MoreToIt_DatabaseModel.Vehicle" Role="Vehicle" Multiplicity="0..1" />
+    <End Type="MoreToIt_DatabaseModel.Package" Role="Package" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vehicle">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Package">
+        <PropertyRef Name="VehicleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transacti__Custo__02FC7413">
+    <End Type="MoreToIt_DatabaseModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="MoreToIt_DatabaseModel.Transaction" Role="Transaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="U_Id" />
+      </Principal>
+      <Dependent Role="Transaction">
+        <PropertyRef Name="Customer_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__VehicleRe__Vehic__6D0D32F4">
+    <End Type="MoreToIt_DatabaseModel.Vehicle" Role="Vehicle" Multiplicity="0..1" />
+    <End Type="MoreToIt_DatabaseModel.VehicleReview" Role="VehicleReview" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vehicle">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="VehicleReview">
+        <PropertyRef Name="Vehicle_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

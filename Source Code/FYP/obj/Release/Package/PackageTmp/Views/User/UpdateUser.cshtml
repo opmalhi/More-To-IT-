@@ -1,0 +1,269 @@
+﻿@model FYP.Models.UserModel
+@{
+    ViewBag.Title = "Update User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .p-image {
+        position: absolute;
+        top: 135px !important;
+        right: 140px !important;
+        color: #666666;
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    }
+    
+    .widget-box {
+        background-color: #fff;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        border-radius: 4px;
+        height: 100%;
+    }
+        .widget-box .wc-title h4 {
+            font-size: 18px;
+            line-height: 18px;
+            margin: 0;
+            color: #333;
+            font-weight: 500;
+        }
+
+    .widget-box .wc-title {
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        padding: 20px 30px;
+    }
+
+        .widget-box .widget-inner {
+            padding: 30px;
+        }
+
+    .widget-inner .edit-profile {
+        padding: 0;
+    }
+
+    .edit-profile .form-group {
+        margin-bottom: 15px;
+    }
+
+    .edit-profile .col-form-label {
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+    .form-control {
+        border-color: #e1e6eb;
+        box-shadow: none;
+        height: 40px;
+        font-size: 13px;
+        line-height: 20px;
+        padding: 9px 12px;
+    }
+
+    .circle {
+        border-radius: 1000px !important;
+        overflow: hidden;
+        width: 158px;
+        height: 158px;
+        border: 8px solid rgba(171, 168, 168, 0.66);
+    }
+
+    input {
+        font-size: 13px;
+        border-radius: 5px;
+        height: 40px;
+        outline: none;
+        width: 100%;
+        border: solid 1px #ccc;
+        border-color: #e1e6eb !important;
+    }
+
+    .upload-button {
+        font-size: 1.8em;
+        top: 131px !important;
+        right: 133px !important;
+    }
+
+    .file-upload {
+        display: none;
+    }
+
+    form i {
+        margin-left: -30px;
+        cursor: pointer;
+    }
+
+</style>
+
+
+<div class="row" style="margin: 120px auto 50px auto; width:1000px;">
+    <div class="col-lg-12 m-b30">
+        <div class="widget-box">
+            <div class="wc-title">
+                <h4>User Profile</h4>
+            </div>
+            <div class="widget-inner">
+
+                @using (Html.BeginForm("UpdateAdmin", "Admin", FormMethod.Post, new { @class = "edit-profile m-b30", enctype = "multipart/form-data" }))
+                {
+                    <div class="form-group row">
+                        <div class="col-sm-10  ml-auto">
+                            <div class="width-box">
+                                <div class="wc-title">
+                                    <h3>Personal Details:</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-sm-2 m-auto ">
+                        <div class="form-group row">
+                            <div class="circle">*@
+                                <!-- User Profile Image -->
+
+                                <!-- Default Image -->
+                                <!-- <i class="fa fa-user fa-5x"></i> -->
+                                @*<img class="profile-pic" style=" width: 142px;" src="@Url.Content(Model.Picture)">
+                            </div>
+                            <div class="p-image">
+                                <i class="fa fa-camera upload-button"></i>
+                                <input class="file-upload" type="file" name="ImageFile" accept="image/*" />
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="form-group row">
+
+                        @Html.HiddenFor(x => x.U_Id)
+                        @Html.HiddenFor(x => x.Picture)
+
+
+                        <label class="col-sm-2 col-form-label">Full Name</label>
+                        <div class="col-sm-7">
+
+                            @Html.TextBoxFor(x => x.Name, null, new { @Class = "form-control", placeholder = "User's Full Name" })
+                            @Html.ValidationMessageFor(x => x.Name, null, new { style = "color:red" })
+                            @*, Required="required"*@
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">NIC #</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.CNIC, null, new { @Class = "form-control", placeholder = "NIC #" })
+                            @Html.ValidationMessageFor(x => x.CNIC, null, new { style = "color:red" })
+
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Date of Birth</label>
+                        <div class="col-sm-7">
+                            @Html.EditorFor(x => x.DOB, "{0:yyyy-MM-dd}" ,new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                            @Html.ValidationMessageFor(x => x.DOB, null, new { style = "color:red" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Contact #</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Contact_Number, null, new { @Class = "form-control", placeholder = "Contact Number" })
+                            @Html.ValidationMessageFor(x => x.Contact_Number, null, new { style = "color:red" })
+
+                        </div>
+                    </div>
+                    <div class="seperator"></div>
+                    <div class="form-group row">
+                        <div class="col-sm-10 ml-auto">
+                            <h3>Address:</h3>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Address</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Address, null, new { @Class = "form-control", placeholder = "Enter Complete Address" })
+                            @Html.ValidationMessageFor(x => x.Address, null, new { style = "color:red" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">City</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.City, null, new { @Class = "form-control", placeholder = "Enter City" })
+                            @Html.ValidationMessageFor(x => x.City, null, new { style = "color:red" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">State</label>
+                        <div class="col-sm-7">
+                            @Html.DropDownListFor(x => x.State, new List<SelectListItem>
+                          { new SelectListItem() { Text = "Please Select" },
+                            new SelectListItem() { Text = "Sindh" },
+                             new SelectListItem() { Text = "Punjab" },
+                              new SelectListItem() { Text = "Balochistan" },
+                               new SelectListItem() { Text = "Khyber Pakhtunkhwa" },
+                                new SelectListItem() { Text = "Gilgit Baltistan" },
+                          }, new { @Class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.State, null, new { style = "color:red" })
+
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <div class="form-group row">
+                            <div class="col-sm-10 ml-auto">
+                                <h3>Create Username and Password:</h3>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">User Name</label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(x => x.Email, null, new { @Class = "form-control", placeholder = "Enter a User Name", style = "text-transform:lowercase" })
+                                @Html.ValidationMessageFor(x => x.Email, null, new { style = "color:red" })
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Password</label>
+                            <div class="col-sm-7">
+                                <p>
+                                    @Html.TextBoxFor(x => x.Password, null, new { @class = "passform", type = "password", name = "password", id = "password1", placeholder = "   Enter a Password", style = "text-transform:lowercase; padding: 9px 12px;" })
+                                    @*<i class="fas fa-eye-slash" name="showeye" id="togglePassword"></i>*@
+                                    @Html.ValidationMessageFor(x => x.Password, null, new { style = "color:red" })
+
+                            </div>
+                        </div>
+                    </div>
+                    @helper button(string type, string value, string clas = "btn")
+                    {
+                        <input type="@type" value="@value" class="@clas" />
+                    }
+
+                    <div class="row">
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-sm-7">
+                            <button type="submit" class="btn">Update changes</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ttr-overlay"></div>
+
+<script src="~/Content/adminassets/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password1');
+        togglePassword.addEventListener('click', function (f) {
+            // toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            // toggle the eye / eye slash icon
+            this.classList.toggle('bi-eye');
+        });
+
+</script>
+
+
+

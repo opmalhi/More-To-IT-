@@ -1,0 +1,298 @@
+﻿@model FYP.Models.VehicleModel
+@{
+    ViewBag.Title = "Company Vehicle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .p1-image {
+        position: absolute;
+        top: 191px;
+        right: 380px;
+        color: #666666;
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    }
+
+    .p2-image {
+        position: absolute;
+        top: 112px;
+        right: 119px;
+        color: #666666;
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    }
+
+    .p3-image {
+        position: absolute;
+        top: 112px;
+        right: 307px;
+        color: #666666;
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    }
+
+    #preview {
+        height: 235px;
+    }
+
+    img {
+        height: 235px;
+        width: 400px;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="db-breadcrumb">
+        <h4 class="breadcrumb-title">Add Company Vehicle</h4>
+        <ul class="db-breadcrumb-list">
+            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            <li>Add Company Vehicle</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 m-b30">
+        <div class="widget-box">
+            <div class="wc-title">
+                <h4>Add Company Vehicle</h4>
+            </div>
+            <div class="widget-inner">
+
+                @using (Html.BeginForm("CompanyVehicle", "Admin", FormMethod.Post, new { @class = "edit-profile m-b30", enctype = "multipart/form-data" }))
+                {
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <div class="width-box">
+                                <div class="wc-title">
+                                    <h3>Vehicle Images:</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="packImage" style="overflow: hidden; width: 400px; height: 235px; border: 8px solid rgba(171, 168, 168, 0.66);">
+                                        <div id="preview"></div>
+                                    </div>
+                                    <div class="p1-image">
+                                        <i class="fa fa-camera upload-button"></i>
+                                        <input id="file" type="file" multiple class="file-upload" name="ImageFile">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="packImage" style="overflow: hidden; width: 400px; height: 235px; border: 8px solid rgba(171, 168, 168, 0.66);">
+                                        <div id="preview1"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="packImage" style="overflow: hidden; width: 400px; height: 235px; border: 8px solid rgba(171, 168, 168, 0.66);">
+                                        <div id="preview2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="packImage" style="overflow: hidden; width: 400px; height: 235px; border: 8px solid rgba(171, 168, 168, 0.66);">
+                                        <div id="preview3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <div class="width-box">
+                                <div class="wc-title">
+                                    <h3>City Details:</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">City</label>
+                        <div class="col-sm-7">
+                            @Html.DropDownListFor(model => model.City, ViewBag.City as SelectList, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => Model.City, null, new { style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <div class="width-box">
+                                <div class="wc-title">
+                                    <h3>Vehicle Details:</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Vehicle No</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Vehicle_No, new { @Class = "form-control", placeholder = "Vehicle No" })
+                            @Html.ValidationMessageFor(x => x.Vehicle_No, null, new { style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Company</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Vehicle_Company, new { @Class = "form-control", placeholder = "Company (Toyota,Honda,...)" })
+                            @Html.ValidationMessageFor(x => x.Vehicle_Company, null, new { style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Model</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Vehicle_Model, new { @Class = "form-control", placeholder = "Model(Corolla, Civic,...)" })
+                            @Html.ValidationMessageFor(x => x.Vehicle_Model, null, new { style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Model Year</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Vehicle_Model_Year, new { @Class = "form-control", placeholder = "Model Year", type = "number" })
+                            @Html.ValidationMessageFor(x => x.Vehicle_Model_Year, null, new { style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Mileage</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Vehicle_Mileage, new { @Class = "form-control", placeholder = "Mileage", type = "number" })
+                            @Html.ValidationMessageFor(x => x.Vehicle_Mileage, null, new { style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Rent(per day)</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Rent, new { @Class = "form-control", placeholder = "Rent", type = "number" })
+                            @Html.ValidationMessageFor(x => x.Rent, null, new { style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Type</label>
+                        <div class="col-sm-7">
+                            @Html.DropDownListFor(x => x.Vehicle_Type, new[] {
+                                 new SelectListItem() {Text = "Hatchback", Value = "Hatchback"},
+                                 new SelectListItem() {Text = "Sedan", Value = "Sedan"},
+                                 new SelectListItem() {Text = "SUV", Value = "SUV"},
+                                 new SelectListItem() {Text = "Pickup Truck", Value = "Pickup Truck"},
+                                 new SelectListItem() {Text = "Van", Value = "Van"},
+                                 new SelectListItem() {Text = "Other", Value = "Other"},
+                            }, "Select Vehicle Type", new { @class = "form-control" })
+                            @*@Html.TextBoxFor(x => x.Rating, new { @Class = "form-control", placeholder = "Rating", type = "number" })*@
+                            @Html.ValidationMessageFor(x => x.Vehicle_Type, null, new { style = "color:red" })
+                        </div>
+                    </div>
+
+                    @Html.HiddenFor(x => x.User_Name)
+                    @Html.HiddenFor(x => x.Phone_No)
+                    @Html.HiddenFor(x => x.Email)
+
+
+                    @helper button(string type, string value, string clas = "btn")
+                    {
+                        /**/
+                        <input type="@type" value="@value" class="@clas" />
+                    }
+
+                    <div class="row">
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-sm-7">
+                            <button type="submit" class="btn">Add Vehicle</button>
+                            <button type="reset" class="btn-secondry">Cancel</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ttr-overlay"></div>
+<script src="~/Content/adminassets/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+    function previewImages() {
+
+        var preview = document.querySelector('#preview');
+
+        if (this.files) {
+            [].forEach.call(this.files, readAndPreview);
+        }
+
+        function readAndPreview(file) {
+            debugger
+            if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
+                return alert(file.name + " is not an image");
+            }
+
+            var reader = new FileReader();
+
+            reader.addEventListener("load", function () {
+                var image = new Image();
+
+                image.title = file.name;
+                image.src = this.result;
+                if ($("#preview img").length == 0) {
+                    image.height = '315px';
+                    preview.appendChild(image);
+                }
+                else if ($("#preview1 img").length == 0) {
+                    preview1.appendChild(image);
+                } else if ($("#preview2 img").length == 0) {
+                    preview2.appendChild(image);
+                } else if ($("#preview3 img").length == 0) {
+                    preview3.appendChild(image);
+                }
+            });
+
+            reader.readAsDataURL(file);
+
+        }
+
+    }
+
+    document.querySelector('#file').addEventListener("change", previewImages);
+
+    $(document).ready(function () {
+        $(".upload-button").on('click', function () {
+            $(".file-upload").click();
+        });
+
+        $('#User_Name').val("More To It");
+        $('#Email').val("moretoit@test.com");
+        $('#Phone_No').val("021-*******");
+    });
+
+
+</script>
+
+
+
+

@@ -1,0 +1,197 @@
+﻿@model IEnumerable<FYP.Models.Vehicle>
+
+@{
+    ViewBag.Title = "VehicleRent";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link href="~/Content/adminassets/css/jobapplication.css" rel="stylesheet" />
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner" id="imgSlider">
+                                @*<div class="carousel-item active">
+                                        <img id="cityImage" onclick="openImageInTab(this)" style="width:100%; height:435px;">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img id="cityImage1" onclick="openImageInTab(this)" style="width:100%; height:435px;">
+
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img id="cityImage2" onclick="openImageInTab(this)" style="width:100%; height:435px;">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img id="cityImage3" onclick="openImageInTab(this)" style="width:100%; height:435px;">
+                                    </div>*@
+                            </div>
+                        </div>
+                        @*<img id="cityImage" style="width:100%; height:435px;" onclick="openImageInTab(this)" />*@
+                    </div>
+                    <div class="col-6" style="padding-top:10px;">
+                        <div style="padding:25px;">
+                            <label>Owner Name:</label>
+                            <span id="ownerName"></span><hr />
+                            <label>Contact Number:</label>
+                            <span id="phoneNo"></span><hr />
+                            <label>Vehicle Number:</label>
+                            <span id="vehicleNo"></span><hr />
+                            <label>Vehicle Company:</label>
+                            <span id="vehicleCompany"></span><hr />
+                            <label>Vehicle Model:</label>
+                            <span id="vehicleModel"></span><hr />
+                            <label>Vehicle Model Year:</label>
+                            <span id="vehicleModelYear"></span><hr />
+                            <label>Mileage:</label>
+                            <span id="vehicleMileage"></span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="db-breadcrumb">
+        <h4 class="breadcrumb-title">Vehicle Rent Request</h4>
+        <ul class="db-breadcrumb-list">
+            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            <li>Vehicle Rent Request</li>
+        </ul>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-12 m-b30">
+            <div class="widget-box">
+                <div class="wc-title">
+                    <h4>Vehicle Rent Request</h4>
+                </div>
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" style="width:100%;" cellspacing="0">
+                                <thead>
+                                    <tr class="text-center">
+                                        @*<th>User ID</th>*@
+                                        <th>Owner Name</th>
+                                        <th>Type</th>
+                                        <th>Company</th>
+                                        <th>Model</th>
+                                        <th>Details</th>
+                                        @*<th>Vehicle Inspection Doc</th>
+                                            <th>Modify</th>*@
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr class="text-center">
+                                            @*<td>@item.User_ID</td>*@
+                                            <td>@item.User_Name</td>
+                                            <td>@item.Vehicle_Type</td>
+                                            <td>@item.Vehicle_Company</td>
+                                            <td>@item.Vehicle_Model</td>
+                                            <td>
+                                                <div class="icons">
+                                                    <a class="anchorBtn" onclick="vehicleDetails(@item.Id)" data-bs-toggle="modal" data-bs-target="#exampleModal">View</a>
+                                                </div>
+                                            </td>
+                                            <!--<td>
+                                                <div class="icons">
+                                                    <a class="anchorBtn" onclick="GetClientReport(@item.Id)">Download</a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group" role="group" aria-label="Basic outlined example">-->
+                                            @*<a href=`http://localhost:53010/{@item.ID}`></a>*@
+                                            <!--<a href="/Admin/VehicleAccepted?id=@item.Id" class="btn btn-sm btn-outline-success"><i class="fa fa-check"></i> Accept</a>
+                                                    <a href="/Admin/VehicleDeclined?id=@item.Id" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash-o"></i> Decline</a>
+                                                </div>
+                                            </td>-->
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ttr-overlay"></div>
+
+<script src="~/Content/assetstable/vendor/jquery/jquery.min.js"></script>
+<script src="~/Content/assetstable/vendor/datatables/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.noConflict();
+        var table = $('#dataTable').DataTable();
+    });
+
+    function openImageInTab(data) {
+        var img = $(data).attr('src');
+        window.open(img, "_blank");
+    }
+
+    function GetClientReport(id) {
+        window.open('/Admin/GetInspectionReport?UserId=' + id, "_blank");
+    }
+
+    function vehicleDetails(data) {
+        var imageSlider = $('#imgSlider');
+        var sliderhtml = ""
+        $.get("/Admin/VehicleDetails/" + data, function (data) {
+            debugger
+            console.log(data)
+            let imgStr = data.vehicleDetail.Vehicle_Pictures;
+            var stringArray = imgStr.split(',');
+            for (let img = 1; img < stringArray.length; img++) {
+                var vehicleImg = stringArray[img];
+                let result = vehicleImg.replace(" ~/", "");
+                //result = result.replace(/%20/g, "");
+                result = "http://localhost:53010/" + result;
+                if (img == 1) {
+                    sliderhtml += `<div class="carousel-item active">
+                                    <img id="${img}" src="${result}" onclick="openImageInTab(this)" style="width:100%; height:480px;">
+                                </div>`
+
+                } else {
+                    sliderhtml += `<div class="carousel-item">
+                                    <img id="${img}" src="${result}" onclick="openImageInTab(this)" style="width:100%; height:480px;">
+                                </div>`
+                }
+                /*$(`#${img}`).attr("src",  result);*/
+                //document.getElementById(img).src = result
+            }
+            //imageSlider.html(sliderhtml)
+            document.getElementById("imgSlider").innerHTML = sliderhtml
+            $("#ownerName").text(data.vehicleDetail.User_Name);
+            $("#phoneNo").text(data.vehicleDetail.Phone_No);
+            $("#vehicleNo").text(data.vehicleDetail.Vehicle_No);
+            $("#vehicleCompany").text(data.vehicleDetail.Vehicle_Company);
+            $("#vehicleModel").text(data.vehicleDetail.Vehicle_Model);
+            $("#vehicleModelYear").text(data.vehicleDetail.Vehicle_Model_Year);
+            $("#vehicleMileage").text(data.vehicleDetail.Vehicle_Mileage);
+
+        });
+
+    }
+
+</script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Content/assetstable/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="~/Content/assetstable/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+
+

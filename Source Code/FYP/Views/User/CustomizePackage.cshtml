@@ -1,0 +1,1199 @@
+﻿@model FYP.Models.CustomPackageModel
+@{
+    ViewBag.Title = "CustomizePackage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/Content/userassests/css/BookingStyle.css" rel="stylesheet" />
+<link href="~/Content/userassests/css/HotelCard.css" rel="stylesheet" />
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+
+<style>
+    #map-canvas {
+        /*height: 400px;*/
+        width: 100%;
+    }
+</style>
+
+<div class="formdiv">
+    <h1>Booking Process </h1>
+    <div id="multi-step-form-container">
+        <!-- Form Steps / Progress Bar -->
+        <ul class="form-stepper form-stepper-horizontal text-center mx-auto pl-0">
+            <!-- Step 1 -->
+            <li class="form-stepper-active text-center form-stepper-list" step="1">
+                <a class="mx-2">
+                    <span class="form-stepper-circle">
+                        <span>1</span>
+                    </span>
+                    <div class="label">Personal Details</div>
+                </a>
+            </li>
+            <!-- Step 2 -->
+            <li class="form-stepper-unfinished text-center form-stepper-list" step="2">
+                <a class="mx-2">
+                    <span class="form-stepper-circle text-muted">
+                        <span>2</span>
+                    </span>
+                    <div class="label text-muted">Select City</div>
+                </a>
+            </li>
+            <!-- Step 3 -->
+            <li class="form-stepper-unfinished text-center form-stepper-list" step="3">
+                <a class="mx-2">
+                    <span class="form-stepper-circle text-muted">
+                        <span>3</span>
+                    </span>
+                    <div class="label text-muted">Select Hotel</div>
+                </a>
+            </li>
+            <!-- Step 4 -->
+            <li class="form-stepper-unfinished text-center form-stepper-list" step="4">
+                <a class="mx-2">
+                    <span class="form-stepper-circle text-muted">
+                        <span>4</span>
+                    </span>
+                    <div class="label text-muted">Select Tour Guider</div>
+                </a>
+            </li>
+            <!-- Step 4 -->
+            <li class="form-stepper-unfinished text-center form-stepper-list" step="5">
+                <a class="mx-2">
+                    <span class="form-stepper-circle text-muted">
+                        <span>5</span>
+                    </span>
+                    <div class="label text-muted">Select Vehicle</div>
+                </a>
+            </li>
+            <!-- Step 5-->
+            <li class="form-stepper-unfinished text-center form-stepper-list" step="6">
+                <a class="mx-2">
+                    <span class="form-stepper-circle text-muted">
+                        <span>6</span>
+                    </span>
+                    <div class="label text-muted">Billing</div>
+                </a>
+            </li>
+            <!-- Step 7 -->
+            <li class="form-stepper-unfinished text-center form-stepper-list" step="7">
+                <a class="mx-2">
+                    <span class="form-stepper-circle text-muted">
+                        <span>7</span>
+                    </span>
+                    <div class="label text-muted">Summary</div>
+                </a>
+            </li>
+        </ul>
+        <!-- Step Wise Form Content -->
+        <div id="userAccountSetupForm" name="userAccountSetupForm">
+            <!-- Step 1 Content -->
+            <section id="step-1" class="form-step">
+                <h2 class="font-normal">Personal Details</h2>
+                <!-- Step 1 input fields -->
+                <div class="mt-3">
+                    <div class="form-group row">
+                        <div class="col">
+                            <label class="col-sm col-form-label">Full Name</label>
+                            <div class="col-sm">
+                                <input class="form-control" value="@Model.Name" id="Name" placeholder="Name" type="text" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label class="col-sm col-form-label">Contact Number #</label>
+                            <div class="col-sm-7">
+                                <input class="form-control" id="ContactNumber" value="@Model.Contact_No" placeholder="Contact Number" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label class="col-sm col-form-label">CNIC #</label>
+                            <div class="col-sm">
+                                <input class="form-control" value="@Model.CNIC" id="CNIC" placeholder="CNIC" type="text" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label class="col-sm col-form-label">Date of Birth</label>
+                            <div class="col-sm-7">
+                                @*<input class="form-control" id="DOB" type="date" value="" />*@
+                                @Html.TextBoxFor(x => x.DOB, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label class="col-sm-2 col-form-label">Email</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" id="Email" value="@Model.Email" type="email" placeholder="Enter Email" style="text-transform:lowercase" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label class="col-sm-2 col-form-label">Address</label>
+                            <div class="col-sm-7">
+                                <input class="form-control" id="Address" value="@Model.Address" type="text" placeholder="Enter Complete Address" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label class="col-sm col-form-label">State</label>
+                            <div class="col-sm">
+                                <input class="form-control" id="State" value="@Model.State" placeholder="State" type="text" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label class="col-sm-2 col-form-label">City</label>
+                            <div class="col-sm-7">
+                                <input class="form-control" id="city" placeholder="City" value="@Model.U_City" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <div class="col">
+                        <button class="button btn-navigate-form-step" type="button" step_number="2" onclick="checkCityAndPlace()">Next</button>
+                    </div>
+                </div>
+            </section>
+            <!-- Step 2 Content, default hidden on page load. -->
+            <section id="step-2" class="form-step d-none">
+                <h2 class="font-normal">Select City</h2>
+                <!-- Step 2 input fields -->
+                <div class="mt-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group row">
+                                <div class="col">
+                                    <label class="col-sm col-form-label">Cities<span class="text-danger">*</span></label>
+                                    <div class="col">
+                                        @Html.HiddenFor(x => x.Cities)
+                                        <select class="city form-control" id="multi-select" multiple onchange="getCities()"></select>
+                                    </div>
+                                    <div id="dateTable" class="col-sm-10">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col">
+                                    <div id="placeMainDiv">
+                                        <div class="d-none" id="placeDiv">
+                                            <label class="col-sm col-form-label" id="placeLabel">Places<span class="text-danger">*</span></label>
+                                            <div class="col">
+                                                @Html.HiddenFor(x => x.Places)
+                                                <select class="place form-control" id="multi-select2" multiple onchange="getplaces()"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-6">
+                                    <label class="col-sm col-form-label">Trip Distance(km)</label>
+                                    <div class="col-sm">
+                                        <input class="form-control" id="tripDistance" type="number" disabled />
+                                        @*<span class="col-sm col-form-label text-danger" id="alertTicketText"></span>*@
+                                    </div>
+                                    @*<span class="col-sm col-form-label" id="availableSeats"></span><br />*@
+                                    @*<span class="col-sm col-form-label text-danger" id="alertText"></span>*@
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-6">
+                                    <label class="col-sm col-form-label">No of Tickets</label>
+                                    <div class="col-sm">
+                                        <input class="form-control" id="NoofTickets" value="@Model.People" placeholder="Enter No of Tickets" type="number" onkeyup="checkSeats(this)" required />
+                                        @*<span class="col-sm col-form-label text-danger" id="alertTicketText"></span>*@
+                                    </div>
+                                    @*<span class="col-sm col-form-label" id="availableSeats"></span><br />*@
+                                    @*<span class="col-sm col-form-label text-danger" id="alertText"></span>*@
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                @Html.HiddenFor(x=>x.No_of_Days)
+                                @Html.HiddenFor(x=>x.TripDays)
+                                <div class="col-6">
+                                    <label class="col-sm col-form-label">Trip Start Date</label>
+                                    <div class="col-sm">
+                                        <input class="form-control" type="date" id="StartDate" value="@Model.StartDate" min="9/8/2022" onchange="checkStartDate()" required>
+                                        @*<input class="form-control" id="startDate" value="@Model.StartDate" type="date" required />*@
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label class="col-sm col-form-label">Trip End Date</label>
+                                    <div class="col-sm">
+                                        <input class="form-control" type="date" id="EndDate" value="@Model.EndDate" onchange="checkCityAndPlace()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-6" style=" display: grid; grid-auto-flow: column;">
+                            <div id="map-canvas"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <button class="buttonPrev btn-navigate-form-step" type="button" step_number="1">Prev</button>
+                    <button class="button btn-navigate-form-step" type="button" step_number="3" id="packNextBtn" onclick="DEHotel()">Next</button>
+                </div>
+            </section>
+            <!-- Step 3 Content, default hidden on page load. -->
+            <section id="step-3" class="form-step d-none">
+                <h2 class="font-normal">Select Hotel</h2>
+                <!-- Step 3 input fields -->
+                @Html.HiddenFor(x => x.Hotels)
+                <div class="mt-3" id="hotelDiv" style="padding: 15px 25px; height: 300px; overflow-y: scroll; overflow-x: hidden;">
+
+
+
+                </div>
+                <div class="mt-3">
+                    <button class="buttonPrev btn-navigate-form-step" type="button" step_number="2">Prev</button>
+                    <button class="button btn-navigate-form-step" id="hotelNextBtn" type="button" step_number="4" onclick="tourGuider()">Next</button>
+                </div>
+            </section>
+            <!-- Step 4 Content, default hidden on page load. -->
+            <section id="step-4" class="form-step d-none">
+                <h2 class="font-normal">Select Tour Guider</h2>
+                <!-- Step 4 input fields -->
+                @Html.HiddenFor(x => x.Guider)
+                <div class="mt-3" style="padding: 0 25px; height: 300px; overflow-y: scroll; overflow-x: hidden;">
+                    <div class="row" id="guiders">
+
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <button class="buttonPrev btn-navigate-form-step" type="button" step_number="3">Prev</button>
+                    <button class="button btn-navigate-form-step" id="guiderNextBtn" type="button" step_number="5" onclick="tourVehicle()">Next</button>
+                </div>
+            </section>
+            <!-- Step 5 Content, default hidden on page load. -->
+            <section id="step-5" class="form-step d-none">
+                <h2 class="font-normal">Select Vehicle</h2>
+                <!-- Step 5 input fields -->
+                @Html.HiddenFor(x => x.Vehicle)
+                <div class="mt-3" style="padding:0 25px; height:300px; overflow-y:scroll; overflow-x:hidden;">
+                    <div class="row" id="vehicles">
+
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <button class="buttonPrev btn-navigate-form-step" type="button" step_number="4">Prev</button>
+                    <button class="button btn-navigate-form-step" id="vehicleNextBtn" type="button" step_number="6">Next</button>
+                </div>
+            </section>
+            <!-- Step 6 Content, default hidden on page load. -->
+            <section id="step-6" class="form-step d-none">
+                <h2 class="font-normal">Billing</h2>
+                <!-- Step 6 input fields -->
+                <div class="mt-3">
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="username">
+                                    <h6 class="font-weight-bold">Cardholder's Name'</h6>
+                                </label>
+                                <input class="form-control" id="CardHolderName" placeholder="Card Holder Name" type="text" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <label for="cardNumber">
+                                <h6 class="font-weight-bold">Card Number</h6>
+                            </label>
+                            <div class="input-group">
+                                <input class="form-control" id="CardNumber" placeholder="Card Number" type="number" required />                          <div class="input-group-append">
+                                    <span class="input-group-text text-muted">
+                                        <i class="fab fa-cc-visa mx-1"></i>
+                                        <i class="fab fa-cc-mastercard mx-1"></i>
+                                        <i class="fab fa-cc-amex mx-1"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>
+                                    <span class="hidden-xs">
+                                        <h6 class="font-weight-bold">Expiration Date</h6>
+                                    </span>
+                                </label>
+                                <div class="input-group">
+                                    <input class="form-control" id="month" placeholder="MM" type="number" required />
+                                    <input class="form-control" id="year" placeholder="YYYY" type="number" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group mb-4">
+                                <label data-toggle="tooltip" title="Three digit CV code on the back of your card">
+                                    <h6 class="font-weight-bold">CVV <i class="fa fa-question-circle d-inline"></i></h6>
+                                </label>
+                                <input class="form-control" id="cvc" placeholder="CVV" type="number" required />
+                                @*<input type="text" required class="form-control">*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <button class="buttonPrev btn-navigate-form-step" type="button" step_number="5">Prev</button>
+                    <button class="button btn-navigate-form-step" type="button" step_number="7" onclick="summary()">Next</button>
+                </div>
+            </section>
+            <!-- Step 7 Content, default hidden on page load. -->
+            <section id="step-7" class="form-step d-none">
+                @Html.HiddenFor(x => x.Price)
+                <h2 class="font-normal font-weight-bold">Summary</h2>
+                <!-- Step 5 input fields -->
+                <div class="mt-3">
+                    <h4 class="font-normal font-weight-bold">Personal Details</h4>
+                    <div class="row py-2">
+                        <div class="col-6">
+                            <label class="font-weight-bold">Name:</label>
+                            <span id="userName"></span><hr />
+                            <label class="font-weight-bold">Contact No#: </label>
+                            <span id="userContact"></span><hr />
+                            <label class="font-weight-bold">Address:</label>
+                            <span id="userAddress"></span><hr />
+                            <label class="font-weight-bold">State:</label>
+                            <span id="userState"></span>
+                        </div>
+                        <div class="col-6">
+                            <label class="font-weight-bold">Date of Birth:</label>
+                            <span id="userDOB"></span><hr />
+                            <label class="font-weight-bold">CNIC:</label>
+                            <span id="userCNIC"></span><hr />
+                            <label class="font-weight-bold">City:</label>
+                            <span id="userCity"></span>
+                        </div>
+                    </div>
+                    <br />
+
+
+                    <h4 class="font-normal font-weight-bold">Package Details</h4>
+                    <div class="row py-2">
+
+                        <div class="col-6">
+                            <label class="font-weight-bold">Package:</label>
+                            <span id="packageName"></span><hr />
+                            <label class="font-weight-bold">Duration:</label>
+                            <span id="duration"></span><hr />
+                            <label class="font-weight-bold">Trip Starting Date: </label>
+                            <span id="date"></span>
+                        </div>
+                        <div class="col-6">
+                            <label class="font-weight-bold">Pick Up Location: </label>
+                            <span id="pickUpLocation"></span><hr />
+                            <label class="font-weight-bold">Price:</label>
+                            <span id="price"></span><hr />
+                            <label class="font-weight-bold">Total Tickets:</label>
+                            <span id="ticket"></span>
+                            @*<input id="hotelId"/>*@
+                        </div>
+                    </div>
+                    <br />
+
+                    <h4 class="font-normal font-weight-bold">Payment Details</h4>
+                    <div class="row py-2">
+                        <div class="col-6">
+                            <label class="font-weight-bold">Card Number:</label><br />
+                            <label class="font-weight-bold">Amount:</label><br />
+                            <label class="font-weight-bold">GST: </label><br />
+                            <label class="font-weight-bold">Discount: </label><br />
+                            <label class="font-weight-bold">Total: </label>
+                        </div>
+                        <div class="col-6">
+                            <span id="cardNumber"></span><br />
+                            <span id="amount"></span><br />
+                            <span id="tax"></span><br />
+                            <span id="discount">0%</span><br /><hr />
+                            <span id="total" class="font-weight-bold"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <div class="col">
+                        <button class="buttonPrev btn-navigate-form-step" type="button" step_number="6">Prev</button>
+                        <button class="button submit-btn" id="saveBtn" onclick="bookingSubmit()">Book Trip</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            @*<div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>*@
+            <div class="modal-body" style="padding:0;">
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+                    @*<div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                        </div>*@
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img id="vehicleImg" src="" class="d-block w-100" style="height:500px;" alt="">
+                        </div>
+                        <div class="carousel-item">
+                            <img id="vehicleImg1" src="" class="d-block w-100" style="height:500px;" alt="">
+                        </div>
+                        <div class="carousel-item">
+                            <img id="vehicleImg2" src="" class="d-block w-100" style="height:500px;" alt="">
+                        </div>
+                        <div class="carousel-item">
+                            <img id="vehicleImg3" src="" class="d-block w-100" style="height:500px;" alt="">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+<script src="~/Scripts/jquery-3.6.0.js"></script>
+<script src="~/Content/userassests/js/BookingScript.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+<script src="~/Content/adminassets/assets/js/jquery.min.js"></script>
+<script src="~/Scripts/select2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBujs-uKupuy4Z_fgE8t87R9hDnMFr4WRQ&callback=initMap&v=weekly" defer></script>
+
+<script defer>
+
+    var isPlace = false;
+    var isHotel = false;
+    var placeCount = 0;
+    var hotel_selected = new Array();
+    var citieslatlng = [];
+    //var num;
+    //var index = 0;
+
+    $(document).ready(function () {
+
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+
+        //$('#StartDate').val(today);
+        $('#StartDate').attr('min', today);
+        //$('#EndDate').val(today);
+
+
+        $.get("@Url.Action("GetCities","User")", function (data) {
+
+            var html = ''
+            var cityDropdown = document.getElementById('multi-select')
+
+            for (let city = 0; city < data.Cities.length; city++)
+            {
+                html += `<option value="${data.Cities[city].City_ID}">${data.Cities[city].City_Name}</option>`
+            }
+            cityDropdown.innerHTML = html;
+            //console.log(cityDropdown)
+
+            var Cities = new Choices('#multi-select', {
+                removeItemButton: true,
+                //maxItemCount: 5,
+                //searchResultLimit: 5
+                /*renderChoiceLimit: 5*/
+            });
+        });
+        checkStartDate()
+
+    });
+
+    function checkStartDate() {
+        checkCityAndPlace()
+        var enddate = new Date($('#StartDate').val());
+        var day1 = ("0" + enddate.getDate()).slice(-2);
+        var month1 = ("0" + (enddate.getMonth() + 1)).slice(-2);
+        var today1 = enddate.getFullYear() + "-" + (month1) + "-" + (day1);
+        $('#EndDate').attr('min', today1);
+    }
+
+    function getCities() {
+        var cititesArray = [];
+        var cititesNameArray = [];
+
+        $.each($("#multi-select option:selected"), function () {
+            cititesArray.push($(this).val());
+            cititesNameArray.push($(this).text());
+
+        });
+
+        var data = cititesArray.toString();
+        $("#Cities").val(data)
+
+        var getdiv = document.getElementById("dateTable")
+
+        var html = `<table style="margin-top:10px;">`
+
+        for (let city = 0; city < cititesArray.length; city++) {
+            html += `<tr>
+            <td style="display: inline-flex; margin-top:5px;">
+                <label style="font-size:15px; margin-right:5px;">No of Days in ${cititesNameArray[city]}</label>
+                <input type="number" name="NoOfdays[]" class="form-control" style="width: 50px;" onchange="checkCityAndPlace()">
+            </td>
+        </tr>`
+        }
+
+        html += '</table>'
+        getdiv.innerHTML = html
+
+        var pickUp = @Html.Raw(Json.Encode(Model.City));
+
+        $.get("/User/CitiesCoordinates?data=" + data + "&PickUpPoint=" + pickUp, function (res) {
+
+            $("#tripDistance").val(res.totalKmApprox);
+            citieslatlng = [];
+            for (let array = 0; array < res.latlngs.length; array++) {
+                citieslatlng.push(res.latlngs[array])
+            }
+            //citieslatlng = res.latlngs
+            //console.log(res);
+            //console.log(citieslatlng);
+
+            initMap()
+        });
+
+            //var numbers = document.getElementById('box');
+            //for (i = 0; i < 100; i++) {
+            //    var span = document.createElement('span');
+            //    span.textContent = i;
+            //    numbers.appendChild(span);
+            //}
+            //num = numbers.getElementsByTagName('span');
+
+
+        if (cititesArray.length > 0) {
+            isPlace = true;
+            $("#placeDiv").removeClass("d-none");
+            //$("#placeLabel").html("Places<span>*</span>");
+            DEPlace()
+            checkCityAndPlace();
+        } else {
+            isPlace = false;
+            $("#placeDiv").addClass("d-none");
+        }
+
+
+    }
+
+
+
+    //function nextNum() {
+    //    num[index].style.display = 'none';
+    //    index = (index + 1) % num.length;
+    //    num[index].style.display = 'initial';
+    //}
+    //function prevNum() {
+    //    num[index].style.display = 'none';
+    //    index = (index - 1 + num.length) % num.length;
+    //    num[index].style.display = 'initial';
+    //}
+
+    function getplaces() {
+        var placesArray = [];
+
+        $.each($("#multi-select2 option:selected"), function () {
+            placesArray.push($(this).val());
+        });
+        var data = placesArray.toString();
+        $("#Places").val(data)
+        checkCityAndPlace();
+    }
+
+    function gethotels() {
+        var hotelsArray = [];
+
+        $.each($("#multi-select3 option:selected"), function () {
+            hotelsArray.push($(this).val());
+        });
+        var data = hotelsArray.toString();
+        $("#Hotels").val(data)
+
+    }
+
+    function DEPlace() {
+
+     
+        var cititesArray = [];
+
+        $.each($("#multi-select option:selected"), function () {
+            cititesArray.push($(this).val());
+        });
+
+        var data = cititesArray.toString();
+        $("#Cities").val(data)
+        $.get("/User/GetPlaces?data=" + data, function (data) {
+
+            document.getElementById('placeDiv').remove()
+            document.getElementById('placeMainDiv').innerHTML= ` <div id="placeDiv">
+                        <label class="col-sm col-form-label">Places</label>
+                        <div class="col-sm">
+                            @Html.HiddenFor(x => x.Places)
+                            <select class="place form-control" id="multi-select2" multiple onchange="getplaces()"></select>
+                        </div>
+                    </div>`
+
+            document.getElementById("multi-select2").placeholder = "Select Place";
+
+            new Choices('#multi-select2', {
+                allowHTML: true,
+                removeItemButton: true,
+                choices: data.Places
+            });
+
+        });
+
+    }
+
+    function DEHotel() {
+
+        $('#hotelNextBtn').prop('disabled', true)
+        document.getElementById('hotelNextBtn').style.cursor = "not-allowed"
+
+        fillNoOfDays();
+        var cititesArray = [];
+
+        $.each($("#multi-select option:selected"), function () {
+            cititesArray.push($(this).val());
+        });
+
+        var data = cititesArray.toString();
+        $("#Cities").val(data)
+
+        $.get("/User/GetHotels?data=" + data, function (data) {
+            console.log(data)
+            var html = ''
+            var hotelDropdown = document.getElementById('hotelDiv')
+            for (let hotel = 0; hotel < data.Hotels.length; hotel++) {
+                let imgStr = data.Hotels[hotel].Picture;
+                var stringArray = imgStr.split(/(\s+)/);
+                let img = stringArray[2];
+                let img1 = stringArray[4];
+                let img2 = stringArray[6];
+                let img3 = stringArray[8];
+                let result = img.replace("~", "");
+                result = result.replace(",", "");
+                let result1 = img1.replace("~", "");
+                result1 = result1.replace(",", "");
+                let result2 = img2.replace("~", "");
+                result2 = result2.replace(",", "");
+                let result3 = img3.replace("~", "");
+                result3 = result3.replace(",", "");
+                html += `
+                    <div class="row" style="width:1200px; margin-top:15px;">
+                        <div class="col-sm-9 col-md-9 col-lg-9">
+                            <div class="hotel-card bg-white rounded-lg shadow overflow-hidden d-block d-lg-flex">
+                                <div class="hotel-card_images">
+                                    <div id="carouselExampleControls${data.Hotels[hotel].Id}" class="carousel slide h-100" data-ride="carousel">
+                                        <div class="carousel-inner" style="height:165px;">
+                                            <div class="carousel-item h-100 active">
+                                                <img src="${result}" class="d-block w-100" alt="Hotel Image">
+                                            </div>
+                                            <div class="carousel-item h-100">
+                                                <img src="${result1}" class="d-block w-100" alt="Hotel Image">
+                                            </div>
+                                            <div class="carousel-item h-100">
+                                                <img src="${result2}" class="d-block w-100" alt="Hotel Image">
+                                            </div>
+                                            <div class="carousel-item h-100">
+                                                <img src="${result3}" class="d-block w-100" alt="Hotel Image">
+                                            </div>
+                                        </div>
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls${data.Hotels[hotel].Id}" data-bs-slide="prev">
+                                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                          <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls${data.Hotels[hotel].Id}" data-bs-slide="next">
+                                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                          <span class="visually-hidden">Next</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="hotel-card_info p-4">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <h5 class="mb-0 mr-2">${data.Hotels[hotel].Name}</h5>
+                                        <div>
+                                            ${getHotelStars(data.Hotels[hotel].Rating)}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-end">
+                                        <div class="hotel-card_details">
+                                            <div class="text-muted mb-2"><i class="fas fa-map-marker-alt"></i> ${data.Hotels[hotel].City}</div>
+                                            <div class="mb-2"><span class="text-muted">(Available Rooms: ${data.Hotels[hotel].Available_Rooms})</span></div>
+                                            <div class="amnities d-flex mb-3">
+                                                <img class="mr-2" src="/Content/Image/desk-bell.svg" data-toggle="tooltip" data-placement="top" title="Desk bell" alt="Desk bell">
+                                                <img class="mr-2" src="/Content/Image/single-bed.svg" data-toggle="tooltip" data-placement="top" title="Double Bed" alt="Double Bed">
+                                                <img class="mr-2" src="/Content/Image/towels.svg" data-toggle="tooltip" data-placement="top" title="Towels" alt="Towels">
+                                                <img class="mr-2" src="/Content/Image/wifi.svg" data-toggle="tooltip" data-placement="top" title="Wifi" alt="Wifi">
+                                            </div>
+                                            <ul class="hotel-checklist pl-0 mb-0">
+                                                <li><i class="fa fa-check text-success"></i> Free Wifi</li>
+                                                <li><i class="fa fa-check text-success"></i> Free Breakfast</li>
+                                                <li><i class="fa fa-check text-success"></i> Free Breakfast</li>
+                                                <li><i class="fa fa-check text-success"></i> Max 4 Guest Per Room</li>
+                                            </ul>
+                                        </div>
+                                        <div class="hotel-card_pricing text-center">
+                                            <h3>Rs ${numberWithCommas(data.Hotels[hotel].Price)}</h3>
+                                            <button class="btn" id="hotelId${data.Hotels[hotel].Id}" onclick="hotelselect('${data.Hotels[hotel].Id}')">Select</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+`
+            }
+            hotelDropdown.innerHTML = html;
+        });
+    }
+
+    function checkCityAndPlace() {
+        var city = $("#Cities").val()
+        var stDate = $("#StartDate").val()
+        var edDate = $("#EndDate").val()
+        var input = document.getElementsByName('NoOfdays[]');
+        if (city == null || city == "") {
+            $('#packNextBtn').prop('disabled', true)
+            document.getElementById('packNextBtn').style.cursor = "not-allowed"
+        } else if (stDate == null || stDate == "" && edDate == null || edDate == "") {
+            $('#packNextBtn').prop('disabled', true)
+            document.getElementById('packNextBtn').style.cursor = "not-allowed"
+        } else {
+            var place = $("#Places").val()
+            if (place == null || place == "") {
+                $('#packNextBtn').prop('disabled', true)
+                document.getElementById('packNextBtn').style.cursor = "not-allowed"
+            } else {
+                $('#packNextBtn').prop('disabled', false)
+                document.getElementById('packNextBtn').style.cursor = "pointer"
+            }
+        }
+    }
+
+    function fillNoOfDays() {
+        var input = document.getElementsByName('NoOfdays[]');
+        var noOfDaysArray = [];
+        var sum = 0;
+
+        for (var i = 0; i < input.length; i++) {
+            var a = input[i];
+            noOfDaysArray.push(a.value)
+            sum += Number(a.value)
+        }
+        var x = noOfDaysArray.toString()
+        $('#No_of_Days').val(sum)
+
+        $('#TripDays').val(x)
+
+        console.log(sum)
+        console.log(x)
+    }
+
+    function tourGuider() {
+
+        var idsHotels = $('#Hotels').val()
+
+        if (idsHotels == null || idsHotels == "") {
+            $('#hotelNextBtn').prop('disabled', true)
+            document.getElementById('hotelNextBtn').style.cursor = "not-allowed"
+        } else {
+
+            $('#guiderNextBtn').prop('disabled', true)
+            document.getElementById('guiderNextBtn').style.cursor = "not-allowed"
+
+            var data = @Html.Raw(Json.Encode(Model.City));
+            $.get("/User/GetTourGuider?city="+data, function (data) {
+                console.log(data)
+                var html = ''
+                var guidersDiv = document.getElementById('guiders')
+                for (let guide = 0; guide < data.Guiders.length; guide++) {
+
+                    var url = data.Guiders[guide].Img.replace("~", "");
+
+
+                    html += `<div class="GuiderDiv col-3 m-3 py-3 text-center" onclick="selectGuider(this)">
+                                <input id="guider${data.Guiders[guide].ID}" class="d-none" value="${data.Guiders[guide].ID}"/>
+                                <img src="${url}" style="width:150px; height:150px; border:1px solid black; border-radius:50%;"/><br /><br />
+                                <h6>${data.Guiders[guide].Name}(Age: ${data.Guiders[guide].Age} Years)</h6>
+                                <span style="margin-bottom:5px;">${data.Guiders[guide].City}, ${data.Guiders[guide].State}</span><br/>
+                                <span>Rs ${numberWithCommas(data.Guiders[guide].Charge)} per day</span><br/>
+                                ${getStars(data.Guiders[guide].Rating)}
+                    </div>`
+                }
+                guidersDiv.innerHTML = html;
+            });
+        }
+    }
+
+    function tourVehicle() {
+
+        $('#vehicleNextBtn').prop('disabled', true)
+        document.getElementById('vehicleNextBtn').style.cursor = "not-allowed"
+
+        var data = @Html.Raw(Json.Encode(Model.City));
+        $.get("/User/GetVehicle?city=" + data, function (data) {
+            console.log(data)
+            var html = ''
+            var vehiclesDiv = document.getElementById('vehicles')
+
+
+            for (let vehicle = 0; vehicle < data.Vehicles.length; vehicle++) {
+                let imgStr; let stringArray; let img; let img1; let img2; let img3; let result; let result1; let result2; let result3;
+
+                if (data.Vehicles[vehicle].Name != "More To It") {
+                    imgStr = data.Vehicles[vehicle].Vehicle_Pictures;
+                    stringArray = imgStr.split(/(\s+)/);
+                    img = stringArray[4];
+                    img1 = stringArray[6];
+                    img2 = stringArray[8];
+                    img3 = stringArray[10];
+                    result = img.replace("~", "");
+                    result = result.replace(",", "");
+                    result1 = img1.replace("~", "");
+                    result1 = result1.replace(",", "");
+                    result2 = img2.replace("~", "");
+                    result2 = result2.replace(",", "");
+                    result3 = img3.replace("~", "");
+                    result3 = result3.replace(",", "");
+                } else {
+                    imgStr = data.Vehicles[vehicle].Vehicle_Pictures;
+                    stringArray = imgStr.split(/(\s+)/);
+                    img = stringArray[2];
+                    img1 = stringArray[4];
+                    img2 = stringArray[6];
+                    img3 = stringArray[8];
+                    result = img.replace("~", "");
+                    result = result.replace(",", "");
+                    result1 = img1.replace("~", "");
+                    result1 = result1.replace(",", "");
+                    result2 = img2.replace("~", "");
+                    result2 = result2.replace(",", "");
+                    result3 = img3.replace("~", "");
+                    result3 = result3.replace(",", "");
+                }
+
+
+
+                html += `<div class="VehicleDiv col-3 my-3 mx-5 py-3 text-center" onclick="selectVehicle(this)">
+                            <input id="vehicle${data.Vehicles[vehicle].Id}" class="d-none" value="${data.Vehicles[vehicle].Id}"/>
+                            <img src="${result}" class="d-block w-100" alt="" style="height:150px;" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="VehicleImages('${result},${result1},${result2},${result3}')"><br/>
+                            <h6>${data.Vehicles[vehicle].Vehicle_Company}(${data.Vehicles[vehicle].Vehicle_Model}, ${data.Vehicles[vehicle].Vehicle_Model_Year})</h6>
+                            <span>${data.Vehicles[vehicle].Vehicle_Type}</span><br/>
+                            <span>Rs ${numberWithCommas(data.Vehicles[vehicle].Rent)} per day</span><br/>
+                            ${getStars(data.Vehicles[vehicle].Rating)}
+                </div>`
+            }
+            vehiclesDiv.innerHTML = html;
+        });
+    }
+
+    function VehicleImages(img) {
+        const Image = img.split(",");
+        $("#vehicleImg").attr("src", Image[0]);
+        $("#vehicleImg1").attr("src", Image[1]);
+        $("#vehicleImg2").attr("src", Image[2]);
+        $("#vehicleImg3").attr("src", Image[3]);
+    }
+
+    function selectGuider(data) {
+        $('#guiderNextBtn').prop('disabled', false)
+        document.getElementById('guiderNextBtn').style.cursor = "pointer"
+
+        var id = data.firstElementChild.value
+        $("#Guider").val(id)
+
+        $(".GuiderDiv").removeClass("selected");
+        $(data).addClass("selected");
+    }
+
+    function selectVehicle(data) {
+        $('#vehicleNextBtn').prop('disabled', false)
+        document.getElementById('vehicleNextBtn').style.cursor = "pointer"
+
+        var id = data.firstElementChild.value
+        $("#Vehicle").val(id)
+
+        $(".VehicleDiv").removeClass("selected");
+        $(data).addClass("selected");
+    }
+
+    function getStars(rating) {
+
+        let output = [];
+
+        //if (rating != null) {
+            rating = Math.round(rating * 2) / 2;
+
+            for (var i = rating; i >= 1; i--)
+                output.push('<i class="fa fa-star" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+            if (i == .5) output.push('<i class="fa fa-star-half-o" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+            for (let i = (5 - rating); i >= 1; i--)
+                output.push('<i class="fa fa-star" aria-hidden="true" style="color: #d9c1c1;"></i>&nbsp;');
+
+        //} else {
+        //    output.push('&nbsp;');
+        //}
+        return output.join('');
+
+    }
+
+    function getHotelStars(rating) {
+
+        let output = [];
+            rating = Math.round(rating * 2) / 2;
+
+        for (var i = rating; i >= 1; i--)
+                output.push('<i class="fa fa-star" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+            if (i == .5) output.push('<i class="fa fa-star-half-o" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+            for (let i = (5 - rating); i >= 1; i--)
+                output.push('<i class="fa fa-star-o" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+        return output.join('');
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    //$(function () {
+    //    $('[data-toggle="tooltip"]').tooltip()
+    //});
+
+    function hotelselect(id) {
+
+        $('#hotelNextBtn').prop('disabled', false)
+        document.getElementById('hotelNextBtn').style.cursor = "pointer"
+
+        var btn = $('#hotelId' + id)
+        if (!btn.is('.btnselect')) {
+            btn.addClass('btnselect');
+            btn.html("Selected");
+            var my_id = id;
+            hotel_selected.push(my_id);
+
+        } else {
+            btn.removeClass('btnselect');
+            btn.html("Select");
+            var my_id = id;
+            var index = record_selected.indexOf(my_id);
+            if (index > -1) {
+                hotel_selected.splice(index, 1);
+            }
+        }
+        $("#Hotels").val(hotel_selected)
+    }
+
+    function initMap() {
+        const map = new google.maps.Map(document.getElementById("map-canvas"), {
+            zoom: 4,
+            center: { lat: 30.3753, lng: 69.3451 },
+        });
+
+        setMarkers(map);
+    }
+
+    function setMarkers(map) {
+
+
+        for (let i = 0; i < citieslatlng.length; i++) {
+            const city = citieslatlng[i];
+
+            new google.maps.Marker({
+                position: { lat: city[1], lng: city[2] },
+                map,
+                //   icon: image,
+                //shape: shape,
+                title: city[0],
+                zIndex: city[3],
+            });
+        }
+    }
+
+
+    function summary() {
+        var hotels = $("#Hotels").val();
+        var guider = $("#Guider").val();
+        var vehicle = $("#Vehicle").val();
+        var Days = $('#No_of_Days').val();
+        var tickets = $('#NoofTickets').val();
+
+
+        $.get("/User/GetPrice?hotels=" + hotels + "&guider=" + guider + "&vehicle=" + vehicle + "&tickets=" + tickets, function (data) {
+            debugger
+
+            var price = data.Price
+            $("#Price").val(data.Price);
+            console.log(price)
+
+            price = price * Days;
+            //Summary
+            $("#userName").text($('#Name').val());
+            $("#userCNIC").text($('#CNIC').val());
+            $("#userContact").text($('#ContactNumber').val());
+            $("#userAddress").text($('#Address').val());
+            $("#userState").text($('#State').val());
+            $("#userCity").text($('#city').val());
+            $("#userDOB").text($('#DOB').val());
+            $("#packageName").text("Customize Package");
+            $("#pickUpLocation").text(@Html.Raw(Json.Encode(Model.City)));
+            $("#duration").text($('#No_of_Days').val() + " Days");
+            $("#price").text("Rs " + numberWithCommas(price));
+            $("#date").text($('#StartDate').val());
+            //$("#hotel").text(json.Summary.Hotels);
+
+            /*var amount = tickets * price;*/
+            var tax = Number(price * 0.12);
+            var total = price + tax;
+            var cardNumber = $('#CardNumber').val();
+            cardNumber = cardNumber.toString().substr(-4);
+            $("#ticket").text(tickets);
+            $("#cardNumber").text("****" + cardNumber);
+            $("#amount").text("Rs " + numberWithCommas(price));
+            $("#tax").text("Rs " + numberWithCommas(Number(tax)));
+            $("#total").text("RS " + numberWithCommas(String(total)));
+        });
+
+    }
+
+
+    function bookingSubmit() {
+        debugger
+        //Package Details
+        var packName = "Customize Package";
+        var pickUp = @Html.Raw(Json.Encode(Model.City));
+        var noOfDays = $('#No_of_Days').val();
+        var date = $('#StartDate').val();
+        var cities = $('#Cities').val();
+        var places = $('#Places').val();
+        var tripDays = $('#TripDays').val();
+        //var idsHotel = $('#Hotels').val();
+        var idsHotel = $('#Hotels').val();
+        var idGuider = $('#Guider').val();
+        var idVehicle = $('#Vehicle').val();
+
+        var packprice = Number($('#Price').val()) * noOfDays;
+        packprice += (packprice * 0.12);
+        var price = Number(packprice);
+
+        //User Details
+        var userID = @Html.Raw(Json.Encode(Model.U_Id));
+        var name = $('#Name').val();
+        var email = $('#Email').val();
+        var phone = $('#ContactNumber').val();
+        var cnic = $('#CNIC').val();
+        var dob = $('#DOB').val();
+        var Address = $('#Address').val();
+        var State = $('#State').val();
+        var City = $('#city').val();
+
+        
+
+        //Card Holder
+        var holderName = $('#CardHolderName').val();
+        var cardNo = $('#CardNumber').val();
+        var month = $('#month').val();
+        var year = $('#year').val();
+        var cvc = $('#cvc').val();
+        var nooftickets= $('#NoofTickets').val();
+        //var amount = $('#packAmount').text();
+
+        var bookingModel = {
+            packname: packName,
+            pickup: pickUp,
+            no_of_days: noOfDays,
+            no_of_tickets: nooftickets,
+            price: price,
+            startdate: date,
+            cities: cities,
+            places: places,
+            hotels: idsHotel,
+            tripdays: tripDays,
+            guider: idGuider,
+            vehicle: idVehicle,
+            u_id: userID,
+            name: name,
+            email: email,
+            contact_no: phone,
+            cnic: cnic,
+            dob: dob,
+            address: Address,
+            state: State,
+            u_city: City,
+            /*packageid: packID,*/
+            holdername: holderName,
+            cardnumber: cardNo,
+            month: month,
+            year: year,
+            cvv: cvc,
+            amount: price,
+        }
+        $("#saveBtn").disabled = true;
+        document.getElementById("saveBtn").innerHTML = `Booking....`
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(bookingModel)
+        };
+        fetch('/User/CustomizePackageBooking', requestOptions)
+            .then(response => response.json())
+            .then(json => {
+                document.getElementById("saveBtn").innerHTML = `Book Trip`
+                if (json) {
+                    Swal.fire({
+                        title: 'Trip Book Successfully!',
+                        icon: 'success',
+                        showDenyButton: false,
+                        showCancelButton: false,
+                        confirmButtonText: 'Ok',
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            $("#saveBtn").disabled = false;
+                            location.replace("@Url.Action("BookingHistory","User")?U_Id=" + userID)
+                        }
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
+                }
+            })
+    }
+</script>

@@ -1,0 +1,75 @@
+﻿@model FYP.Models.LoginModel
+@{
+    ViewBag.Title = "MoreToIt-Login";
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="icon" href="~/Content/loginassets/img/dummy/favicon.png" type="image/x-icon">
+
+    <title>More To It</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/Content/loginassets/css/app.css">
+    <link rel="stylesheet" href="~/Content/loginassets/css/style.css">
+
+    @* Eye Icon *@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+
+</head>
+
+<body class="light">
+    <div id="app">
+        <div id="primary" class="p-t-b-100 height-full">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 mx-md-auto paper-card">
+                        <div class="text-center">
+                            <div @*class="roundlogo"*@>
+                                <img src="~/Content/loginassets/img/dummy/icon.png" height="130" width="130" alt="">
+                            </div>
+                            <h3 class="mt-2"><b>Welcome To More To It!</b></h3>
+                        </div>
+                        @using (Html.BeginForm(FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <p>
+                                <label for="username">Username:</label>
+                                @Html.TextBoxFor(x => x.Email, null, new { placeholder = "Username", type = "text", name = "username", id = "username" })
+                                @Html.ValidationMessageFor(x => x.Email, null, new { style = "color:red" })
+                            </p>
+                            <p>
+                                <label for="password">Password:</label>
+                                @Html.TextBoxFor(x => x.Password, null, new { placeholder = "Your Password", type = "password", name = "password", id = "password" })
+                                @Html.ValidationMessageFor(x => x.Password, null, new { style = "color:red" })
+                                <i class="bi bi-eye-slash" name="showeye" id="togglePassword"></i>
+                            </p>
+                            <input type="submit" name="submit" class="btn btn-primary btn-lg btn-block" value="Log In">
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Content/loginassets/js/jscript.js"></script>
+
+    @if (TempData["Message"] != null)
+    {
+        <script type="text/javascript">
+        window.onload = function () {
+            alert("@TempData["Message"]");
+        }
+        </script>
+    }
+</body>
+</html>
+

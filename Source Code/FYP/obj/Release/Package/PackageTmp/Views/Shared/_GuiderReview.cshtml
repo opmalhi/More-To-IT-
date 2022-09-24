@@ -1,0 +1,13 @@
+﻿@model FYP.Models.GuiderReview
+
+<link href="~/Content/userassests/css/Review.css" rel="stylesheet" />
+
+@using (Html.BeginForm("VehicleApplication", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="inputBox">
+        <input type="text" placeholder="owner name" id="User_Name" name="User_Name" required autocomplete="off">
+        <input type="text" placeholder="contact no" id="Phone_No" name="Phone_No" required autocomplete="off">
+    </div>
+
+    <input type="submit" class="btn" value="Apply">
+}

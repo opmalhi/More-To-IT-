@@ -1,0 +1,581 @@
+﻿@model List<FYP.Models.BookingMapModel>
+
+@{
+    ViewBag.Title = "BookingHistory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+    fieldset {
+        display: block;
+        margin-inline-start: 2px;
+        margin-inline-end: 2px;
+        padding-block-start: 0.35em;
+        padding-inline-start: 0.75em;
+        padding-inline-end: 0.75em;
+        padding-block-end: 0.625em;
+        min-inline-size: min-content;
+        border-width: 2px !important;
+        border-style: dashed !important;
+        border-color: rgb(192, 192, 192) !important;
+        border-image: initial !important;
+        padding: 5px 10px !important;
+    }
+
+    legend {
+        display: block !important;
+        padding-inline-start: 2px;
+        padding-inline-end: 2px;
+        border-width: initial !important;
+        border-style: none !important;
+        border-color: initial !important;
+        border-image: initial !important;
+        display: block !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin-bottom: 0.5rem !important;
+        font-size: 1.5rem !important;
+        line-height: inherit !important;
+        padding: 0;
+        float: none !important;
+        width: auto !important;
+        margin-left: 5px !important;
+    }
+
+    .printBtn {
+        /*margin: 0 auto !important;*/
+        padding: 2px 15px;
+        font-size: 14px;
+        float: right;
+        background-color: black;
+        color: white;
+        border-radius: 5px;
+        margin: -0.5rem -0.5rem -0.5rem auto;
+    }
+
+    label {
+        font-weight: bold !important;
+        font-size: 12px;
+    }
+
+    fieldset span {
+        font-size: 12px;
+    }
+
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .nav-tabs {
+        border-bottom: 1px solid #ddd;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .nav {
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+    }
+
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > .services:hover {
+        color: #555;
+        cursor: default;
+        border: 1px solid #ddd;
+        border-bottom-color: transparent;
+    }
+
+    .nav-tabs > li > a {
+        margin-right: 2px;
+        line-height: 1.42857143;
+        border: 1px solid transparent;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .nav > li > a {
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+        color: orange;
+    }
+
+
+    .nav-tabs > li {
+        float: left;
+        margin-bottom: -1px;
+    }
+
+    .nav > li {
+        position: relative;
+        display: block;
+    }
+
+    .nav-tabs > li > a {
+        margin-right: 2px;
+        line-height: 1.42857143;
+        border: 1px solid transparent;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .nav > li > a {
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+    }
+
+    #Vehicle_Type {
+        background-color: #f7f7f7;
+        padding: 1rem;
+        font-size: 1.7rem;
+        color: #333;
+        width: 290px;
+        height: 50px;
+        cursor: pointer;
+    }
+</style>
+<link href="~/Content/bootstrap/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/userassests/css/Review.css" rel="stylesheet" />
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">DETAIL</h5>
+                <a class="printBtn" onclick="printTicket($('#bookingId').val())">Print</a>
+                @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>*@<br />
+            </div>
+            <div class="modal-body">
+                <fieldset>
+                    <legend style="width:auto">Personal Details</legend>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Name:</label>
+                            <span id="userName"></span><hr />
+                            <label>Contact No#: </label>
+                            <span id="userContact"></span><hr />
+                            <label>Address:</label>
+                            <span id="userAddress"></span><hr />
+                            <label>State:</label>
+                            <span id="userState"></span>
+                        </div>
+                        <div class="col-6">
+                            <label>Date of Birth:</label>
+                            <span id="userDOB"></span><hr />
+                            <label>CNIC:</label>
+                            <span id="userCNIC"></span><hr />
+                            <label>City:</label>
+                            <span id="userCity"></span>
+                        </div>
+                    </div>
+                </fieldset>
+                <br />
+
+                <fieldset>
+                    <legend style="width:auto">Package Details</legend>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Package:</label>
+                            <span id="packName"></span><hr />
+                            <input id="bookingId" type="hidden" />
+                            <label>Duration:</label>
+                            <span id="duration"></span><hr />
+                            <label>Trip Starting Date: </label>
+                            <span id="date"></span>
+                        </div>
+                        <div class="col-6">
+                            <label>Pick Up Location: </label>
+                            <span id="pickUpLocation"></span><hr />
+                            <label>Price:</label>
+                            <span id="price"></span><hr />
+                            <label>Total Tickets:</label>
+                            <span id="ticket"></span>
+                        </div>
+                    </div>
+                </fieldset>
+                <br />
+
+                <fieldset>
+                    <legend style="width:auto">Payment Details</legend>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Card Number:</label><br />
+                            <label>Amount:</label><br />
+                            <label>GST: </label><br />
+                            <label>Discount: </label><br />
+                            <label>Total: </label>
+                        </div>
+                        <div class="col-6">
+                            <span id="cardNumber"></span><br />
+                            <span id="amount"></span><br />
+                            <span id="tax"></span><br />
+                            <span id="discount">0%</span><br /><hr />
+                            <span id="total" class="font-weight-bold"></span>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+<!--Review Modal -->
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            @*<div class="modal-header">
+                    <h5 class="modal-title" id="reviewModalLabel">Review</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button><br />
+                </div>*@
+            <div class="modal-body">
+                <div class="col-10">
+                    <div>
+                        <h2>Package Review</h2><hr />
+                        <div class="comment-box ml-2">
+                            <h4>Add a comment</h4>
+                            <div class="rating">
+                                <input type="radio" name="packrating" value="5" id="5"><label for="5">☆</label>
+                                <input type="radio" name="packrating" value="4" id="4"><label for="4">☆</label>
+                                <input type="radio" name="packrating" value="3" id="3"><label for="3">☆</label>
+                                <input type="radio" name="packrating" value="2" id="2"><label for="2">☆</label>
+                                <input type="radio" name="packrating" value="1" id="1"><label for="1">☆</label>
+                            </div>
+                            <div class="comment-area">
+                                <textarea id="packageReview" class="form-control" placeholder="what is your view?" rows="4"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div>
+                        <h2>Guider Review</h2><hr />
+                        <div class="comment-box ml-2">
+                            <h4>Add a comment</h4>
+                            <div class="rating">
+                                <input type="radio" name="guiderrating" value="5" id="guider5"><label for="guider5">☆</label>
+                                <input type="radio" name="guiderrating" value="4" id="guider4"><label for="guider4">☆</label>
+                                <input type="radio" name="guiderrating" value="3" id="guider3"><label for="guider3">☆</label>
+                                <input type="radio" name="guiderrating" value="2" id="guider2"><label for="guider2">☆</label>
+                                <input type="radio" name="guiderrating" value="1" id="guider1"><label for="guider1">☆</label>
+                            </div>
+                            <div class="comment-area">
+                                <textarea id="guiderReview" class="form-control" placeholder="what is your view?" rows="4"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div>
+                        <h2>Vehicle Review</h2><hr />
+                        <div class="comment-box ml-2">
+                            <h4>Add a comment</h4>
+                            <div class="rating">
+                                <input type="radio" name="vehiclerating" value="5" id="vehicle5"><label for="vehicle5">☆</label>
+                                <input type="radio" name="vehiclerating" value="4" id="vehicle4"><label for="vehicle4">☆</label>
+                                <input type="radio" name="vehiclerating" value="3" id="vehicle3"><label for="vehicle3">☆</label>
+                                <input type="radio" name="vehiclerating" value="2" id="vehicle2"><label for="vehicle2">☆</label>
+                                <input type="radio" name="vehiclerating" value="1" id="vehicle1"><label for="vehicle1">☆</label>
+                            </div>
+                            <div class="comment-area">
+                                <textarea id="vehicleReview" class="form-control" placeholder="what is your view?" rows="4"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*@Html.ActionLink("Review", "PackageReview", "User", new { U_Id = Session["U_Id"] }, new { @class = "btn" })*@
+                <input type="hidden" id="Package_ID">
+                <input type="hidden" id="Booking_ID">
+                <input type="button" class="btn" value="Review" onclick="Review()">
+
+                <!--<ul class="nav nav-tabs" role="tablist">
+                                <li class="active"><a href="#package" role="tab" data-toggle="tab" class="services">Package Review</a></li>
+                                <li><a href="##guider" role="tab" data-toggle="tab" class="services">Guider Review</a></li>
+                                <li><a href="#vehicle" role="tab" data-toggle="tab">Vehicle Review</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="package">-->
+                @*@Html.Action("PackageReview", "User")*@
+                <!--</div>
+                <div class="tab-pane" id="guider">-->
+                @*@Html.Action("GuiderReview", "User")*@
+
+                <!--</div>
+                <div class="tab-pane" id="vehicle">-->
+                @*@Html.Action("VehicleReview", "User")*@
+
+                <!--</div>
+                </div>-->
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin: 120px auto 50px auto; width:1000px;">
+
+    <div class="col-lg-12 m-b30">
+        <div class="widget-box">
+            <div class="wc-title">
+                <h4>Bookings History</h4>
+            </div>
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div>
+                        <table class="table table-hover">
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    var date = item.Date >= DateTime.Now;
+                                    <tr onclick="summary(@item.bookingId)">
+                                        <td colspan="3" style="font-size: 1.5rem; padding: 1.5% 1%;">
+                                            <i class="fas fa-suitcase-rolling" style="color:gray; margin-right:5px;"></i>
+                                            @item.packageName
+                                            @{
+                                                if (date)
+                                                {
+                                                    var status = "Valid";
+                                                    <span class="badge alert-success" id="status">@status</span>
+                                                    if (item.isCustomize)
+                                                    {
+                                                        var custom = "Customized";
+                                                        <span class="badge alert-warning" id="status">@custom</span>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    var status = "Expired";
+                                                    <span class="badge alert-danger">@status</span>
+                                                    if (item.isCustomize)
+                                                    {
+                                                        var custom = "Customized";
+                                                        <span class="badge alert-warning" id="status">@custom</span>
+                                                    }
+                                                }
+
+                                            }
+                                        </td>
+                                        <td style="padding: 1.5% 1%;">
+                                            <a id="detailsBtn" class="btn" style="margin-left:5px !important;" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="summary(@item.bookingId)">Details</a>
+                                            @{
+                                                if (item.isReviewed == false)
+                                                {
+                                                    <a id="detailsBtn" class="btn" data-bs-toggle="modal" data-bs-target="#reviewModal" onclick="reviewId(@item.packageId,@item.bookingId)">Review</a>
+                                                }
+                                                else
+                                                {
+                                                    <a id="detailsBtn" class="btn" style="pointer-events:none;  opacity:0.5;">Review</a>
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        @foreach (var item in Model)
+                        {
+                            var date = item.Date >= DateTime.Now;
+
+
+                            <!--<div class="alert alert-dark" role="alert">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p style="font-size: 1.5rem; line-height: 1.5;" class="text-wrap">@item.packageName</p>
+
+                                    </div>
+                                    <div class="col-2">
+                                        @{
+                                            if (date)
+                                            {
+                                                var status = "Valid";
+                                                <span class="badge alert-success">@status</span>
+                                            }
+                                            else
+                                            {
+                                                var status = "Expired";
+                                                <span class="badge alert-danger">@status</span>
+                                            }
+
+                                        }
+                                    </div>
+
+
+                                    <div class="col-4">
+                                        <a id="detailsBtn" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="summary(@item.bookingId)">Details</a>
+                                    </div>
+                                </div>-->
+                            @*<input type="button" value="detail" class="btn btn-sm btn-outline-dark">*@
+                            <!--</div>-->
+
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+@*<script src="~/Scripts/jquery-3.6.0.js"></script>*@
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+@*<script src="~/Scripts/bootstrap.min.js"></script>*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script>
+    function summary(id) {
+
+        fetch('/User/SummaryDetails?bookingId=' + id)
+            .then(response => response.json())
+            .then(json => {
+
+                const d1 = new Date(json.Summary.DOB.match(/\d+/)[0] * 1);
+
+                const formattedDate1 = d1.getFullYear() + '-' + ("0" + (d1.getMonth() + 1)).slice(-2) + '-' + ("0" + d1.getDate()).slice(-2)
+
+                const d2 = new Date(json.Summary.Date.match(/\d+/)[0] * 1);
+
+                formattedDate2 = d2.getFullYear() + '-' + ("0" + (d2.getMonth() + 1)).slice(-2) + '-' + ("0" + d2.getDate()).slice(-2)
+
+                var total = parseInt(json.Summary.Amount) + parseInt(json.Summary.Tax);
+
+                $("#bookingId").val(id);
+                $("#userName").text(json.Summary.Name);
+                $("#userCNIC").text(json.Summary.CNIC);
+                $("#userContact").text(json.Summary.Contact_Number);
+                $("#userAddress").text(json.Summary.Address);
+                $("#userState").text(json.Summary.State);
+                $("#userCity").text(json.Summary.City);
+                $("#userDOB").text(formattedDate1);
+                $("#packName").text(json.Summary.Package_Name);
+                $("#pickUpLocation").text(json.Summary.Pick_Up_Location);
+                $("#duration").text(json.Summary.No_of_Days + " Days");
+                $("#price").text("Rs " + numberWithCommas(json.Summary.Price));
+                $("#date").text(formattedDate2);
+                $("#hotel").text(json.Summary.Hotels);
+                $("#ticket").text(json.Summary.No_of_Tickets);
+                $("#cardNumber").text(json.Summary.Card_Number);
+                $("#amount").text("Rs " + numberWithCommas(String(json.Summary.Amount)));
+                $("#tax").text("Rs " + numberWithCommas(json.Summary.Tax));
+                $("#total").text("RS " + numberWithCommas(String(total)));
+            });
+
+
+
+        //$.get("/User/SummaryDetails?bookingId=" + id, function (data) {
+        //debugger
+        //    console.log(data)
+        //    $("#userName").text(data.summary.Name);
+        //    $("#userCNIC").text(data.summary.CNIC);
+        //    $("#userContact").text(data.summary.Contact_Number);
+        //    $("#userAddress").text(data.summary.Address);
+        //    $("#userState").text(data.summary.State);
+        //    $("#userCity").text(data.summary.City);
+        //    $("#userDOB").text(data.summary.DOB);
+        //    $("#packageName").text(data.summary.Package_Name);
+        //    $("#pickUpLocation").text(data.summary.Pick_Up_Location);
+        //    $("#noOfDays").text(data.summary.No_of_Days);
+        //    $("#price").text("Rs " + data.summary.Price);
+        //    $("#date").text(data.summary.Date);
+        //    $("#hotel").text(data.summary.Hotels);
+        //    $("#cardNumber").text(data.summary.Card_number);
+        //    $("#amount").text(data.summary.Amount);
+        //    $("#tax").text(data.summary.Tax);
+        //    $("#tax").text(data.summary.No_of_Tickets);
+        //    $("#status").text(data.summary.Status);
+        //});
+
+    }
+
+    function printTicket(id) {
+        var newdate = $("#date").text()
+        var date = new Date(newdate)
+        //Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(date);
+        var currentDate = new Date()
+        var isExpired = date < currentDate
+        if (isExpired) {
+            alert("Can't Print Ticket, This Package is already Expired!!");
+        } else {
+            var url = '/User/PrintTicket?bookingId=' + id
+            window.open(url, '_blank');
+        }
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function reviewId(packid,bookingid) {
+        $("#Package_ID").val(packid)
+        $("#Booking_ID").val(bookingid)
+    }
+
+    debugger
+    var url = new URL(window.location);
+    var userID = url.searchParams.get("U_Id");
+
+    function Review() {
+        debugger
+        var packid = $("#Package_ID").val()
+        var bookid = $("#Booking_ID").val()
+        var packRating = $("input[type='radio'][name='packrating']:checked").val();
+        var packReview = $("#packageReview").val()
+        var guiderRating = $("input[type='radio'][name='guiderrating']:checked").val();
+        var guiderReview = $("#guiderReview").val()
+        var vehicleRating = $("input[type='radio'][name='vehiclerating']:checked").val();
+        var vehicleReview = $("#vehicleReview").val()
+
+
+        var reviewModel = {
+            u_id: userID,
+            packid: packid,
+            bookingid: bookid,
+            packRating: packRating,
+            packReview: packReview,
+            guiderRating: guiderRating,
+            guiderReview: guiderReview,
+            vehicleRating: vehicleRating,
+            vehicleReview: vehicleReview,
+        }
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(reviewModel)
+        };
+        fetch('/User/Review', requestOptions)
+            .then(response => response.json())
+            .then(json => {
+                if (json) {
+                    Swal.fire({
+                        title: 'Reviewed Successfully!',
+                        icon: 'success',
+                        showDenyButton: false,
+                        showCancelButton: false,
+                        confirmButtonText: 'Ok',
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        location.reload();
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
+                }
+            })
+    }
+</script>
+
+

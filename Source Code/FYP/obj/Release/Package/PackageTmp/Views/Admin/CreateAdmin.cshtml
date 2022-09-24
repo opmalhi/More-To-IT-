@@ -1,0 +1,257 @@
+﻿@model FYP.Models.CreateAdminModel
+@{
+    ViewBag.Title = "CreateAdmin";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .p-image {
+        position: absolute;
+        top: 132px;
+        right: 148px;
+        color: #666666;
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    }
+
+    .ttr-header {
+        height: 60px;
+    }
+
+    .ttr-pinned-sidebar .ttr-sidebar {
+        top: 60px;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="db-breadcrumb">
+        <h4 class="breadcrumb-title">Create User</h4>
+        <ul class="db-breadcrumb-list">
+            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            <li>Create User</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 m-b30">
+        <div class="widget-box">
+            <div class="wc-title">
+                <h4>Admin Profile</h4>
+            </div>
+            <div class="widget-inner">
+
+                @using (Html.BeginForm("CreateAdmin", "Admin", FormMethod.Post, new { @class = "edit-profile m-b30", enctype = "multipart/form-data" }))
+                {
+                    <div class="form-group row">
+                        <div class="col-sm-10  ml-auto">
+                            <div class="width-box">
+                                <div class="wc-title">
+                                    <h3>Personal Details:</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-sm-2 m-auto ">
+                        <div class="form-group row">
+                            <div class="circle">
+                                <img class="profile-pic">
+                            </div>
+
+                            <div class="p-image">
+                                <i class="fa fa-camera upload-button"></i>
+                                <input class="file-upload" type="file" name="ImageFile" accept="image/*" id="file" />
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Full Name</label>
+                        <div class="col-sm-7">
+
+                            @Html.TextBoxFor(x => x.Full_Name, null, new { @Class = "form-control", placeholder = "Full Name" })
+                            @Html.ValidationMessageFor(x => x.Full_Name, null, new { style = "color:red" })
+                            @*, Required="required"*@
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Father Name</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Father_Name, null, new { @Class = "form-control", placeholder = "Father Name" })
+                            @Html.ValidationMessageFor(x => x.Full_Name, null, new { style = "color:red" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">NIC #</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.NIC, null, new { @Class = "form-control", placeholder = "NIC #" })
+                            @Html.ValidationMessageFor(x => x.NIC, null, new { style = "color:red" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Gender</label>
+                        <div class="col-sm-7">
+                            @Html.DropDownListFor(x => x.Gender, new List<SelectListItem>
+                            { new SelectListItem() { Text = "Please Select" },
+                              new SelectListItem() { Text = "Male" },
+                              new SelectListItem() { Text = "Female" }
+                            }, new { @Class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Gender, null, new { style = "color:red" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Date of Birth</label>
+                        <div class="col-sm-7">
+                            @Html.EditorFor(x => x.DOB, new { htmlAttributes = new { @class = "form-control", @type = "date", } })
+                            @Html.ValidationMessageFor(x => x.DOB, null, new { style = "color:red" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Contact #</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Contact_Number, null, new { @Class = "form-control", placeholder = "Contact #" })
+                            @Html.ValidationMessageFor(x => x.Contact_Number, null, new { style = "color:red" })
+
+                        </div>
+                    </div>
+                   
+                    <div class="seperator"></div>
+                    <div class="form-group row">
+                        <div class="col-sm-10 ml-auto">
+                            <h3>Address:</h3>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Address</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Address, null, new { @Class = "form-control", placeholder = "Address" })
+                            @Html.ValidationMessageFor(x => x.Address, null, new { style = "color:red" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">State</label>
+                        <div class="col-sm-7">
+                            @Html.DropDownListFor(x => x.State, new List<SelectListItem>
+                          { new SelectListItem() { Text = "Please Select" },
+                            new SelectListItem() { Text = "Sindh" },
+                             new SelectListItem() { Text = "Punjab" },
+                              new SelectListItem() { Text = "Balochistan" },
+                               new SelectListItem() { Text = "Khyber Pakhtunkhwa" },
+                                new SelectListItem() { Text = "Gilgit Baltistan" },
+                          }, new { @Class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.State, null, new { style = "color:red" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">City</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.City, null, new { @Class = "form-control", placeholder = "City" })
+                            @Html.ValidationMessageFor(x => x.City, null, new { style = "color:red" })
+
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="form-group row">
+                            <div class="col-sm-10 ml-auto">
+                                <h3>Create Username and Password:</h3>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">User Name</label>
+                            <div class="col-sm-7">
+                                @Html.TextBoxFor(x => x.UserName, null, new { @Class = "form-control", placeholder = "User Name" })
+                                @Html.ValidationMessageFor(x => x.UserName, null, new { style = "color:red" })
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Password</label>
+                            <div class="col-sm-7">
+                                <p>
+                                    @Html.TextBoxFor(x => x.Password, null, new { @class = "az", type = "password", name = "password", id = "password1", placeholder = "Password" })
+                                    <i class="bi bi-eye-slash" name="showeye" id="togglePassword"></i>
+                                    @Html.ValidationMessageFor(x => x.Password, null, new { style = "color:red" })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    @helper button(string type, string value, string clas = "btn")
+                    {
+                        <input type="@type" value="@value" class="@clas" />
+                    }
+
+                    <div class="row">
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-sm-7">
+                            <button type="submit" class="btn">Create Admin</button>
+                            <button type="reset" class="btn-secondry">Cancel</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ttr-overlay"></div>
+<script src="~/Content/adminassets/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+            var readURL = function (input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader()
+
+                    reader.onload = function (e) {
+                        $('.profile-pic').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+        }
+
+            function validate(file) {
+                var ext = file.split(".");
+                ext = ext[ext.length - 1].toLowerCase();
+                var arrayExtensions = ["jpg", "jpeg", "png", "bmp", "gif"];
+
+                if (arrayExtensions.lastIndexOf(ext) == -1) {
+                    alert("This is not an allowed file type Please upload Picture");
+                    $("#file").val("");
+                }
+            }
+
+            $("#file").change(function (e) {
+                var file = this.files[0], img;
+                if (Math.round(file.size / (1024 * 1024)) > 2) { // make it in MB so divide by 1024*1024
+                    alert('Please select image size less than 2 MB');
+                    this.value = '';
+                }
+
+            });
+
+            $(".file-upload").on('change', function () {
+                readURL(this);
+            });
+
+            $(".upload-button").on('click', function () {
+                $(".file-upload").click();
+            });
+        });
+
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password1');
+        togglePassword.addEventListener('click', function (f) {
+            // toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            // toggle the eye / eye slash icon
+            this.classList.toggle('bi-eye');
+        });
+
+</script>
+

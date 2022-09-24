@@ -1,0 +1,83 @@
+﻿
+
+
+.user-profile-image {
+    /* border: 1px solid #edebed;
+    border-radius: 3px;
+    */
+}
+.user-profile-image img {
+        height: 410px;
+        width:410px;
+        cursor: pointer;
+}
+.user-profile-image:hover .upload-pic {
+        transform: scaleY(1);
+}
+.user-profile-image .upload-pic {
+        background-color: #242424;
+        opacity:0.6;
+        width: 410px;
+        height:50px;
+        position:absolute;
+        bottom:42px;
+        left:12px;
+        cursor:pointer;
+        transform:scaleY(0);
+        transition:0.5s;
+        transform-origin:bottom;
+}
+.user-profile-image .upload-pic:before{
+            content:"Upload Assessment Image";
+            color:#fff;
+            position:absolute;
+            bottom:14px;
+            left:120px;
+            opacity:1;
+            font-size:17px;
+}
+.user-profile-image .upload-pic img {
+            height: 30px;
+            width: 30px;
+            color: #fff;
+            position: absolute;
+            top: 7px;
+            left: 70px;
+}
+.user-profile-image .remove-photo{
+        position:absolute;
+        top:0;
+        right:0;
+}
+.image-desc{
+       font-size:14.5px;
+}
+.bill_container {
+    top:-474px;
+    position:absolute;
+    left:508px;
+}
+@media (min-width: 768px)
+{
+   .bill_container {
+    flex: 0 0 50%;
+    max-width: 50%;
+} 
+}
+.h4, h4 {
+    font-size: 1.2rem;
+    font-style:normal;
+}
+input[type=text] {
+    width: 410px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: -6px solid #ccc;
+    border-radius: 3px;
+    display: inline-block;
+}
+input
+{
+    width:410px !important;
+    height: 30px !important;
+}

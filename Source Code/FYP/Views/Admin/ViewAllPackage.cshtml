@@ -1,0 +1,175 @@
+﻿@model List<FYP.Models.AddPackageModel>
+@{
+    ViewBag.Title = "ViewAllPackage";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<style>
+    tbody tr:hover {
+        cursor: pointer;
+    }
+
+    .modal-body {
+        padding: 0;
+    }
+</style>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            @*<div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>*@
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-7">
+                        <img id="packageImage" style="width:100%; height:435px;" onclick="openImageInTab(this)" />
+                    </div>
+                    <div class="col-5" style="padding-top:10px;">
+                        <div style="padding:25px;">
+                            <label>Package Name:</label>
+                            <span id="packageName"></span><hr />
+                            <label>Pick Up Location:</label>
+                            <span id="pickUpLocation"></span><hr />
+                            <label>Trip Start Date:</label>
+                            <span id="tripDate"></span><hr />
+                            <label>Total Trip Days</label>
+                            <span id="tripDays"></span><hr />
+                            <label>Package Price</label>
+                            <span id="tripPrice"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="db-breadcrumb">
+        <h4 class="breadcrumb-title">Packages</h4>
+        <ul class="db-breadcrumb-list">
+            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            <li>View all Packages</li>
+        </ul>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-12 m-b30">
+            <div class="widget-box">
+                <div class="wc-title">
+                    <h4>Packages</h4>
+                </div>
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" style="width:100%;" cellspacing="0">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th class="d-none">Package ID</th>
+                                        <th>Package Name</th>
+                                        <th>Pick Up Location</th>
+                                        <th>No Of Days</th>
+                                        <th>Price</th>
+                                        <th>Total Seats</th>
+                                        <th>Remaining Tickets</th>
+                                        <th>Modify</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (var item in Model)
+                                        {
+                                            var Total = 0;
+                                            if (item.IsCustomize == false)
+                                            {
+                                                Total = @item.Total_Seats + @item.No_of_Bookings;
+                                            }
+                                            else {
+                                                Total = @item.Total_Seats;
+                                            }
+
+                                        <tr class="text-center" onclick="packageDetails(this)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <td class="d-none">@item.Package_ID</td>
+                                            <td>@item.Name</td>
+                                            <td>@item.Pick_Up_Location</td>
+                                            <td>@item.No_of_Days</td>
+                                            <td>@item.Price</td>
+                                            <td>@Total</td>
+                                            <td>@item.No_of_Bookings</td>
+                                            @*<td>@item.Date.ToShortDateString()</td>*@
+                                            <td>@Html.ActionLink("Update", "UpdatePackage", "Admin", new { Pack_Id = @item.Package_ID }, new { @class = "btn", onclick="closeModal()" })</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ttr-overlay"></div>
+
+<script src="~/Content/assetstable/vendor/jquery/jquery.min.js"></script>
+<script src="~/Content/assetstable/vendor/datatables/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.noConflict();
+        var table = $('#dataTable').DataTable();
+    });</script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Content/assetstable/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="~/Content/assetstable/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+@*<script src="~/Scripts/jquery-3.6.0.js"></script>*@
+
+<script>
+
+    function closeModal() {
+        debugger
+        $("#exampleModal").modal("hide")
+    }
+
+    function openImageInTab(data) {
+        var img = $(data).attr('src');
+        //console.log(img);
+        window.open(img, "_blank");
+    }
+
+    function packageDetails(data) {
+        var value = $(data).closest('tr').children('td:first').text();
+        console.log(value);
+
+        $.get("/Admin/PackageDetails/" + value, function (data) {
+            console.log(data)
+            if (data.packageDetail.IsCustomize == false) {
+                let a = data.packageDetail.Picture;
+                let result = a.replace("~/", "");
+                console.log(result);
+                $("#packageImage").attr("src", "http://localhost:53010/" + result);
+            } else {
+                let result = data.packageDetail.Picture;
+                $("#packageImage").attr("src", "" + result);
+            }
+            $("#packageName").text(data.packageDetail.Name);
+            $("#pickUpLocation").text(data.packageDetail.Pick_Up_Location);
+            $("#tripDate").text(data.packageDetail.DateString);
+            $("#tripDays").text(data.packageDetail.No_of_Days);
+            $("#tripPrice").text("Rs " + data.packageDetail.Price);
+
+        });
+
+    }
+</script>
+
+

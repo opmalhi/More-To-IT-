@@ -1,0 +1,611 @@
+﻿@model FYP.Models.AddPackageModel
+@{
+    ViewBag.Title = "Create Packages";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .disabled {
+        cursor:not-allowed;
+    }
+
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+    /*.mt-100 {
+        margin-top: 100px
+    }*/
+
+    /*body {
+        background: #00B4DB;
+        background: -webkit-linear-gradient(to right, #0083B0, #00B4DB);
+        background: linear-gradient(to right, #0083B0, #00B4DB);
+        color: #514B64;
+        min-height: 100vh
+    }*/
+</style>
+
+<link href="~/Content/adminassets/css/dropdown.css" rel="stylesheet" />
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<div class="container-fluid">
+    <div class="db-breadcrumb">
+        <h4 class="breadcrumb-title">Add Package</h4>
+        <ul class="db-breadcrumb-list">
+            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            <li>Add Package</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 m-b30">
+        <div class="widget-box">
+            <div class="wc-title">
+                <h4>Add Package</h4>
+            </div>
+            <div class="widget-inner">
+
+                <form method="post" action="/Admin/AddPackage" onsubmit="fillNoOfDays()" class="edit-profile m-b30" enctype="multipart/form-data">
+
+                    <div class="form-group row">
+                        <div class="col-sm-10  ml-auto">
+                            <div class="width-box">
+                                <div class="wc-title">
+                                    <h3>Package Details:</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-10 m-auto">
+                        <div class="form-group" style="margin-left:70px;">
+                            <div class="packImage" style="overflow: hidden; width: 520px; height: 320px; border: 8px solid rgba(171, 168, 168, 0.66);">
+                                <img class="profile-pic" style="width:505px; height:310px;">
+                            </div>
+
+                            <div class="p-image">
+                                <i class="fa fa-camera upload-button"></i>
+                                <input class="file-upload" type="file" name="ImageFile" accept="image/*" id="file" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Package Name</label>
+                        <div class="col-sm-7">
+
+                            @Html.TextBoxFor(x => x.Name, null, new { @Class = "form-control", placeholder = "Package Name" })
+                            @Html.ValidationMessageFor(x => x.Name, null, new { style = "color:red" })
+                        </div>
+                    </div>
+                    @*<div class="form-group row">
+            <label class="col-sm-2 col-form-label">Place Name</label>
+            <div class="col-sm-7">
+                @Html.TextBoxFor(x => x.Place_Name, null, new { @Class = "form-control", placeholder = "Place Name" })
+                @Html.ValidationMessageFor(x => x.Place_Name, null, new { style = "color:red" })
+
+            </div>
+        </div>*@
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Pick Up Location</label>
+                        <div class="col-sm-7">
+                            @Html.DropDownListFor(model => model.Pick_Up_Location, ViewBag.PickLocation as SelectList, new { @class = "form-control", onchange= "getGuiderVehicle()" })
+                            @Html.ValidationMessageFor(x => x.Pick_Up_Location, null, new { style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="seperator"></div>
+                    <div class="form-group row">
+                        <div class="col-sm-10 ml-auto">
+                            <h3>Trip Locations:</h3>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Cities</label>
+                        <div class="col-sm-7">
+                            @Html.HiddenFor(x => x.Cities)
+                            @* @Html.DropDownListFor(model => model.Cities, ViewBag.City as SelectList, new { @class = "form-control" })*@
+                            @*<div class="select select--multiple">*@
+                            <select class="city form-control" id="multi-select" multiple onchange="noOfDaysStay()"></select>
+                            @*<span class="focus"></span>*@
+                            @*</div>*@
+                            <span style="font-size:12px; color:grey;">Press CTRL button for multiple Selection</span><br />
+                                @Html.ValidationMessageFor(x => x.Cities, null, new { style = "color:red" })
+                            @*<button id="addPlace" type="button" class="btn btn-sm btn-warning" style="background-color:#EFBB20;color:white;margin-top:10px;">Add Place</button>*@
+
+                            <div id="dateTable" class="col-sm-10">
+
+                            </div>
+
+                            <a id="addPlace" onclick="DEPlace()"><i class='fas fa-plus-circle my-auto' style='font-size:24px; margin:5px; margin-left:0px;'></i><strong><small>Add Places</small></strong></a>
+                            <a id="addHotel" onclick="DEHotel()"><i class='fas fa-plus-circle my-auto' style='font-size:24px; margin:5px; margin-left:0px;'></i><strong><small>Add Hotel</small></strong></a>
+                        </div>
+                    </div>
+
+
+
+                    <div class="d-none" id="placeDiv">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Places</label>
+                            <div class="col-sm-7">
+                                @Html.HiddenFor(x => x.Places)
+                                <select class="place form-control" id="multi-select2" multiple onchange="getplaces()"></select>
+                                <span style="font-size:12px; color:grey;">Press CTRL button for multiple Selection</span><br />
+                                @* @Html.DropDownListFor(model => model.Places, ViewBag.Place as SelectList, new { @class = "form-control"})*@
+                                @Html.ValidationMessageFor(x => x.Places, null, new { style = "color:red" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-none" id="hotelDiv">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Hotels</label>
+                            <div class="col-sm-7">
+                                @Html.HiddenFor(x => x.Hotels)
+                                <select class="hotel form-control" id="multi-select3" multiple onchange="gethotels()"></select>
+                                <span style="font-size:12px; color:grey;">Press CTRL button for multiple Selection</span><br />
+                                @* @Html.DropDownListFor(model => model.Places, ViewBag.Place as SelectList, new { @class = "form-control"})*@
+                                @Html.ValidationMessageFor(x => x.Hotels, null, new { style = "color:red" })
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="seperator"></div>
+                    <div class="form-group row">
+                        <div class="col-sm-10 ml-auto">
+                            <h3>Tour Details:</h3>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Date</label>
+                        <div class="col-sm-7">
+                            @Html.EditorFor(x => x.Date, new { htmlAttributes = new { @class = "form-control", @type = "date", } })
+                            @Html.ValidationMessageFor(x => x.Date, null, new { style = "color:red" })
+
+                        </div>
+                    </div>
+                    <div class="form-group row d-none">
+                        <label class="col-sm-2 col-form-label">No of Days</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.No_of_Days, null, new { @Class = "form-control", placeholder = "No of Days" })
+                            @Html.ValidationMessageFor(x => x.No_of_Days, null, new { style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row d-none">
+                        <label class="col-sm-2 col-form-label">No of Days</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.TripDays, null, new { @Class = "form-control", placeholder = "No of Days" })
+                            @Html.ValidationMessageFor(x => x.TripDays, null, new { style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Price</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Price, null, new { @Class = "form-control", placeholder = "Price", type = "number" })
+                            @Html.ValidationMessageFor(x => x.Price, null, new { style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Total Seats</label>
+                        <div class="col-sm-7">
+                            @Html.TextBoxFor(x => x.Total_Seats, null, new { @Class = "form-control", placeholder = "Total Tickets", type = "number" })
+                            @Html.ValidationMessageFor(x => x.Total_Seats, null, new { style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="seperator"></div>
+                    <div class="form-group row">
+                        <div class="col-sm-10 ml-auto">
+                            <h3>About Package:</h3>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" >
+                        <label class="col-sm-2 col-form-label">Guider</label>
+                        <div class="col-sm-7">
+                            @Html.HiddenFor(x => x.GuiderID)
+                            <select class="guider form-control" id="guider-select" onchange="getGuider()"></select>
+                            @Html.ValidationMessageFor(x => x.GuiderID, null, new { style = "color:red" })
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Vehicle</label>
+                        <div class="col-sm-7">
+                            @Html.HiddenFor(x => x.VehicleID)
+                            <select class="vehicle form-control" id="vehicle-select" onchange="getVehicle()"></select>
+                            @Html.ValidationMessageFor(x => x.VehicleID, null, new { style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Inclusions</label>
+                        <div class="col-sm-7">
+                            @Html.HiddenFor(x => x.Inclusions)
+                            <select id="multi-select4" placeholder="Select Inclusions" multiple onchange="getInclusion()">
+                                <option value="Air-Condidtional Vehicle">Air-Condidtional Vehicle</option>
+                                <option value="Fuel Surcharge">Fuel Surcharge</option>
+                                <option value="All Expenditures of Transportation">All Expenditures of Transportation</option>
+                                <option value="Guide Charges">Guide Charges</option>
+                                <option value="Sightseeing Tickets">Sightseeing Tickets</option>
+                                <option value="Entry/Admission Tickets">Entry/Admission Tickets</option>
+                                <option value="Accommodation">Accommodation</option>
+                                <option value="1.5L Water Bottle Per Day">1.5L Water Bottle Per Day</option>
+                                <option value="Breakfast">Breakfast</option>
+                                <option value="Lunch">Lunch</option>
+                                <option value="Dinner">Dinner</option>
+                                <option value="Infants Must Sit On Laps">Infants Must Sit On Laps</option>
+                                <option value="All Fee and Taxes">All Fee and Taxes</option>
+                            </select>
+                            @Html.ValidationMessageFor(x => x.Inclusions, null, new { style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Exclusions</label>
+                        <div class="col-sm-7">
+                            @Html.HiddenFor(x => x.Exclusions)
+                            <select id="multi-select5" placeholder="Select Exclusions" multiple onchange="getExclusion()">
+                                <option value="Breakfast">Breakfast</option>
+                                <option value="Lunch">Lunch</option>
+                                <option value="Dinner">Dinner</option>
+                                <option value="Snacks">Snacks</option>
+                                <option value="Beverages">Beverages</option>
+                                <option value="Alcoholic Beverages">Alcoholic Beverages</option>
+                                <option value="Laundry">Laundry</option>
+                                <option value="Entrance Tickets">Entrance Tickets</option>
+                                <option value="Accomodation">Accomodation</option>
+                                <option value="Shopping">Shopping</option>
+                                <option value="Insurance">Insurance</option>
+                                <option value="Gratitude">Gratitude</option>
+                                <option value="Tips">Tips</option>
+                                <option value="Any Optional Tour/Place">Any Optional Tour/Place</option>
+                                <option value="Anything Not Mentioned In Inclusions">Anything Not Mentioned In Inclusions</option>
+                                <option value="All Other Items of Personal Nature Uses Are Not Included">All Other Items of Personal Nature Uses Are Not Included</option>
+                            </select>
+                            @Html.ValidationMessageFor(x => x.Exclusions, null, new { style = "color:red" })
+                        </div>
+                    </div>
+
+                    @helper button(string type, string value, string clas = "btn")
+                    {
+                        <input type="@type" value="@value" class="@clas" />
+                    }
+
+                    <div class="row">
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-sm-7">
+                            <button type="submit" class="btn">Create Package</button>
+                            <button type="reset" class="btn-secondry">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ttr-overlay"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+@*<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />*@
+<script src="~/Content/adminassets/assets/js/jquery.min.js"></script>
+<script src="~/Scripts/select2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+<script type="text/javascript">
+
+    var isPlace = false;
+    var isHotel = false;
+
+
+    function getGuiderVehicle() {
+        var pickUp = $("#Pick_Up_Location").val();
+
+        $.get("/Admin/GetGuiderVehicle?city=" + pickUp, function (data) {
+
+            var guiderhtml = '<option class="disabled" value="0" disabled selected>Select Guider</option>'
+            var vehiclehtml = '<option class="disabled" value="0" disabled selected>Select Vehicle</option>'
+            
+
+            //document.getElementById("guider-select").placeholder = "Select Guider";
+            //document.getElementById("vehicle-select").placeholder = "Select Vehicle";
+
+
+            var guiderDropdown = document.getElementById('guider-select')
+            var vehicleDropdown = document.getElementById('vehicle-select')
+
+            for (let guider = 0; guider < data.Guiders.length; guider++)
+            {
+                guiderhtml += `<option value="${data.Guiders[guider].ID}">${data.Guiders[guider].Name} (Age: ${data.Guiders[guider].Age})</option>`
+            }
+            guiderDropdown.innerHTML = guiderhtml;
+
+            for (let vehicle = 0; vehicle < data.Vehicles.length; vehicle++)
+            {
+                vehiclehtml += `<option value="${data.Vehicles[vehicle].Id}">${data.Vehicles[vehicle].Vehicle_Company} (Model: ${data.Vehicles[vehicle].Vehicle_Model})</option>`
+            }
+            vehicleDropdown.innerHTML = vehiclehtml;
+
+        });
+    }
+
+    function fillNoOfDays() {
+        var input = document.getElementsByName('NoOfdays[]');
+            var noOfDaysArray = [];
+        var sum = 0;
+
+        for (var i = 0; i < input.length; i++) {
+            var a = input[i];
+            noOfDaysArray.push(a.value)
+            sum += Number(a.value)
+        }
+        var x = noOfDaysArray.toString()
+        $('#No_of_Days').val(sum)
+
+        $('#TripDays').val(x)
+    }
+
+    function noOfDaysStay() {
+        var cititesArray = [];
+        var cititesNameArray = [];
+
+        $.each($("#multi-select option:selected"), function () {
+            cititesArray.push($(this).val());
+            cititesNameArray.push($(this).text());
+
+        });
+
+        var data = cititesArray.toString();
+        $("#Cities").val(data)
+
+
+        var getdiv = document.getElementById("dateTable")
+
+        var html = `<table>`
+
+        for (let city = 0; city < cititesArray.length; city++) {
+            html += `<tr>
+            <td>
+                <label style="font-size:15px;">No of Days in ${cititesNameArray[city]}</label>
+                <input type="number" name="NoOfdays[]">
+            </td>
+        </tr>`
+        }
+
+        html += '</table>'
+        getdiv.innerHTML = html
+
+    }
+
+    function DEPlace() {
+        var cititesArray = [];
+
+        $.each($("#multi-select option:selected"), function () {
+            cititesArray.push($(this).val());
+        });
+
+        if (cititesArray.length > 0) {
+            var data = cititesArray.toString();
+            $("#Cities").val(data)
+            $.get("/Admin/GetPlaces?data=" + data, function (data) {
+                var html = ''
+                var placeDropdown = document.getElementById('multi-select2')
+                for (let place = 0; place < data.Places.length; place++) {
+                    html += `<option value="${data.Places[place].id}" title="${data.Places[place].city}" data-toggle="popover" data-trigger="hover">${data.Places[place].place}</option>`
+                }
+                placeDropdown.innerHTML = html;
+                console.log(placeDropdown)
+            });
+
+            if (isPlace == false) {
+                isPlace = true;
+                $("#placeDiv").removeClass("d-none");
+            } else {
+                isPlace = false;
+                $("#placeDiv").addClass("d-none");
+            }
+        } else {
+            alert("Please the City(s)");
+        }
+    }
+
+    function DEHotel() {
+        var cititesArray = [];
+
+        $.each($("#multi-select option:selected"), function () {
+            cititesArray.push($(this).val());
+        });
+
+        if (cititesArray.length > 0) {
+            var data = cititesArray.toString();
+            $("#Cities").val(data)
+
+            $.get("/Admin/GetHotels?data=" + data, function (data) {
+                console.log(data)
+                var html = '<option class="disabled" value="0" disabled>Select Hotels According To City</option>'
+                var hotelDropdown = document.getElementById('multi-select3')
+                for (let hotel = 0; hotel < data.Hotels.length; hotel++) {
+                    html += `<option value="${data.Hotels[hotel].Id}" title="City: ${data.Hotels[hotel].City}, Price: ${data.Hotels[hotel].Price}" data-toggle="popover" data-trigger="hover">${data.Hotels[hotel].Name}</option>`
+                }
+                hotelDropdown.innerHTML = html;
+            });
+
+            if (isHotel == false) {
+                isHotel = true;
+                $("#hotelDiv").removeClass("d-none");
+            } else {
+                isHotel = false;
+                $("#hotelDiv").addClass("d-none");
+            }
+        } else {
+            alert("Please the City(s)");
+        }
+    }
+
+    function getplaces() {
+        var placesArray = [];
+
+        $.each($("#multi-select2 option:selected"), function () {
+            placesArray.push($(this).val());
+        });
+        var data = placesArray.toString();
+        $("#Places").val(data)
+
+    }
+
+    function gethotels() {
+        var hotelsArray = [];
+
+        $.each($("#multi-select3 option:selected"), function () {
+            hotelsArray.push($(this).val());
+        });
+        var data = hotelsArray.toString();
+        $("#Hotels").val(data)
+
+    }
+
+    function getInclusion() {
+        var inclusionArray = [];
+
+        $.each($("#multi-select4 option:selected"), function () {
+            inclusionArray.push($(this).val());
+        });
+        var data = inclusionArray.toString();
+        $("#Inclusions").val(data)
+    }
+
+    function getExclusion() {
+        var exclusionArray = [];
+
+        $.each($("#multi-select5 option:selected"), function () {
+            exclusionArray.push($(this).val());
+        });
+        var data = exclusionArray.toString();
+        $("#Exclusions").val(data)
+    }
+
+    function getGuider() {
+        debugger
+        var guider = $("#guider-select").val();
+        $("#GuiderID").val(guider)
+    }
+
+    function getVehicle() {
+        var vehicle = $("#vehicle-select").val();
+        $("#VehicleID").val(vehicle)
+    }
+
+    $(document).ready(function () {
+
+        var Inclusions = new Choices('#multi-select4', {
+            removeItemButton: true,
+            //maxItemCount: 5,
+            //searchResultLimit: 5
+            /*renderChoiceLimit: 5*/
+        });
+
+        var Exclusions = new Choices('#multi-select5', {
+            removeItemButton: true,
+            //maxItemCount: 5,
+            //searchResultLimit: 5
+            /*renderChoiceLimit: 5*/
+        });
+
+        //var Cities = new Choices('#multi-select', {
+        //    removeItemButton: true,
+        //    //maxItemCount: 5,
+        //    //searchResultLimit: 5
+        //    /*renderChoiceLimit: 5*/
+        //});
+
+        //var Places = new Choices('#multi-select2', {
+        //    removeItemButton: true,
+        //    //maxItemCount: 5,
+        //    //searchResultLimit: 5
+        //    /*renderChoiceLimit: 5*/
+        //});
+
+        //var Hotels = new Choices('#multi-select3', {
+        //    removeItemButton: true,
+        //    //maxItemCount: 5,
+        //    //searchResultLimit: 5
+        //    /*renderChoiceLimit: 5*/
+        //});
+
+        var readURL = function (input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader()
+
+                reader.onload = function (e) {
+                    $('.profile-pic').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function validate(file) {
+            var ext = file.split(".");
+            ext = ext[ext.length - 1].toLowerCase();
+            var arrayExtensions = ["jpg", "jpeg", "png", "bmp", "gif"];
+
+            if (arrayExtensions.lastIndexOf(ext) == -1) {
+                alert("This is not an allowed file type Please upload Picture");
+                $("#file").val("");
+            }
+        }
+
+        $("#file").change(function (e) {
+            var file = this.files[0], img;
+            if (Math.round(file.size / (1024 * 1024)) > 2) { // make it in MB so divide by 1024*1024
+                alert('Please select image size less than 2 MB');
+                this.value = '';
+            }
+
+        });
+
+        $(".file-upload").on('change', function () {
+            readURL(this);
+        });
+
+        $(".upload-button").on('click', function () {
+            $(".file-upload").click();
+        });
+
+        $.get("@Url.Action("GetCities","Admin")", function (data) {
+
+            var html = '<option class="disabled" value="0" disabled>Select Multiple Cities</option>'
+            var cityDropdown = document.getElementById('multi-select')
+
+            for (let city = 0; city < data.Cities.length; city++)
+            {
+                html += `<option value="${data.Cities[city].City_ID}">${data.Cities[city].City_Name}</option>`
+            }
+
+            cityDropdown.innerHTML = html;
+
+            var Cities = new Choices('#multi-select', {
+            removeItemButton: true,
+            //maxItemCount: 5,
+            //searchResultLimit: 5
+            /*renderChoiceLimit: 5*/
+            });
+
+            getGuiderVehicle();
+        });
+
+    });
+</script>
+

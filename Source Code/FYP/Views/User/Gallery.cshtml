@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Gallery";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/userassests/css/gallery.css" rel="stylesheet" />
+
+<div class="wrapper" id="cities">
+    
+</div>
+
+<script src="~/Scripts/jquery-3.6.0.js"></script>
+<script>
+    var citiesDiv = document.getElementById("cities")
+    var cityhtml = ""
+
+    $.get("/User/GetCities", function (data) {
+        console.log(data)
+
+        for (var city = 0; city < data.Cities.length; city++) {
+            var img = data.Cities[city].City_Picture1
+            let result = img.replace("~", "");
+            cityhtml += `<img src="${result}" alt="">`
+        }
+            citiesDiv.innerHTML = cityhtml
+    });
+
+    //$.get("/User/GalleryPlaces", function (data) {
+    //    console.log(data)
+    //    var c = data.PLaces[0].length;
+    //    console.log(c)
+    //    for (var place = 0; place < data.PLaces.length; place++) {
+    //        var img = data.Places[place].pic
+    //        let result = img.replace("~", "");
+    //        cityhtml += `<img src="${result}" alt="">`
+    //    }
+
+    //});
+</script>

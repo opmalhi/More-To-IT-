@@ -1,0 +1,97 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50)), url(css/bckg.jpg);
+    background-size: 100% 100%;
+    background-attachment: fixed;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center !important;
+    height: 100vh;
+}
+
+.form {
+    width: 350px;
+    height: 450px;
+    background-color: white;
+    opacity: 0.85;
+    border-radius:20px;
+    box-shadow: 0 5px 30px black;
+}
+
+.btn button {
+    padding: 3px;
+    margin: 30px 0px 40px 30px;
+    border-style: none;
+    background-color: transparent;
+    font-size: 18px;
+    font-weight: 550;
+}
+
+.formGroup {
+    display: flex;
+    justify-content: center;
+}
+
+    .formGroup input {
+        border: none;
+        width: 80%;
+        border-bottom: 2px solid;
+        padding: 10px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        font-weight: bold;
+        background-color: transparent;
+        color: black;
+    }
+
+input:focus {
+    outline: none !important;
+    border-bottom: 2px solid teal;
+    font-size: 17px;
+    font-weight: bold;
+    color: black;
+}
+
+::placeholder {
+    color:black;
+}
+
+.text {
+    font-size: 13px;
+}
+
+.btn2 {
+    margin-top:15px;
+    padding: 10px;
+    width:80%;
+    background-color: teal;
+    border-style: none;
+    color: white;
+    font-weight: 600;
+    border-radius:3px;
+}
+
+    .btn2:hover {
+        background-color: rgba(10, 136, 43, 0.5);
+    }
+
+.btn button:hover {
+    border-bottom: 2px solid teal;
+}
+
+.login {
+    display: none;
+}
+
+.login {
+    margin-top: 40px;
+}
